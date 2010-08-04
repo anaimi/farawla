@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="Farawla.Features.FileExplorer.Widget"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Local="clr-namespace:Farawla.Features.FileExplorer"
+    Width="240" VerticalContentAlignment="Stretch"
+    Name="MainControl">
+	
+	<UserControl.Resources>
+		
+	</UserControl.Resources>
+	
+    <Grid>
+		<Local:FileList x:Name="list" OnItemOpen="OnItemClick" />
+    </Grid>
+</UserControl>

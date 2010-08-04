@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="Farawla.Features.ColorPicker.SaturationBrightness"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	>
+    <Grid>
+		<Canvas x:Name="Shades" Width="200" Height="180" Cursor="Hand" MouseMove="ShadesMouseMove" MouseDown="ShadesMouseDown">
+			<Rectangle x:Name="SampleColor" Width="200" Height="180" Fill="Red"></Rectangle>
+			<Rectangle x:Name="WhiteGradient" IsHitTestVisible="False" Width="200" Height="180">
+				<Rectangle.Fill>
+					<LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+						<GradientStop Offset="0" Color="#ffffffff"/>
+						<GradientStop Offset="1" Color="#00ffffff"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+			<Rectangle x:Name="BlackGradient" IsHitTestVisible="False" Width="200" Height="180">
+				<Rectangle.Fill>
+					<LinearGradientBrush StartPoint="0,1" EndPoint="0, 0">
+						<GradientStop Offset="0" Color="#ff000000"/>
+						<GradientStop Offset="1" Color="#00000000"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+
+			<Canvas x:Name="Selector" IsHitTestVisible="False" Width="10" Height="10" Canvas.Top="90" Canvas.Left="100">
+				<Ellipse Width="10" Height="10" StrokeThickness="3" Stroke="#FFFFFFFF"/>
+				<Ellipse Width="10" Height="10" StrokeThickness="1" Stroke="#FF000000"/>
+			</Canvas>
+		</Canvas>
+	</Grid>
+</UserControl>

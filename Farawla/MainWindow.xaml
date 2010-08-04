@@ -1,0 +1,103 @@
+﻿<Window x:Class="Farawla.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Farawla="clr-namespace:Farawla"
+    xmlns:FileExplorer="clr-namespace:Farawla.Features.FileExplorer"
+    xmlns:ColorPicker="clr-namespace:Farawla.Features.ColorPicker"
+    SnapsToDevicePixels="True"
+    Name="Main"
+    Title="Code Editor" Height="600" Width="600">
+	<Window.Resources>
+		<Farawla:ContentToMarginConverter x:Key="ContentToMarginConverter" />
+		<Farawla:ContentToPathConverter x:Key="ContentToPathConverter" />
+
+		<RadialGradientBrush x:Key="TabHoverColor" GradientOrigin="1,1">
+			<GradientStop Color="#FFB0B0B0" Offset="0"/>
+			<GradientStop Color="#FFA0A0A0" Offset="1"/>
+		</RadialGradientBrush>
+		<RadialGradientBrush x:Key="TabNotSelectedColor" GradientOrigin="1,1">
+			<GradientStop Color="#FFA0A0A0" Offset="0"/>
+			<GradientStop Color="#FF909090" Offset="1"/>
+		</RadialGradientBrush>
+		<LinearGradientBrush x:Key="TabSelectedColor" StartPoint="0,0" EndPoint="0,1" >
+			<GradientStop Color="#FFF4F8FE" Offset="0"/>
+			<GradientStop Color="#FFFFFFFF" Offset="1"/>
+		</LinearGradientBrush>
+		<LinearGradientBrush x:Key="ToolbarColor" StartPoint="0,0" EndPoint="0,1" >
+			<GradientStop Color="#FFDAE8F9" Offset="1"/>
+			<GradientStop Color="#FFF4F8FE" Offset="0.9"/>
+		</LinearGradientBrush>
+
+		<!-- TabControl style -->
+		<Style x:Key="TabControlStyle" TargetType="{x:Type TabControl}">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="TabControl">
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="*"/>
+							</Grid.RowDefinitions>
+							<TabPanel Grid.Row="0" Panel.ZIndex="1" Margin="0,0,4,-1" IsItemsHost="True" Background="Transparent" />
+							<Border Grid.Row="1" Height="5" Background="{StaticResource ToolbarColor}" Margin="1,0,0,0" />
+							<Border Grid.Row="2" BorderThickness="0" Margin="1,0,0,0" Background="White">
+								<ContentPresenter ContentSource="SelectedContent" />
+							</Border>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<!-- TabItem style -->
+		<Style x:Key="{x:Type TabItem}" TargetType="{x:Type TabItem}">
+			<Setter Property="SnapsToDevicePixels" Value="True"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="TabItem">
+						<Grid x:Name="grd">
+							<Path x:Name="TabPath" Margin="{Binding ElementName=TabItemContent, Converter={StaticResource ContentToMarginConverter}}" Fill="{StaticResource TabNotSelectedColor}">
+								<Path.Data>
+									<PathGeometry>
+										<PathFigure IsClosed="False" StartPoint="1,0" Segments="{Binding ElementName=TabItemContent, Converter={StaticResource ContentToPathConverter}}" />
+									</PathGeometry>
+								</Path.Data>
+								<Path.LayoutTransform>
+									<ScaleTransform ScaleY="-1"/>
+								</Path.LayoutTransform>
+							</Path>
+							<ContentPresenter x:Name="TabItemContent" ContentSource="Header" Margin="5,2,5,2" VerticalAlignment="Center" TextElement.Foreground="#FF000000" />
+						</Grid>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True" SourceName="grd">
+								<Setter Property="Fill" TargetName="TabPath" Value="{StaticResource TabHoverColor}" />
+							</Trigger>
+							<Trigger Property="Selector.IsSelected" Value="True">
+								<Setter TargetName="TabItemContent" Property="TextElement.Foreground" >
+									<Setter.Value>
+										<SolidColorBrush Color="#FF000000" />
+									</Setter.Value>
+								</Setter>
+								<Setter Property="Fill" TargetName="TabPath" Value="{StaticResource TabSelectedColor}" />
+								<Setter Property="Panel.ZIndex" Value="2"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Resources>
+	
+	<Grid>
+		<TabControl Name="Tab" Style="{StaticResource TabControlStyle}" FontSize="12" Margin="0" />
+
+		<!-- side bar -->
+		<Border Name="Sidebar" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="250" Background="#66666666" Margin="0,30,22,22" Padding="5" CornerRadius="4">
+			<StackPanel VerticalAlignment="Stretch" Name="SidebarContainer">
+				<FileExplorer:Widget x:Name="FileExplorer" MaxHeight="{Binding ElementName=SidebarContainer, Path=ActualHeight}" />
+				<ColorPicker:Widget x:Name="ColorPicker" Height="300" />
+			</StackPanel>
+		</Border>
+	</Grid>
+</Window>
