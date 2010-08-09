@@ -93,6 +93,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Core\Sidebar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Features\ColorPicker\AlphaSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -139,6 +143,9 @@
     <Compile Include="Core\Controller.cs" />
     <Compile Include="Core\KeyboardObserver.cs" />
     <Compile Include="Core\Languages.cs" />
+    <Compile Include="Core\Sidebar.xaml.cs">
+      <DependentUpon>Sidebar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Features\ColorPicker\AlphaSlider.xaml.cs">
       <DependentUpon>AlphaSlider.xaml</DependentUpon>
     </Compile>

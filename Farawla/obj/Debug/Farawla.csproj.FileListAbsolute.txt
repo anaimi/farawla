@@ -89,3 +89,5 @@ D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\MainWindow.baml
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Farawla.g.resources
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Farawla.Properties.Resources.resources
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Farawla.csproj.GenerateResource.Cache
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Core\Sidebar.g.cs
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Core\Sidebar.baml

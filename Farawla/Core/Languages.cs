@@ -73,7 +73,6 @@ namespace Farawla.Core
 		public List<Rule> Rules { get; set; }
 		public List<Span> Spans { get; set; }
 
-		private string path;
 		private HighlightingDefinition highlighter;
 		
 		public Language()

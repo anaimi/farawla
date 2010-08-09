@@ -14,8 +14,8 @@ namespace Farawla.Core
 		
 		public static void PopulateFeatureList()
 		{
-			Controller.Current.Features.Add(Controller.Current.MainWindow.FileExplorer);
-			Controller.Current.Features.Add(Controller.Current.MainWindow.ColorPicker);
+			Controller.Current.Features.Add(Controller.Current.MainWindow.Sidebar.FileExplorer);
+			Controller.Current.Features.Add(Controller.Current.MainWindow.Sidebar.ColorPicker);
 		}
 	}
 }

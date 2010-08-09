@@ -2,7 +2,7 @@
   "DefaultEditorBackground": "#606060",
   "DefaultEditorForeground": "#FFFFFF",
   "DefaultEditorFontFamily": "Courier New",
-  "IsWindowMaximized": true,
+  "IsWindowMaximized": false,
   "OpenTabs": [
     "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\Farawla\\Sample Files\\main.js"
   ],
@@ -16,7 +16,7 @@
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#FF67E137"
+        "Color": "#FF4BE642"
       }
     }
   ]

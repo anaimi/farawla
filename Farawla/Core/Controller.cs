@@ -138,7 +138,7 @@ namespace Farawla.Core
 			
 			#region resize widgets
 			// update widgets
-			var workspace = MainWindow.SidebarContainer.ActualHeight;
+			var workspace = MainWindow.ActualHeight;
 			var widgets = Features.Where(f => f is UserControl).Select(f => f as UserControl);
 			
 			// reduce workspace, by enumerating the MaxHeights of non-Stretchable widgets

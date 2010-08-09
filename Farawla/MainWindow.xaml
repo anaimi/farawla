@@ -4,6 +4,7 @@
     xmlns:Farawla="clr-namespace:Farawla"
     xmlns:FileExplorer="clr-namespace:Farawla.Features.FileExplorer"
     xmlns:ColorPicker="clr-namespace:Farawla.Features.ColorPicker"
+    xmlns:Core="clr-namespace:Farawla.Core"
     SnapsToDevicePixels="True"
     Name="Main"
     Title="Code Editor" Height="600" Width="600">
@@ -91,13 +92,7 @@
 	
 	<Grid>
 		<TabControl Name="Tab" Style="{StaticResource TabControlStyle}" FontSize="12" Margin="0" />
-
-		<!-- side bar -->
-		<Border Name="Sidebar" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="250" Background="#66666666" Margin="0,30,22,22" Padding="5" CornerRadius="4">
-			<StackPanel VerticalAlignment="Stretch" Name="SidebarContainer">
-				<FileExplorer:Widget x:Name="FileExplorer" MaxHeight="{Binding ElementName=SidebarContainer, Path=ActualHeight}" />
-				<ColorPicker:Widget x:Name="ColorPicker" Height="300" />
-			</StackPanel>
-		</Border>
+		
+		<Core:Sidebar x:Name="Sidebar" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="250" Margin="0,30,22,22" />
 	</Grid>
 </Window>
