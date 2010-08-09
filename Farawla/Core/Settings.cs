@@ -56,6 +56,8 @@ namespace Farawla.Core
 		public string DefaultEditorForeground { get; set; }
 		public string DefaultEditorFontFamily { get; set; }
 		
+		public bool IsWindowMaximized { get; set; }
+		
 		public List<string> OpenTabs { get; set; }
 		public List<WidgetSettings> Widgets { get; set; }
 
@@ -65,6 +67,7 @@ namespace Farawla.Core
 			DefaultEditorBackground = DEFAULT_EDITOR_BACKGROUND;
 			DefaultEditorForeground = DEFAULT_EDITOR_FOREGROUND;
 			DefaultEditorFontFamily = DEFAULT_EDITOR_FONT_FAMILY;
+			IsWindowMaximized = true;
 
 			OpenTabs = new List<string>();
 			Widgets = new List<WidgetSettings>();

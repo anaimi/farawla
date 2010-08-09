@@ -68,6 +68,12 @@ namespace Farawla.Core
 			_current.Keyboard = new KeyboardObserver();
 			_current.Languages = new Languages();
 			
+			// maximize window if it was maximized
+			if (Settings.Instance.IsWindowMaximized)
+				_current.MainWindow.WindowState = WindowState.Maximized;
+			else
+				_current.MainWindow.WindowState = WindowState.Normal;
+			
 			// open files that were open
 			if (Settings.Instance.OpenTabs.Count > 0)
 			{
@@ -148,6 +154,9 @@ namespace Farawla.Core
 				widget.Height = workspace;
 			}
 			#endregion
+			
+			// save current state
+			Settings.Instance.IsWindowMaximized = MainWindow.WindowState == WindowState.Maximized;
 		}
 		
 		public void TabCountUpdated()
