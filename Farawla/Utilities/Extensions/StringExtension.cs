@@ -117,19 +117,34 @@ public static class StringExtension
 	
 	public static Color ToColor(this string str)
 	{
-		int r, g, b;
+		int a, r, g, b;
 		
+		a = 0;
 		r = 0;
 		g = 0;
 		b = 0;
+		
+		if (!str.StartsWith("#"))
+			throw new Exception("Color string must start with a '#'");
+		
+		if (str.Length != 7 && str.Length != 9)
+			throw new Exception("String '" + str + "' is not a valid 6- or 8-digits hex color");
 
-		if (!str.StartsWith("#") || str.Length != 7)
-			throw new Exception("String '" + str + "' is not a valid 6-digits hex color");
+		if (str.Length == 7)
+		{
+			r = Convert.ToInt32(str.Substring(1, 2), 16);
+			g = Convert.ToInt32(str.Substring(3, 2), 16);
+			b = Convert.ToInt32(str.Substring(5, 2), 16);
 
-		r = Convert.ToInt32(str.Substring(1, 2), 16);
-		g = Convert.ToInt32(str.Substring(3, 2), 16);
-		b = Convert.ToInt32(str.Substring(5, 2), 16);
+			return Color.FromArgb(255, (byte)r, (byte)g, (byte)b);
+		}
 
-		return Color.FromArgb(255, (byte)r, (byte)g, (byte)b);
+		a = Convert.ToInt32(str.Substring(1, 2), 16);
+		r = Convert.ToInt32(str.Substring(3, 2), 16);
+		g = Convert.ToInt32(str.Substring(5, 2), 16);
+		b = Convert.ToInt32(str.Substring(7, 2), 16);
+
+		return Color.FromArgb((byte)a, (byte)r, (byte)g, (byte)b);
+		
 	}
 }

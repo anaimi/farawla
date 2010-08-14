@@ -15,6 +15,10 @@ namespace Farawla.Features.FileExplorer
 {
 	public partial class Widget : IFeature
 	{
+		#region Widget: File Explorer
+		public string WidgetName { get { return "File Explorer"; } }
+		#endregion
+		
 		public WidgetSettings Settings { get; set; }
 		public List<FileItem> ExpandedDirectories { get; set; }
 		

@@ -14,7 +14,7 @@ namespace Farawla.Core
 {
 	public class Controller
 	{
-		#region instance
+		#region Instance
 		private static Controller _current;
 		public static Controller Current
 		{
@@ -28,7 +28,7 @@ namespace Farawla.Core
 		}
 		#endregion
 
-		public List<IFeature> Features = new List<IFeature>();
+		public List<IFeature> Features { get; private set; }
 		public KeyboardObserver Keyboard { get; private set; }
 		public List<WindowTab> CurrentTabs { get; private set; }
 		public Languages Languages { get; private set; }
@@ -64,6 +64,7 @@ namespace Farawla.Core
 			_current = new Controller();
 
 			_current.MainWindow = instance;
+			_current.Features = new List<IFeature>();
 			_current.CurrentTabs = new List<WindowTab>();
 			_current.Keyboard = new KeyboardObserver();
 			_current.Languages = new Languages();
@@ -136,24 +137,8 @@ namespace Farawla.Core
 			// inform features
 			Features.ForEach(f => f.OnResize());
 			
-			#region resize widgets
-			// update widgets
-			var workspace = MainWindow.ActualHeight;
-			var widgets = Features.Where(f => f is UserControl).Select(f => f as UserControl);
-			
-			// reduce workspace, by enumerating the MaxHeights of non-Stretchable widgets
-			foreach(var widget in widgets.Where(w => w.VerticalContentAlignment != VerticalAlignment.Stretch))
-			{
-				workspace -= widget.MaxHeight;
-			}
-			
-			// set the Height on Stretchable components
-			workspace = workspace / widgets.Where(w => w.VerticalContentAlignment == VerticalAlignment.Stretch).Count();
-			foreach(var widget in widgets.Where(w => w.VerticalContentAlignment == VerticalAlignment.Stretch))
-			{
-				widget.Height = workspace;
-			}
-			#endregion
+			// update sidebar
+			MainWindow.Sidebar.UpdateWidgetSize();
 			
 			// save current state
 			Settings.Instance.IsWindowMaximized = MainWindow.WindowState == WindowState.Maximized;

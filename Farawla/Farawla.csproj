@@ -93,10 +93,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Core\Sidebar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Features\ColorPicker\AlphaSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,9 +139,7 @@
     <Compile Include="Core\Controller.cs" />
     <Compile Include="Core\KeyboardObserver.cs" />
     <Compile Include="Core\Languages.cs" />
-    <Compile Include="Core\Sidebar.xaml.cs">
-      <DependentUpon>Sidebar.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Core\Sidebar.cs" />
     <Compile Include="Features\ColorPicker\AlphaSlider.xaml.cs">
       <DependentUpon>AlphaSlider.xaml</DependentUpon>
     </Compile>
@@ -195,6 +189,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Core\Settings.cs" />
+    <Compile Include="Utilities\Extensions\FrameworkElementExtension.cs" />
     <Compile Include="Utilities\Resources.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

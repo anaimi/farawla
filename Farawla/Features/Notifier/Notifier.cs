@@ -8,6 +8,10 @@ namespace Farawla.Features.Notifier
 {
 	class Notifier
 	{
+		#region Widget: Notifier
+		public string WidgetName { get { return "Notifier"; } }
+		#endregion
+		
 		#region instance
 		private static Notifier _instance;
 		public static Notifier Instance

@@ -20,6 +20,10 @@ namespace Farawla.Features.ColorPicker
 {
 	public partial class Widget : UserControl, IFeature
 	{
+		#region Widget: Color Picker
+		public string WidgetName { get { return "Color Picker"; } }
+		#endregion
+			
 		public WidgetSettings Settings { get; set; }
 		
 		public Widget()

@@ -2,7 +2,7 @@
   "DefaultEditorBackground": "#606060",
   "DefaultEditorForeground": "#FFFFFF",
   "DefaultEditorFontFamily": "Courier New",
-  "IsWindowMaximized": false,
+  "IsWindowMaximized": true,
   "OpenTabs": [
     "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\Farawla\\Sample Files\\main.js"
   ],
@@ -10,13 +10,13 @@
     {
       "Name": "FileExplorer",
       "Values": {
-        "Path": "D:\\Users\\nuaimiaa\\Desktop\\P. Projects"
+        "Path": "D:\\Program Files\\Centra\\Client\\bin\\plugins\\imageformats"
       }
     },
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#FF4BE642"
+        "Color": "#FFC03DE1"
       }
     }
   ]
