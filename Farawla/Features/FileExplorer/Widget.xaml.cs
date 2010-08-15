@@ -13,10 +13,12 @@ using System.Diagnostics;
 
 namespace Farawla.Features.FileExplorer
 {
-	public partial class Widget : IFeature
+	public partial class Widget : IWidget
 	{
 		#region Widget: File Explorer
 		public string WidgetName { get { return "File Explorer"; } }
+		public bool Expandable { get { return true; } }
+		public double WidgetHeight { get { return -1; } }
 		#endregion
 		
 		public WidgetSettings Settings { get; set; }
@@ -187,6 +189,11 @@ namespace Farawla.Features.FileExplorer
 			}
 			
 			throw new Exception("Directory '" + path + "' was not found");
+		}
+		
+		public void OnClick()
+		{
+		
 		}
 	}
 

@@ -49,31 +49,79 @@ namespace Farawla.Core
 
 		public void OnLoad()
 		{
-			foreach (var widget in Controller.Current.Features.Where(w => w is UserControl))
+			foreach (var widget in Controller.Current.Widgets)
 			{
-				Container.Children.Add(AddWidget(widget as UserControl));
+				var control = AddWidget(widget);
+				
+				//if (Container.Children.Count > 0)
+				//{
+				//    Container.RowDefinitions.Add(new RowDefinition());
+				//    control.SetValue(Grid.RowProperty, Container.Children.Count);
+				//}
+				
+				Container.Children.Add(control);
 			}
 		}
 		
-		private UIElement AddWidget(UserControl widget)
+		private UIElement AddWidget(IWidget widget)
 		{
-			var height = widget.Height;
-			var feature = widget as IFeature;
+			var isControl = widget is UserControl;
+			var control = widget as UserControl;
+			
+			var height = isControl ? control.Height : 0;
 			
 			// initialize grid
 			var grid = new Grid();
-			var contentRow = new RowDefinition();
 			grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(BUTTON_HEIGHT) });
-			grid.RowDefinitions.Add(contentRow);
+
+			// set properties for widget
+			if (isControl)
+			{
+				grid.RowDefinitions.Add(new RowDefinition());
+
+				control.Margin = new Thickness(5);
+				control.SetValue(Grid.RowProperty, 1);
+
+				grid.Children.Add(control);
+			}	
 			
 			// initialize button
-			var button = new Border {
+			var button = CreateButton(widget.WidgetName, () => {
+				
+				widget.OnClick();
+				
+				if (!isControl)
+					return;
+				
+				if (Math.Round(control.Height, 2) == 0)
+				{
+					ExpandWidget(control, height);
+				}
+				else
+				{
+					CollapseWidget(control);
+				}
+			});
+			
+			// add button
+			grid.Children.Add(button);
+			
+			return grid;
+		}
+		
+		private Border CreateButton(string label, Action click)
+		{
+			// initialize button
+			var button = new Border
+			{
 				Background = new SolidColorBrush("#60606060".ToColor()),
 				Padding = new Thickness(5),
-				Child = new TextBlock {
+				Child = new TextBlock
+				{
 					Foreground = new SolidColorBrush("#FFFFFFFF".ToColor()),
-					Text = feature.WidgetName,
-					Effect = new DropShadowEffect {
+					Text = label,
+					Effect = new DropShadowEffect
+					{
 						Opacity = 0.5,
 						ShadowDepth = 9,
 						Direction = 542,
@@ -82,35 +130,17 @@ namespace Farawla.Core
 				},
 				Cursor = Cursors.Hand
 			};
-			
-			// set properties for widget
-			widget.Margin = new Thickness(5);
-			widget.SetValue(Grid.RowProperty, 1);
-			
+
 			// set properties for button
 			button.SetValue(Grid.RowProperty, 0);
 			button.MouseEnter += (s, e) => button.Background = new SolidColorBrush("#FF606060".ToColor());
 			button.MouseLeave += (s, e) => button.Background = new SolidColorBrush(Colors.Transparent);
 			button.MouseLeftButtonDown += (s, e) => {
-				if (Math.Round(widget.Height, 2) == 0)
-				{
-					ExpandWidget(widget, height);
-				}
-				else
-				{
-					CollapseWidget(widget);
-				}
+				if (click != null)
+					click();
 			};
 			
-			// rounded corners for button?
-			//if (Container.Children.Count == 0)
-			//    button.CornerRadius = new CornerRadius(4, 4, 0, 0);
-			
-			// add components
-			grid.Children.Add(button);
-			grid.Children.Add(widget);
-			
-			return grid;
+			return button;
 		}
 
 		private void CollapseWidget(UserControl widget)
@@ -128,21 +158,26 @@ namespace Farawla.Core
 
 		public void UpdateWidgetSize()
 		{
-			// update widgets
-			var workspace = Controller.Current.MainWindow.ActualHeight - OuterBorder.Padding.Top - OuterBorder.Padding.Bottom;
-			var widgets = Controller.Current.Features.Where(f => f is UserControl).Select(f => f as UserControl);
+			var workspace = OuterBorder.ActualHeight - OuterBorder.Padding.Top - OuterBorder.Padding.Bottom;
+			var widgets = Controller.Current.Widgets.Where(f => f is UserControl).Select(f => f as UserControl);
 
 			// reduce workspace, by enumerating the MaxHeights of non-Stretchable widgets
 			foreach (var widget in widgets.Where(w => w.VerticalContentAlignment != VerticalAlignment.Stretch))
 			{
-				workspace -= BUTTON_HEIGHT;
-				workspace -= widget.Height;
+				widget.Height = (widget as IWidget).WidgetHeight;
+				workspace -= widget.Height + BUTTON_HEIGHT + 10;
 			}
+			
+			// reduce workspace for each non-Expandable button
+			workspace -= BUTTON_HEIGHT * Controller.Current.Widgets.Count(w => !(w is UserControl));
 
 			// set the Height on Stretchable components
-			var count = widgets.Where(w => w.VerticalContentAlignment == VerticalAlignment.Stretch).Count();
-			workspace = workspace / count - BUTTON_HEIGHT / count;
-			foreach (var widget in widgets.Where(w => w.VerticalContentAlignment == VerticalAlignment.Stretch))
+			var stretchables = widgets.Where(w => w.VerticalContentAlignment == VerticalAlignment.Stretch);
+			var count = stretchables.Count();
+			
+			workspace = (workspace / count) - ((BUTTON_HEIGHT + 10) * count);
+			
+			foreach (var widget in stretchables)
 			{
 				widget.Height = workspace;
 			}

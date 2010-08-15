@@ -28,7 +28,7 @@ namespace Farawla.Core
 		}
 		#endregion
 
-		public List<IFeature> Features { get; private set; }
+		public List<IWidget> Widgets { get; private set; }
 		public KeyboardObserver Keyboard { get; private set; }
 		public List<WindowTab> CurrentTabs { get; private set; }
 		public Languages Languages { get; private set; }
@@ -64,7 +64,7 @@ namespace Farawla.Core
 			_current = new Controller();
 
 			_current.MainWindow = instance;
-			_current.Features = new List<IFeature>();
+			_current.Widgets = new List<IWidget>();
 			_current.CurrentTabs = new List<WindowTab>();
 			_current.Keyboard = new KeyboardObserver();
 			_current.Languages = new Languages();
@@ -112,7 +112,7 @@ namespace Farawla.Core
 		
 		public void OnStart()
 		{
-			Features.ForEach(f => f.OnStart());
+			Widgets.ForEach(f => f.OnStart());
 		}
 
 		public void OnExit()
@@ -123,7 +123,7 @@ namespace Farawla.Core
 				Settings.Instance.OpenTabs.Add(tab.DocumentPath);
 			
 			// inform widgets
-			Features.ForEach(f => f.OnExit());
+			Widgets.ForEach(f => f.OnExit());
 			
 			// save settings
 			Settings.Instance.Save();
@@ -134,8 +134,8 @@ namespace Farawla.Core
 
 		public void OnResize()
 		{
-			// inform features
-			Features.ForEach(f => f.OnResize());
+			// inform Widgets
+			Widgets.ForEach(f => f.OnResize());
 			
 			// update sidebar
 			MainWindow.Sidebar.UpdateWidgetSize();

@@ -18,10 +18,12 @@ using System.Diagnostics;
 
 namespace Farawla.Features.ColorPicker
 {
-	public partial class Widget : UserControl, IFeature
+	public partial class Widget : UserControl, IWidget
 	{
 		#region Widget: Color Picker
 		public string WidgetName { get { return "Color Picker"; } }
+		public bool Expandable { get { return true; } }
+		public double WidgetHeight { get { return 235; } }
 		#endregion
 			
 		public WidgetSettings Settings { get; set; }
@@ -150,6 +152,11 @@ namespace Farawla.Features.ColorPicker
 		public void OnResize()
 		{
 			
+		}
+		
+		public void OnClick()
+		{
+		
 		}
 	}
 }

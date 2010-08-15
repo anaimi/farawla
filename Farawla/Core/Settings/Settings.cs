@@ -4,11 +4,18 @@ using System.IO;
 using Farawla.Features.Notifier;
 using Newtonsoft.Json;
 using System.Linq;
+using Farawla.Features;
 
 namespace Farawla.Core
 {
-	public class Settings
+	public class Settings: IWidget
 	{
+		#region Widget: Settings
+		public string WidgetName { get { return "Settings"; } }
+		public bool Expandable { get { return false; } }
+		public double WidgetHeight { get { return -1; } }
+		#endregion
+		
 		public static string ExecDir
 		{
 			get { return Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\"; }
@@ -20,7 +27,7 @@ namespace Farawla.Core
 		
 		public const string FILE_NAME = "settings.js";
 		
-		#region instance
+		#region Instance
 		private static Settings _instance;
 		public static Settings Instance
 		{
@@ -85,6 +92,28 @@ namespace Farawla.Core
 		{
 			File.WriteAllText(ExecDir + FILE_NAME, JsonConvert.SerializeObject(_instance, Formatting.Indented));
 		}
+
+		#region Widget Events
+		public void OnStart()
+		{
+		
+		}
+
+		public void OnExit()
+		{
+		
+		}
+
+		public void OnResize()
+		{
+		
+		}
+
+		public void OnClick()
+		{
+			Notifier.Instance.Show("Showing settings...");
+		}
+		#endregion
 	}
 	
 	public class WidgetSettings

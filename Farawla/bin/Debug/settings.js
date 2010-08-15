@@ -1,4 +1,7 @@
 {
+  "WidgetName": "Settings",
+  "Expandable": false,
+  "WidgetHeight": -1.0,
   "DefaultEditorBackground": "#606060",
   "DefaultEditorForeground": "#FFFFFF",
   "DefaultEditorFontFamily": "Courier New",
@@ -16,7 +19,7 @@
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#FFC03DE1"
+        "Color": "#FFBC29EB"
       }
     }
   ]
