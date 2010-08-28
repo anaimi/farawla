@@ -5,6 +5,7 @@ using Farawla.Features.Notifier;
 using Newtonsoft.Json;
 using System.Linq;
 using Farawla.Features;
+using Farawla.Features.Settings;
 
 namespace Farawla.Core
 {
@@ -111,7 +112,8 @@ namespace Farawla.Core
 
 		public void OnClick()
 		{
-			Notifier.Instance.Show("Showing settings...");
+			Controller.Current.ShowOverlay();
+			SettingsWindow.Instance.ShowDialog();
 		}
 		#endregion
 	}

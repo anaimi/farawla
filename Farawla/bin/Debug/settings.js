@@ -19,7 +19,7 @@
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#FFBC29EB"
+        "Color": "#FF396DAE"
       }
     }
   ]

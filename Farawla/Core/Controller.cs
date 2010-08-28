@@ -151,6 +151,18 @@ namespace Farawla.Core
 				CreateNewTab("");
 			}
 		}
+
+		#region Overlay Show/Hide
+		public void ShowOverlay()
+		{
+			MainWindow.Overlay.Visibility = Visibility.Visible;
+		}
+
+		public void HideOverlay()
+		{
+			MainWindow.Overlay.Visibility = Visibility.Collapsed;
+		}
+		#endregion
 	}
 
 	public class WindowTab

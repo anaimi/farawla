@@ -7,7 +7,7 @@
     xmlns:Core="clr-namespace:Farawla.Core"
     SnapsToDevicePixels="True"
     Name="Main"
-    Title="Code Editor" Height="600" Width="600">
+    Title="Farawla Code Editor" Height="600" Width="600">
 	<Window.Resources>
 		<Farawla:ContentToMarginConverter x:Key="ContentToMarginConverter" />
 		<Farawla:ContentToPathConverter x:Key="ContentToPathConverter" />
@@ -94,5 +94,7 @@
 		<TabControl Name="Tab" Style="{StaticResource TabControlStyle}" FontSize="12" Margin="0" />
 		
 		<Core:Sidebar x:Name="Sidebar" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="250" Margin="0,30,22,22" />
+		
+		<Canvas x:Name="Overlay" Visibility="Collapsed" Background="#90000000" Width="{Binding Source=Main, Path=Width}" Height="{Binding Source=Main, Path=Height}" />
 	</Grid>
 </Window>

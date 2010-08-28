@@ -10,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Farawla.Core;
+using System.Windows.Forms;
 
 namespace Farawla.Features.Settings
 {
@@ -18,9 +20,34 @@ namespace Farawla.Features.Settings
 	/// </summary>
 	public partial class SettingsWindow : Window
 	{
+		#region Instance
+		private static SettingsWindow _instance;
+		public static SettingsWindow Instance
+		{
+			get
+			{
+				if (_instance == null)
+					_instance = new SettingsWindow();
+				
+				return _instance;
+			}
+		}
+		#endregion
+		
 		public SettingsWindow()
 		{
 			InitializeComponent();
+			
+			Closing += (s, e) => {
+				Hide();
+				Controller.Current.HideOverlay();
+				e.Cancel = true;
+			};
+			
+			KeyDown += (s, e) => {
+				if (e.Key == System.Windows.Input.Key.Escape)
+					Close();
+			};
 		}
 	}
 }
