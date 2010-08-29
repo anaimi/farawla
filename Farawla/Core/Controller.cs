@@ -127,6 +127,8 @@ namespace Farawla.Core
 		{
 			#region Bind keyboard shortcuts
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.O, BrowseFile);
+			Keyboard.AddBinding(KeyCombination.Ctrl, Key.S, () => ActiveTab.Save(false));
+			Keyboard.AddBinding(KeyCombination.Ctrl | KeyCombination.Shift, Key.S, () => ActiveTab.Save(true));
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.F4, CloseActiveTab);
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.T, () => CreateNewTab(""));
 			Keyboard.AddBinding(KeyCombination.Ctrl | KeyCombination.Shift, Key.T, OpenLastClosedTab);
@@ -220,7 +222,7 @@ namespace Farawla.Core
 	{
 		public string Name { get; set; }
 		public string DocumentPath { get; set; }
-
+		public bool IsSaved { get; private set; }
 		public TabItem Tab { get; private set; }
 		public TextEditor Editor { get; private set; }
 		
@@ -234,8 +236,19 @@ namespace Farawla.Core
 			var extension = path.Substring(path.LastIndexOf('.') + 1);
 			var language = Controller.Current.Languages.GetLanguage(extension);
 			
-			Name = path.IsBlank() ? "new" : path.Substring(path.LastIndexOf('\\') + 1);
-			DocumentPath = path;
+			// set name and path
+			if (path.IsBlank())
+			{
+				IsSaved = false;
+				Name = "new";
+				DocumentPath = string.Empty;
+			}
+			else
+			{
+				IsSaved = true;
+				Name = Path.GetFileName(path);
+				DocumentPath = path;
+			}
 			
 			// editor
 			Editor = new TextEditor();
@@ -244,6 +257,7 @@ namespace Farawla.Core
 			Editor.ShowLineNumbers = true;
 			Editor.Background = new SolidColorBrush(language.Background.ToColor());
 			Editor.Foreground = new SolidColorBrush(language.Foreground.ToColor());
+			Editor.TextChanged += (s, e) => TextChanged();
 			
 			// load?
 			if (!path.IsBlank())
@@ -266,6 +280,53 @@ namespace Farawla.Core
 		{
 			var index = Controller.Current.CurrentTabs.IndexOf(this);
 			Controller.Current.MainWindow.Tab.SelectedIndex = index;
+		}
+		
+		public void Save(bool saveAs)
+		{
+			var dialog = new SaveFileDialog();
+
+			if (DocumentPath.IsBlank() || saveAs)
+			{
+				if (dialog.ShowDialog().Value)
+				{
+					Editor.Save(dialog.FileName);
+					Name = Path.GetFileName(dialog.FileName);
+				}
+				else
+				{
+					return;
+				}
+			}
+			else
+			{
+				Editor.Save(DocumentPath);
+			}
+
+			IsSaved = true;
+			MarkWindowAsSaved();
+		}
+		
+		public void TextChanged()
+		{
+			if (!Editor.IsLoaded)
+				return;
+			
+			if (IsSaved)
+			{
+				IsSaved = false;
+				MarkWindowAsUnsaved();
+			}
+		}
+		
+		public void MarkWindowAsUnsaved()
+		{
+			Tab.Header = Name + "*";
+		}
+		
+		public void MarkWindowAsSaved()
+		{
+			Tab.Header = Name;
 		}
 		
 		public void Close()

@@ -14,11 +14,18 @@
     "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\script\\dbconsole",
     "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\public\\blank.html",
     "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\public\\404.html",
-    "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\public\\422.html",
-    "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\public\\LiveSearchSiteAuth.xml",
-    "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\script\\destroy"
+    "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\public\\422.html"
   ],
-  "ClosedTabs": [],
+  "ClosedTabs": [
+    {
+      "Path": "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\public\\LiveSearchSiteAuth.xml",
+      "Index": 8
+    },
+    {
+      "Path": "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\script\\destroy",
+      "Index": 9
+    }
+  ],
   "Widgets": [
     {
       "Name": "FileExplorer",

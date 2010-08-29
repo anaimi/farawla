@@ -39,6 +39,9 @@ namespace Farawla.Core
 
 			var bindings = Bindings.Where(b => b.Equals(combination, e.Key));
 			
+			if (bindings.Count() > 0)
+				e.Handled = true;
+			
 			foreach(var binding in bindings)
 				binding.Command();
 		}
