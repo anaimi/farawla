@@ -65,8 +65,9 @@ namespace Farawla.Core
 		public string DefaultEditorFontFamily { get; set; }
 		
 		public bool IsWindowMaximized { get; set; }
-		
+
 		public List<string> OpenTabs { get; set; }
+		public List<ClosedTabs> ClosedTabs { get; set; }
 		public List<WidgetSettings> Widgets { get; set; }
 
 		public Settings()
@@ -78,6 +79,7 @@ namespace Farawla.Core
 			IsWindowMaximized = true;
 
 			OpenTabs = new List<string>();
+			ClosedTabs = new List<ClosedTabs>();
 			Widgets = new List<WidgetSettings>();
 		}
 		
@@ -153,6 +155,18 @@ namespace Farawla.Core
 		public bool KeyExists(string key)
 		{
 			return !this[key].IsBlank();
+		}
+	}
+	
+	public class ClosedTabs
+	{
+		public string Path { get; set; }
+		public int Index { get; set; }
+
+		public ClosedTabs(string path, int index)
+		{
+			Path = path;
+			Index = index;
 		}
 	}
 }

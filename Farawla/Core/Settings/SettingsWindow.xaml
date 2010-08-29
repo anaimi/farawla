@@ -5,6 +5,10 @@
     Height="330" Width="500"
     WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
 	<Window.Resources>
+		<Style TargetType="{x:Type TextBlock}">
+			<Setter Property="Foreground" Value="White" />
+		</Style>
+
 		<Style TargetType="{x:Type Button}" x:Key="BlueButton">
 			<Setter Property="Cursor" Value="Hand" />
 			<Setter Property="Template">
@@ -87,10 +91,17 @@
 			</TabControl.Resources>
 			
 			<TabItem Header="General">
-				Hello!
+				<Grid>
+					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">not implemented yet</TextBlock>
+				</Grid>
 			</TabItem>
+			
 			<TabItem Header="About">
-				Ola!
+				<StackPanel>
+					<TextBlock>Farawla v0.0</TextBlock>
+					<TextBlock>By Ahmad Al-Naimi (ANaimi)</TextBlock>
+					<TextBlock>http://www.anaimi.com</TextBlock>
+				</StackPanel>
 			</TabItem>
 		</TabControl>
 		

@@ -36,8 +36,7 @@ namespace Farawla.Features.FileExplorer
 		
 		public void OnStart()
 		{
-			Controller.Current.Keyboard.AddBinding(KeyCombination.Ctrl, Key.O, BrowseFile);
-			Controller.Current.Keyboard.AddBinding(KeyCombination.Ctrl, Key.F4, CloseActiveTab);
+			
 		}
 		
 		public void OnExit()
@@ -48,21 +47,6 @@ namespace Farawla.Features.FileExplorer
 		public void OnResize()
 		{
 			
-		}
-		
-		public void BrowseFile()
-		{
-			var dialog = new OpenFileDialog();
-
-			if (dialog.ShowDialog().Value)
-			{
-				Controller.Current.CreateNewTab(dialog.FileName);
-			}
-		}
-		
-		public void CloseActiveTab()
-		{
-			Controller.Current.ActiveTab.Close();
 		}
 		
 		private void OpenInitialFileList(string path)

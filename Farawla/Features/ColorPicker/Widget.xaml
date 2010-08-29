@@ -67,7 +67,7 @@
 			<Canvas x:Name="CurrentColor" Width="89" Height="50" Background="Black" Grid.Column="0" Grid.RowSpan="3" VerticalAlignment="Top" />
 			
 			<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Margin="5,0,0,0">
-				<TextBlock>HSB</TextBlock>
+				<TextBlock>AHSB</TextBlock>
 				<TextBox x:Name="CurrentColorAHSB_A">1</TextBox>
 				<TextBox x:Name="CurrentColorAHSB_H">1</TextBox>
 				<TextBox x:Name="CurrentColorAHSB_S">1</TextBox>
