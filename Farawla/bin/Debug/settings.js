@@ -18,6 +18,10 @@
   ],
   "ClosedTabs": [
     {
+      "Path": "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\Farawla\\Sample Files\\test",
+      "Index": 8
+    },
+    {
       "Path": "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\public\\LiveSearchSiteAuth.xml",
       "Index": 8
     },
@@ -36,7 +40,7 @@
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#FF396DAE"
+        "Color": "#FF396EAF"
       }
     }
   ]

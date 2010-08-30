@@ -141,7 +141,7 @@ namespace Farawla.Core
 		{
 			// save opened tabs
 			Settings.Instance.OpenTabs = new List<string>();
-			foreach(var tab in CurrentTabs.Where(t => !t.DocumentPath.IsBlank()).OrderBy(t => t.Index))
+			foreach(var tab in CurrentTabs.Where(t => !t.IsNewDocument).OrderBy(t => t.Index))
 				Settings.Instance.OpenTabs.Add(tab.DocumentPath);
 			
 			// inform widgets
@@ -226,6 +226,11 @@ namespace Farawla.Core
 		public TabItem Tab { get; private set; }
 		public TextEditor Editor { get; private set; }
 		
+		public bool IsNewDocument
+		{
+			get { return DocumentPath.IsBlank(); }
+		}
+		
 		public int Index
 		{
 			get { return Controller.Current.MainWindow.Tab.Items.IndexOf(Tab); }
@@ -286,33 +291,54 @@ namespace Farawla.Core
 		{
 			var dialog = new SaveFileDialog();
 
-			if (DocumentPath.IsBlank() || saveAs)
+			if (IsNewDocument || saveAs)
 			{
 				if (dialog.ShowDialog().Value)
 				{
-					Editor.Save(dialog.FileName);
-					Name = Path.GetFileName(dialog.FileName);
+					DocumentPath = dialog.FileName;
+					Name = Path.GetFileName(DocumentPath);
 				}
 				else
 				{
 					return;
 				}
 			}
-			else
-			{
-				Editor.Save(DocumentPath);
-			}
+
+			Editor.Save(DocumentPath);
 
 			IsSaved = true;
 			MarkWindowAsSaved();
+		}
+		
+		public void PromptToSave()
+		{
+			if (!IsSaved && !(IsNewDocument && Editor.Text == ""))
+			{
+				var result = MessageBox.Show("Do you want to save '" + Name + "'?", "Save " + Name, MessageBoxButton.YesNoCancel);
+
+				switch (result)
+				{
+					case MessageBoxResult.Yes:
+						Save(false);
+						break;
+
+					case MessageBoxResult.No:
+						// do nothing
+						break;
+
+					case MessageBoxResult.Cancel:
+						return;
+						break;
+				}
+			}
 		}
 		
 		public void TextChanged()
 		{
 			if (!Editor.IsLoaded)
 				return;
-			
-			if (IsSaved)
+
+			if (IsSaved || IsNewDocument)
 			{
 				IsSaved = false;
 				MarkWindowAsUnsaved();
@@ -331,8 +357,11 @@ namespace Farawla.Core
 		
 		public void Close()
 		{
+			// save or ignore?
+			PromptToSave();
+			
 			// add path to closed tabs, keep last ten tabs
-			if (!DocumentPath.IsBlank())
+			if (!IsNewDocument)
 			{
 				Settings.Instance.ClosedTabs.Insert(0, new ClosedTabs(DocumentPath, Index));
 				Settings.Instance.ClosedTabs = Settings.Instance.ClosedTabs.Take(10).ToList();
