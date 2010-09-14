@@ -2,103 +2,47 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
-using System.Windows;
-using System.Xml.Linq;
-using System.Diagnostics;
-using System.Xml.XPath;
-using ICSharpCode.AvalonEdit.Highlighting;
-using System.Windows.Media;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
-using Farawla.Features.Notifier;
+using System.Windows;
+using System.Windows.Media;
+using ICSharpCode.AvalonEdit.Highlighting;
 
-namespace Farawla.Core
+namespace Farawla.Core.Language
 {
-	public class Languages
+	public class Highlighting
 	{
-		public List<Language> List { get; private set; }
-		
-		public Languages()
-		{
-			List = new List<Language>();
-			
-			if (!VerifyLanguagesFolderExist())
-				return;
-			
-			foreach(var lang in Directory.GetDirectories("languages"))
-			{
-				var json = File.ReadAllText(lang + "\\language.js");
-				var obj = JsonConvert.DeserializeObject<Language>(json);
-				
-				obj.Initialize();
-				List.Add(obj);
-			}
-		}
-		
-		public Language GetLanguage(string extension)
-		{
-			foreach(var lang in List)
-				if (lang.Associations.Any(a => a == extension))
-					return lang;
-			
-			return new Language();
-		}
-		
-		private bool VerifyLanguagesFolderExist()
-		{
-			if (!Directory.Exists("languages"))
-			{
-				Notifier.Instance.Show("The folder 'languages' was not found in the same directory of the executable. You should create it and load it with a folder for each language you want Farawla to support");
-				return false;
-			}
-
-			if (Directory.GetDirectories("languages").Length == 0)
-			{
-				Notifier.Instance.Show("The folder 'languages' is empty. You should load it with folders of each language you want Farawla to support");
-				return false;
-			}
-			
-			return true;
-		}
-	}
-	
-	public class Language
-	{
-		public string Name { get; set; }
 		public string Background { get; set; }
 		public string Foreground { get; set; }
 		public string FontFamily { get; set; }
-		public List<string> Associations { get; set; }
+		
 		public List<Rule> Rules { get; set; }
 		public List<Span> Spans { get; set; }
 
+		private LanguageMeta language;
 		private HighlightingDefinition highlighter;
-		
-		public Language()
+
+		public Highlighting()
 		{
-			Name = "Default";
-			
 			FontFamily = Settings.Instance.DefaultEditorFontFamily;
 			Background = Settings.Instance.DefaultEditorBackground;
 			Foreground = Settings.Instance.DefaultEditorForeground;
-			
-			Associations = new List<string>();
+
 			Rules = new List<Rule>();
 			Spans = new List<Span>();
 		}
-		
-		public void Initialize()
+
+		public void Initialize(LanguageMeta language)
 		{
-			highlighter = new HighlightingDefinition(Name);
-			
+			this.language = language;
+			highlighter = new HighlightingDefinition(language.Name);
+
 			// rules
 			if (Rules != null)
 			{
 				foreach (var rule in Rules)
 					highlighter.MainRuleSet.Rules.Add(rule.GetRule());
 			}
-			
+
 			// spans
 			if (Spans != null)
 			{
@@ -106,7 +50,7 @@ namespace Farawla.Core
 					highlighter.MainRuleSet.Spans.Add(span.GetSpan());
 			}
 		}
-		
+
 		public HighlightingDefinition GetHighlighter()
 		{
 			return highlighter;
@@ -116,18 +60,18 @@ namespace Farawla.Core
 	public class Rule : GenericRule
 	{
 		public string Regex { get; set; }
-		
+
 		public HighlightingRule GetRule()
 		{
 			var rule = new HighlightingRule();
-			
+
 			rule.Color = GetColor();
 			rule.Regex = new Regex(Regex);
-			
+
 			return rule;
 		}
 	}
-	
+
 	public class Span : GenericRule
 	{
 		public string Start { get; set; }
@@ -142,41 +86,41 @@ namespace Farawla.Core
 			span.StartExpression = new Regex(Start);
 			span.EndExpression = new Regex(End);
 			//TODO: use escape character
-			
+
 			return span;
 		}
 	}
-	
+
 	public class GenericRule
 	{
 		public string Name { get; set; }
 		public string Color { get; set; }
 		public string Weight { get; set; }
 		public string Style { get; set; }
-		
+
 		protected FontWeight GetFontWeight()
 		{
 			return FontWeights.Normal;
 		}
-		
+
 		protected FontStyle GetFontStyle()
 		{
 			return FontStyles.Normal;
 		}
-		
+
 		protected HighlightingCustomeBrush GetForeground()
 		{
 			return new HighlightingCustomeBrush(new SolidColorBrush(Color.ToColor()));
 		}
-		
+
 		protected HighlightingColor GetColor()
 		{
 			var color = new HighlightingColor();
-			
+
 			color.Foreground = GetForeground();
 			color.FontWeight = GetFontWeight();
 			color.FontStyle = GetFontStyle();
-			
+
 			return color;
 		}
 
@@ -196,7 +140,7 @@ namespace Farawla.Core
 			_name = name;
 			_rules = new HighlightingRuleSet();
 		}
-		
+
 		public HighlightingColor GetNamedColor(string name)
 		{
 			return null;
@@ -221,17 +165,15 @@ namespace Farawla.Core
 	public class HighlightingCustomeBrush : HighlightingBrush
 	{
 		private Brush _brush;
-		
+
 		public HighlightingCustomeBrush(Brush brush)
 		{
 			_brush = brush;
 		}
-		
+
 		public override Brush GetBrush(ICSharpCode.AvalonEdit.Rendering.ITextRunConstructionContext context)
 		{
 			return _brush;
 		}
 	}
-
-
 }

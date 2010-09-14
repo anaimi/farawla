@@ -7,16 +7,33 @@
   "DefaultEditorFontFamily": "Courier New",
   "IsWindowMaximized": true,
   "OpenTabs": [
-    "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\Farawla\\Sample Files\\main.js",
-    "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\public\\robots.txt",
-    "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\script\\console",
-    "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\public\\500.html",
-    "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\script\\dbconsole",
-    "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\public\\blank.html",
-    "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\public\\404.html",
-    "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\public\\422.html"
+    "C:\\Users\\Ahmad\\Desktop\\test.js"
   ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\test.js",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\test.txt",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\test.txt",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\test.txt",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\test.txt",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\test.txt",
+      "Index": 1
+    },
     {
       "Path": "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\Farawla\\Sample Files\\test",
       "Index": 8
@@ -34,7 +51,7 @@
     {
       "Name": "FileExplorer",
       "Values": {
-        "Path": "D:\\Users\\nuaimiaa\\Desktop\\P. Projects\\ORLYBlog\\script"
+        "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Sample Files"
       }
     },
     {

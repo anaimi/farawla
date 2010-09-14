@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Farawla.Core.Language;
 using ICSharpCode.AvalonEdit;
 using System.Xml;
 using ICSharpCode.AvalonEdit.Highlighting;
@@ -11,6 +12,8 @@ using System.IO;
 using Farawla.Features;
 using System.Windows.Input;
 using Microsoft.Win32;
+using System.Diagnostics;
+using System.ComponentModel;
 
 namespace Farawla.Core
 {
@@ -216,163 +219,5 @@ namespace Farawla.Core
 			MainWindow.Overlay.Visibility = Visibility.Collapsed;
 		}
 		#endregion
-	}
-
-	public class WindowTab
-	{
-		public string Name { get; set; }
-		public string DocumentPath { get; set; }
-		public bool IsSaved { get; private set; }
-		public TabItem Tab { get; private set; }
-		public TextEditor Editor { get; private set; }
-		
-		public bool IsNewDocument
-		{
-			get { return DocumentPath.IsBlank(); }
-		}
-		
-		public int Index
-		{
-			get { return Controller.Current.MainWindow.Tab.Items.IndexOf(Tab); }
-		}
-		
-		public WindowTab(string path)
-		{
-			var extension = path.Substring(path.LastIndexOf('.') + 1);
-			var language = Controller.Current.Languages.GetLanguage(extension);
-			
-			// set name and path
-			if (path.IsBlank())
-			{
-				IsSaved = false;
-				Name = "new";
-				DocumentPath = string.Empty;
-			}
-			else
-			{
-				IsSaved = true;
-				Name = Path.GetFileName(path);
-				DocumentPath = path;
-			}
-			
-			// editor
-			Editor = new TextEditor();
-			Editor.FontFamily = new FontFamily(language.FontFamily);
-			Editor.FontSize = 13;
-			Editor.ShowLineNumbers = true;
-			Editor.Background = new SolidColorBrush(language.Background.ToColor());
-			Editor.Foreground = new SolidColorBrush(language.Foreground.ToColor());
-			Editor.TextChanged += (s, e) => TextChanged();
-			
-			// load?
-			if (!path.IsBlank())
-				Editor.Load(path);
-			
-			// tab
-			Tab = new TabItem();
-			Tab.Header = Name;
-			Tab.Content = Editor;
-			
-			// syntax highlighter
-			if (language.Name != "Default")
-			{
-				HighlightingManager.Instance.RegisterHighlighting(language.Name, language.Associations.ToArray(), language.GetHighlighter());
-				Editor.SyntaxHighlighting = language.GetHighlighter();
-			}
-		}
-		
-		public void MakeActive()
-		{
-			var index = Controller.Current.CurrentTabs.IndexOf(this);
-			Controller.Current.MainWindow.Tab.SelectedIndex = index;
-		}
-		
-		public void Save(bool saveAs)
-		{
-			var dialog = new SaveFileDialog();
-
-			if (IsNewDocument || saveAs)
-			{
-				if (dialog.ShowDialog().Value)
-				{
-					DocumentPath = dialog.FileName;
-					Name = Path.GetFileName(DocumentPath);
-				}
-				else
-				{
-					return;
-				}
-			}
-
-			Editor.Save(DocumentPath);
-
-			IsSaved = true;
-			MarkWindowAsSaved();
-		}
-		
-		public void PromptToSave()
-		{
-			if (!IsSaved && !(IsNewDocument && Editor.Text == ""))
-			{
-				var result = MessageBox.Show("Do you want to save '" + Name + "'?", "Save " + Name, MessageBoxButton.YesNoCancel);
-
-				switch (result)
-				{
-					case MessageBoxResult.Yes:
-						Save(false);
-						break;
-
-					case MessageBoxResult.No:
-						// do nothing
-						break;
-
-					case MessageBoxResult.Cancel:
-						return;
-						break;
-				}
-			}
-		}
-		
-		public void TextChanged()
-		{
-			if (!Editor.IsLoaded)
-				return;
-
-			if (IsSaved || IsNewDocument)
-			{
-				IsSaved = false;
-				MarkWindowAsUnsaved();
-			}
-		}
-		
-		public void MarkWindowAsUnsaved()
-		{
-			Tab.Header = Name + "*";
-		}
-		
-		public void MarkWindowAsSaved()
-		{
-			Tab.Header = Name;
-		}
-		
-		public void Close()
-		{
-			// save or ignore?
-			PromptToSave();
-			
-			// add path to closed tabs, keep last ten tabs
-			if (!IsNewDocument)
-			{
-				Settings.Instance.ClosedTabs.Insert(0, new ClosedTabs(DocumentPath, Index));
-				Settings.Instance.ClosedTabs = Settings.Instance.ClosedTabs.Take(10).ToList();
-			}
-			
-			// remove tab
-			Controller.Current.MainWindow.Tab.Items.Remove(Tab);
-			Controller.Current.CurrentTabs.Remove(this);
-			
-			// update count (also open a new tab if tab count is zero)
-			Controller.Current.TabCountUpdated();
-		}
 	}
 }

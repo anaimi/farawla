@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9F8D2034-4BA2-4927-A013-94AFECBAF02D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -142,8 +142,12 @@
     <Compile Include="Core\Bootstrapper.cs" />
     <Compile Include="Core\Controller.cs" />
     <Compile Include="Core\KeyboardObserver.cs" />
-    <Compile Include="Core\Languages.cs" />
+    <Compile Include="Core\Language\AutoComplete.cs" />
+    <Compile Include="Core\Language\Highlighting.cs" />
+    <Compile Include="Core\Language\Languages.cs" />
+    <Compile Include="Core\Language\LanguageMeta.cs" />
     <Compile Include="Core\Sidebar.cs" />
+    <Compile Include="Core\WindowTab.cs" />
     <Compile Include="Features\ColorPicker\AlphaSlider.xaml.cs">
       <DependentUpon>AlphaSlider.xaml</DependentUpon>
     </Compile>

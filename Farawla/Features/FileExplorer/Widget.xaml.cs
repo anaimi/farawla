@@ -68,6 +68,9 @@ namespace Farawla.Features.FileExplorer
 			{
 				newPath += part + "\\";
 				
+				if (!Directory.Exists(newPath))
+					continue;
+				
 				var item = GetListBoxItemByPath(newPath);
 				OnItemClick(item);
 			}

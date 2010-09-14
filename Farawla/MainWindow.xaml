@@ -2,7 +2,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Farawla="clr-namespace:Farawla"
-    xmlns:FileExplorer="clr-namespace:Farawla.Features.FileExplorer"
     xmlns:ColorPicker="clr-namespace:Farawla.Features.ColorPicker"
     xmlns:Core="clr-namespace:Farawla.Core"
     SnapsToDevicePixels="True"
