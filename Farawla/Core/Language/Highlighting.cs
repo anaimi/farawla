@@ -11,10 +11,6 @@ namespace Farawla.Core.Language
 {
 	public class Highlighting
 	{
-		public string Background { get; set; }
-		public string Foreground { get; set; }
-		public string FontFamily { get; set; }
-		
 		public List<Rule> Rules { get; set; }
 		public List<Span> Spans { get; set; }
 
@@ -23,10 +19,6 @@ namespace Farawla.Core.Language
 
 		public Highlighting()
 		{
-			FontFamily = Settings.Instance.DefaultEditorFontFamily;
-			Background = Settings.Instance.DefaultEditorBackground;
-			Foreground = Settings.Instance.DefaultEditorForeground;
-
 			Rules = new List<Rule>();
 			Spans = new List<Span>();
 		}
@@ -110,7 +102,7 @@ namespace Farawla.Core.Language
 
 		protected HighlightingCustomeBrush GetForeground()
 		{
-			return new HighlightingCustomeBrush(new SolidColorBrush(Color.ToColor()));
+			return new HighlightingCustomeBrush(new SolidColorBrush(Theme.Instance.GetColor(Name)));
 		}
 
 		protected HighlightingColor GetColor()

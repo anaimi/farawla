@@ -22,10 +22,7 @@ namespace Farawla.Core
 			get { return Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\"; }
 		}
 
-		public const string DEFAULT_EDITOR_BACKGROUND = "#000000";
-		public const string DEFAULT_EDITOR_FOREGROUND = "#FFFFFF";
-		public const string DEFAULT_EDITOR_FONT_FAMILY = "Courier New";
-		
+		public const string DEFAULT_THEME = "clouds.js";
 		public const string FILE_NAME = "settings.js";
 		
 		#region Instance
@@ -59,11 +56,8 @@ namespace Farawla.Core
 			}
 		}
 		#endregion
-
-		public string DefaultEditorBackground { get; set; }
-		public string DefaultEditorForeground { get; set; }
-		public string DefaultEditorFontFamily { get; set; }
 		
+		public string ThemeName { get; set; }
 		public bool IsWindowMaximized { get; set; }
 
 		public List<string> OpenTabs { get; set; }
@@ -73,9 +67,7 @@ namespace Farawla.Core
 		public Settings()
 		{
 			// set default settings
-			DefaultEditorBackground = DEFAULT_EDITOR_BACKGROUND;
-			DefaultEditorForeground = DEFAULT_EDITOR_FOREGROUND;
-			DefaultEditorFontFamily = DEFAULT_EDITOR_FONT_FAMILY;
+			ThemeName = DEFAULT_THEME;
 			IsWindowMaximized = true;
 
 			OpenTabs = new List<string>();

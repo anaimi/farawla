@@ -120,13 +120,13 @@ namespace Farawla.Core
 				{
 					Foreground = new SolidColorBrush("#FFFFFFFF".ToColor()),
 					Text = label,
-					Effect = new DropShadowEffect
-					{
-						Opacity = 0.5,
-						ShadowDepth = 9,
-						Direction = 542,
-						BlurRadius = 9
-					}
+					//Effect = new DropShadowEffect
+					//{
+					//    Opacity = 0.5,
+					//    ShadowDepth = 9,
+					//    Direction = 542,
+					//    BlurRadius = 9
+					//}
 				},
 				Cursor = Cursors.Hand
 			};

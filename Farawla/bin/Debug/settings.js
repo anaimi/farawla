@@ -2,9 +2,7 @@
   "WidgetName": "Settings",
   "Expandable": false,
   "WidgetHeight": -1.0,
-  "DefaultEditorBackground": "#606060",
-  "DefaultEditorForeground": "#FFFFFF",
-  "DefaultEditorFontFamily": "Courier New",
+  "ThemeName": "clouds.js",
   "IsWindowMaximized": true,
   "OpenTabs": [
     "C:\\Users\\Ahmad\\Desktop\\test.js"

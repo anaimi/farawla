@@ -2,11 +2,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Farawla="clr-namespace:Farawla"
-    xmlns:ColorPicker="clr-namespace:Farawla.Features.ColorPicker"
     xmlns:Core="clr-namespace:Farawla.Core"
     SnapsToDevicePixels="True"
     Name="Main"
-    Title="Farawla Code Editor" Height="600" Width="600">
+    Title="Farawla" Height="600" Width="600">
 	<Window.Resources>
 		<Farawla:ContentToMarginConverter x:Key="ContentToMarginConverter" />
 		<Farawla:ContentToPathConverter x:Key="ContentToPathConverter" />

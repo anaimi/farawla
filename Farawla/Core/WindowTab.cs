@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
 using Farawla.Core.Language;
@@ -15,6 +18,7 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using Microsoft.Win32;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using System.Windows.Input;
+using FontFamily=System.Windows.Media.FontFamily;
 
 namespace Farawla.Core
 {
@@ -24,6 +28,7 @@ namespace Farawla.Core
 		public string DocumentPath { get; set; }
 		public bool IsSaved { get; private set; }
 		public string Text { get; private set; }
+		public int CaretOffset { get; private set; }
 
 		public LanguageMeta Language { get; set; }
 		public TabItem Tab { get; private set; }
@@ -37,7 +42,7 @@ namespace Farawla.Core
 		{
 			get { return Controller.Current.MainWindow.Tab.Items.IndexOf(Tab); }
 		}
-
+		
 		private BackgroundWorker completionWorker;
 		private List<CompletionWindowItem> completionItems;
 
@@ -62,7 +67,6 @@ namespace Farawla.Core
 
 			// editor
 			Editor = new TextEditor();
-			Editor.FontFamily = new FontFamily(Language.Highlighting.FontFamily);
 			Editor.FontSize = 13;
 			Editor.ShowLineNumbers = true;
 			Editor.Options.EnableEmailHyperlinks = false;
@@ -71,10 +75,11 @@ namespace Farawla.Core
 			//Editor.Options.ShowSpaces = true;
 			Editor.Options.ShowBoxForControlCharacters = true;
 			Editor.Options.ConvertTabsToSpaces = true;
-			Editor.Background = new SolidColorBrush(Language.Highlighting.Background.ToColor());
-			Editor.Foreground = new SolidColorBrush(Language.Highlighting.Foreground.ToColor());
+			Editor.Background = new SolidColorBrush(Theme.Instance.Background.ToColor());
+			Editor.Foreground = new SolidColorBrush(Theme.Instance.Foreground.ToColor());
+			Editor.FontFamily = new FontFamily(Theme.Instance.FontFamily);
 			Editor.TextArea.TextEntered += (s, e) => TextEntered(e);
-
+			
 			// load?
 			if (!path.IsBlank())
 				Editor.Load(path);
@@ -154,16 +159,19 @@ namespace Farawla.Core
 				return;
 
 			Text = Editor.Text;
+			CaretOffset = Editor.CaretOffset;
 
 			// have auto complete?
 			if (Language.HasAutoComplete)
 			{
-				if (args.Text.Length == 1 && args.Text[0] == '.')
+				if (completionItems != null && args.Text.Length == 1 && args.Text[0] == '.')
 				{
 					var cw = new CompletionWindow(Editor.TextArea);
 					
 					foreach(var item in completionItems)
 						cw.CompletionList.CompletionData.Add(item);
+					
+					Debug.WriteLine("Refreshed completion list: " + completionItems.Count + " items.");
 					
 					cw.Show();
 					cw.Closed += (s, e) => cw = null;
@@ -194,9 +202,10 @@ namespace Farawla.Core
 
 		public void PopulateAutoComplete()
 		{
+			var identifiers = Language.AutoComplete.GetIdentifiersFromCode(Text).Where(i => i.Scope.From < CaretOffset && i.Scope.To >= CaretOffset);
 			completionItems = new List<CompletionWindowItem>();
-			
-			foreach (var identifier in Language.AutoComplete.GetIdentifiersFromCode(Text))
+
+			foreach (var identifier in identifiers)
 			{
 				completionItems.Add(new CompletionWindowItem(identifier.Name));
 			}
@@ -210,8 +219,11 @@ namespace Farawla.Core
 			// add path to closed tabs, keep last ten tabs
 			if (!IsNewDocument)
 			{
-				Settings.Instance.ClosedTabs.Insert(0, new ClosedTabs(DocumentPath, Index));
-				Settings.Instance.ClosedTabs = Settings.Instance.ClosedTabs.Take(10).ToList();
+				if (Settings.Instance.ClosedTabs.Count > 0 && Settings.Instance.ClosedTabs[0].Path != DocumentPath)
+				{
+					Settings.Instance.ClosedTabs.Insert(0, new ClosedTabs(DocumentPath, Index));
+					Settings.Instance.ClosedTabs = Settings.Instance.ClosedTabs.Take(10).ToList();
+				}
 			}
 
 			// remove tab
