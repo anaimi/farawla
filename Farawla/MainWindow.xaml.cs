@@ -18,11 +18,12 @@ namespace Farawla
 
 			Bootstrapper.Initialize(this);
 
-			Loaded += (s, e) => Controller.Current.OnStart();
-			Closed += (e, s) => Controller.Current.OnExit();
-			SizeChanged += (s, e) => Controller.Current.OnResize();
+			Loaded += (s, e) => Controller.Current.Start();
+			Closed += (e, s) => Controller.Current.Exit();
+			SizeChanged += (s, e) => Controller.Current.Resize();
 			
 			MouseMove += ChangeSidebarVisibility;
+			Drop += (s, e) => Controller.Current.FileDropped((string[])e.Data.GetData(DataFormats.FileDrop));
 		}
 		
 		private void ChangeSidebarVisibility(object sender, MouseEventArgs e)

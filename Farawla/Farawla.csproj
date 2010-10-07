@@ -93,6 +93,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Core\Sidebar\Bar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Core\Sidebar\BarButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Features\ColorPicker\AlphaSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -109,15 +117,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Features\FileExplorer\FileList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Features\FileExplorer\Widget.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Core\Settings\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\Projects\Widget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,7 +151,12 @@
     <Compile Include="Core\Language\Languages.cs" />
     <Compile Include="Core\Language\LanguageMeta.cs" />
     <Compile Include="Core\Settings\Theme.cs" />
-    <Compile Include="Core\Sidebar.cs" />
+    <Compile Include="Core\Sidebar\Bar.xaml.cs">
+      <DependentUpon>Bar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Sidebar\BarButton.xaml.cs">
+      <DependentUpon>BarButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Core\WindowTab.cs" />
     <Compile Include="Features\ColorPicker\AlphaSlider.xaml.cs">
       <DependentUpon>AlphaSlider.xaml</DependentUpon>
@@ -162,11 +171,11 @@
     <Compile Include="Features\ColorPicker\Widget.xaml.cs">
       <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\FileExplorer\FileList.xaml.cs">
-      <DependentUpon>FileList.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Core\Settings\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Projects\Widget.xaml.cs">
+      <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\Extensions\DateTimeExtension.cs" />
     <Compile Include="Utilities\Extensions\DoubleExtension.cs" />
@@ -174,9 +183,6 @@
     <Compile Include="Utilities\Extensions\IntegerExtension.cs" />
     <Compile Include="Utilities\Extensions\StringExtension.cs" />
     <Compile Include="Utilities\Extensions\TimeSpanExtension.cs" />
-    <Compile Include="Features\FileExplorer\Widget.xaml.cs">
-      <DependentUpon>Widget.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Features\IWidget.cs" />
     <Compile Include="Core\Notifier\Notifier.cs" />
     <Compile Include="Lib\Chrome\Debug.cs" />
@@ -246,12 +252,25 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\directory.png">
+    <Resource Include="Resources\directory.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\file.png">
+    </Resource>
+    <Resource Include="Resources\file.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\projects.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\add.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\loading.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features\Snippets\" />

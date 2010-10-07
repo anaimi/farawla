@@ -64,6 +64,11 @@ namespace Farawla.Core
 			}
 		}
 
+		public event Action OnStart;
+		public event Action OnExit;
+		public event Action OnResize;
+		public event Action<string[]> OnFileDropped;
+		
 		public static void Initialize(MainWindow instance)
 		{
 			_current = new Controller();
@@ -126,7 +131,7 @@ namespace Farawla.Core
 			TabCountUpdated();
 		}
 		
-		public void OnStart()
+		public void Start()
 		{
 			#region Bind keyboard shortcuts
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.O, BrowseFile);
@@ -136,37 +141,35 @@ namespace Farawla.Core
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.T, () => CreateNewTab(""));
 			Keyboard.AddBinding(KeyCombination.Ctrl | KeyCombination.Shift, Key.T, OpenLastClosedTab);
 			#endregion
-			
-			Widgets.ForEach(f => f.OnStart());
 		}
 
-		public void OnExit()
+		public void Exit()
 		{
 			// save opened tabs
 			Settings.Instance.OpenTabs = new List<string>();
 			foreach(var tab in CurrentTabs.Where(t => !t.IsNewDocument).OrderBy(t => t.Index))
 				Settings.Instance.OpenTabs.Add(tab.DocumentPath);
 			
-			// inform widgets
-			Widgets.ForEach(f => f.OnExit());
-			
 			// save settings
 			Settings.Instance.Save();
 			
 			// DIE!
-			System.Windows.Application.Current.Shutdown();
+			Application.Current.Shutdown();
 		}
 
-		public void OnResize()
+		public void Resize()
 		{
-			// inform Widgets
-			Widgets.ForEach(f => f.OnResize());
-			
 			// update sidebar
 			MainWindow.Sidebar.UpdateWidgetSize();
 			
 			// save current state
 			Settings.Instance.IsWindowMaximized = MainWindow.WindowState == WindowState.Maximized;
+		}
+
+		public void FileDropped(string[] files)
+		{
+			if (OnFileDropped != null)
+				OnFileDropped(files);
 		}
 		
 		public void TabCountUpdated()

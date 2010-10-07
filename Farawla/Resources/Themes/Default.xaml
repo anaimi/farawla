@@ -26,10 +26,9 @@
 	<SolidColorBrush x:Key="PressedBorderBrush" Color="{StaticResource HoverColor}" />
 	<SolidColorBrush x:Key="PressedBrush" Color="{StaticResource HoverColor}" />
 
-	<SolidColorBrush x:Key="SelectedBackgroundBrush" Color="#FF666666" />
-	<SolidColorBrush x:Key="ControlBackgroundBrush" Color="#FF444444" />
-
-	<SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
+	<SolidColorBrush x:Key="SelectedBackgroundBrush">#22606060</SolidColorBrush>
+	<SolidColorBrush x:Key="ControlBackgroundBrush">#22606060</SolidColorBrush>
+  <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
 	<SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#FF787878" />
 	<SolidColorBrush x:Key="DisabledBorderBrush" Color="#AAA" />
 	<SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FF595959" />
@@ -528,16 +527,8 @@
 						</Storyboard>
 					</ControlTemplate.Resources>
 					<Grid Margin="0,0,0,0" x:Name="Grid">
-						<Rectangle HorizontalAlignment="Stretch" x:Name="HoverRectangle" VerticalAlignment="Stretch" Width="Auto" Height="Auto" RadiusX="1" RadiusY="1" Stroke="{x:Null}" Margin="4.5,-2,4.5,-2" Opacity="0.3" MinHeight="10">
-							<Rectangle.Fill>
-								<SolidColorBrush Color="{DynamicResource WhiteColor}" />
-							</Rectangle.Fill>
-						</Rectangle>
-						<Rectangle HorizontalAlignment="Stretch" x:Name="PressedRectangle" VerticalAlignment="Stretch" Width="Auto" Height="Auto" RadiusX="1" RadiusY="1" Stroke="{x:Null}" Margin="4.5,-2,4.5,-2" Opacity="0.3" MinHeight="10">
-							<Rectangle.Fill>
-								<SolidColorBrush Color="{DynamicResource WhiteColor}" />
-							</Rectangle.Fill>
-						</Rectangle>
+						<Rectangle HorizontalAlignment="Stretch" x:Name="HoverRectangle" VerticalAlignment="Stretch" Width="Auto" Height="Auto" RadiusX="1" RadiusY="1" Stroke="{x:Null}" Margin="4.5,-2,4.5,-2" Opacity="0.3" MinHeight="10" Fill="{DynamicResource GlyphBrush}" />
+						<Rectangle HorizontalAlignment="Stretch" x:Name="PressedRectangle" VerticalAlignment="Stretch" Width="Auto" Height="Auto" RadiusX="1" RadiusY="1" Stroke="{x:Null}" Margin="4.5,-2,4.5,-2" Opacity="0.3" MinHeight="10" Fill="{DynamicResource GlyphBrush}" />
 					</Grid>
 					<ControlTemplate.Triggers>
 						<Trigger Property="IsFocused" Value="True" />
@@ -586,7 +577,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type ScrollBar}">
-					<Grid x:Name="GridRoot" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Background="{DynamicResource NormalBrush}">
+					<Grid x:Name="GridRoot" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Background="Transparent">
 						<Grid.RowDefinitions>
 							<RowDefinition MaxHeight="18" />
 							<RowDefinition Height="0.00001*" />
@@ -1739,116 +1730,6 @@
 		</Setter>
 	</Style>
 	<DropShadowBitmapEffect x:Key="PopupDropShadow" ShadowDepth="1.5" Softness="0.15" />
-	<Style TargetType="{x:Type MenuItem}">
-		<Setter Property="HorizontalContentAlignment" Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-		<Setter Property="VerticalContentAlignment" Value="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type MenuItem}">
-					<ControlTemplate.Resources>
-						<Storyboard x:Key="HighlightedOn">
-							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="(UIElement.Opacity)">
-								<SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1"/>
-							</DoubleAnimationUsingKeyFrames>
-							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="HoverShineBorder" Storyboard.TargetProperty="(UIElement.Opacity)">
-								<SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1"/>
-							</DoubleAnimationUsingKeyFrames>
-						</Storyboard>
-						<Storyboard x:Key="HightlightedOff">
-							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="HoverShineBorder" Storyboard.TargetProperty="(UIElement.Opacity)">
-								<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
-							</DoubleAnimationUsingKeyFrames>
-							<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="(UIElement.Opacity)">
-								<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
-							</DoubleAnimationUsingKeyFrames>
-						</Storyboard>
-					</ControlTemplate.Resources>
-					<Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0,0,0,0" Margin="3,2,3,2">
-						<Grid Margin="0,0,0,0">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition MinWidth="17" Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup" />
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup" />
-								<ColumnDefinition Width="14" />
-							</Grid.ColumnDefinitions>
-							<Border Grid.Column="0" Grid.ColumnSpan="4" Background="{DynamicResource HoverBrush}" Opacity="0" x:Name="HoverBorder" CornerRadius="1,1,1,1"/>
-							<Border Grid.ColumnSpan="4" Background="{DynamicResource HoverShineBrush}" Opacity="0" x:Name="HoverShineBorder" CornerRadius="1,1,1,1"/>
-							<ContentPresenter Margin="4,0,6,0" x:Name="Icon" VerticalAlignment="Center" ContentSource="Icon" />
-							<Grid Visibility="Hidden" Margin="4,0,6,0" x:Name="GlyphPanel" VerticalAlignment="Center">
-								<Path x:Name="GlyphPanelpath" VerticalAlignment="Center" Fill="{TemplateBinding Foreground}" Data="M0,2 L0,4.8 L2.5,7.4 L7.1,2.8 L7.1,0 L2.5,4.6 z" FlowDirection="LeftToRight" />
-							</Grid>
-							<ContentPresenter Grid.Column="1" x:Name="HeaderHost" RecognizesAccessKey="True" ContentSource="Header" Margin="2,1,2,1" />
-							<Grid Grid.Column="3" Margin="4,0,6,0" x:Name="ArrowPanel" VerticalAlignment="Center">
-								<Path x:Name="ArrowPanelPath" VerticalAlignment="Center" Fill="{TemplateBinding Foreground}" Data="M0,0 L0,8 L4,4 z" />
-							</Grid>
-							<Popup IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" x:Name="SubMenuPopup" Focusable="false" AllowsTransparency="true" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
-								<Grid x:Name="SubMenu">
-									<Border x:Name="SubMenuBorder" Background="{DynamicResource LightBrush}" BorderThickness="1" Opacity="0.8">
-										<Border.BorderBrush>
-											<SolidColorBrush Color="{DynamicResource WhiteColor}" />
-										</Border.BorderBrush>
-									</Border>
-									<StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
-								</Grid>
-							</Popup>
-						</Grid>
-					</Border>
-					<ControlTemplate.Triggers>
-						<Trigger Property="Role" Value="TopLevelHeader">
-							<Setter Property="Margin" Value="0,1,0,1" />
-							<Setter Property="Padding" Value="6,3,6,3" />
-							<Setter Property="Grid.IsSharedSizeScope" Value="true" />
-							<Setter Property="Placement" Value="Bottom" TargetName="SubMenuPopup" />
-							<Setter Property="Visibility" Value="Collapsed" TargetName="ArrowPanel" />
-						</Trigger>
-						<Trigger Property="Role" Value="TopLevelItem">
-							<Setter Property="Margin" Value="0,1,0,1" />
-							<Setter Property="Padding" Value="6,3,6,3" />
-							<Setter Property="Visibility" Value="Collapsed" TargetName="ArrowPanel" />
-						</Trigger>
-						<Trigger Property="Role" Value="SubmenuHeader">
-							<Setter Property="DockPanel.Dock" Value="Top" />
-							<Setter Property="Padding" Value="0,2,0,2" />
-							<Setter Property="Grid.IsSharedSizeScope" Value="true" />
-						</Trigger>
-						<Trigger Property="Role" Value="SubmenuItem">
-							<Setter Property="DockPanel.Dock" Value="Top" />
-							<Setter Property="Padding" Value="0,2,0,2" />
-							<Setter Property="Visibility" Value="Collapsed" TargetName="ArrowPanel" />
-						</Trigger>
-						<Trigger Property="IsSuspendingPopupAnimation" Value="true">
-							<Setter Property="PopupAnimation" Value="None" TargetName="SubMenuPopup" />
-						</Trigger>
-						<Trigger Property="Icon" Value="{x:Null}">
-							<Setter Property="Visibility" Value="Collapsed" TargetName="Icon" />
-						</Trigger>
-						<Trigger Property="IsChecked" Value="true">
-							<Setter Property="Visibility" Value="Visible" TargetName="GlyphPanel" />
-							<Setter Property="Visibility" Value="Collapsed" TargetName="Icon" />
-						</Trigger>
-						<Trigger Property="AllowsTransparency" SourceName="SubMenuPopup" Value="true">
-							<Setter Property="Margin" Value="0,0,3,3" TargetName="SubMenu" />
-							<Setter Property="SnapsToDevicePixels" Value="true" TargetName="SubMenu" />
-							<Setter Property="BitmapEffect" Value="{DynamicResource PopupDropShadow}" TargetName="SubMenuBorder" />
-						</Trigger>
-						<Trigger Property="IsHighlighted" Value="true">
-							<Trigger.ExitActions>
-								<BeginStoryboard Storyboard="{StaticResource HightlightedOff}" x:Name="HightlightedOff_BeginStoryboard"/>
-							</Trigger.ExitActions>
-							<Trigger.EnterActions>
-								<BeginStoryboard Storyboard="{StaticResource HighlightedOn}"/>
-							</Trigger.EnterActions>
-						</Trigger>
-						<Trigger Property="IsEnabled" Value="false">
-							<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-						</Trigger>
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
 	<Style TargetType="{x:Type Separator}">
 		<Setter Property="Height" Value="1" />
 		<Setter Property="Margin" Value="0,2,0,2" />
@@ -2266,7 +2147,7 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
-	<Style TargetType="{x:Type TreeView}">
+	<!--<Style TargetType="{x:Type TreeView}">
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type TreeView}">
@@ -2414,7 +2295,7 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
-	</Style>
+	</Style>-->
 
 	<Style x:Key="ButtonFocusVisual">
 		<Setter Property="Control.Template">

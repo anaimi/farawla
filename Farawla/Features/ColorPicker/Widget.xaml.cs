@@ -15,6 +15,7 @@ using System.Windows.Threading;
 using System.Collections.ObjectModel;
 using Farawla.Core;
 using System.Diagnostics;
+using Farawla.Core.Sidebar;
 
 namespace Farawla.Features.ColorPicker
 {
@@ -24,6 +25,7 @@ namespace Farawla.Features.ColorPicker
 		public string WidgetName { get { return "Color Picker"; } }
 		public bool Expandable { get { return true; } }
 		public double WidgetHeight { get { return 235; } }
+		public BarButton SidebarButton { get; set; }
 		#endregion
 			
 		public WidgetSettings Settings { get; set; }
@@ -137,21 +139,6 @@ namespace Farawla.Features.ColorPicker
 			
 			// remember it for next time
 			Settings["Color"] = CPUtilities.StringFromColor(color);
-		}
-
-		public void OnStart()
-		{
-			
-		}
-
-		public void OnExit()
-		{
-			
-		}
-
-		public void OnResize()
-		{
-			
 		}
 		
 		public void OnClick()

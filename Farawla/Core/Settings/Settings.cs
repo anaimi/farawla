@@ -1,11 +1,13 @@
 using System.Windows.Documents;
 using System.Collections.Generic;
 using System.IO;
+using Farawla.Core.Sidebar;
 using Farawla.Features.Notifier;
 using Newtonsoft.Json;
 using System.Linq;
 using Farawla.Features;
 using Farawla.Features.Settings;
+using System;
 
 namespace Farawla.Core
 {
@@ -15,6 +17,7 @@ namespace Farawla.Core
 		public string WidgetName { get { return "Settings"; } }
 		public bool Expandable { get { return false; } }
 		public double WidgetHeight { get { return -1; } }
+		public BarButton SidebarButton { get; set; }
 		#endregion
 		
 		public static string ExecDir
@@ -85,25 +88,12 @@ namespace Farawla.Core
 		
 		public void Save()
 		{
+			SidebarButton = null;
+			
 			File.WriteAllText(ExecDir + FILE_NAME, JsonConvert.SerializeObject(_instance, Formatting.Indented));
 		}
 
 		#region Widget Events
-		public void OnStart()
-		{
-		
-		}
-
-		public void OnExit()
-		{
-		
-		}
-
-		public void OnResize()
-		{
-		
-		}
-
 		public void OnClick()
 		{
 			Controller.Current.ShowOverlay();

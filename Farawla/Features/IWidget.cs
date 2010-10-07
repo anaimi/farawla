@@ -1,3 +1,4 @@
+using Farawla.Core.Sidebar;
 namespace Farawla.Features
 {
 	public interface IWidget
@@ -5,10 +6,7 @@ namespace Farawla.Features
 		string WidgetName { get; }
 		bool Expandable { get; }
 		double WidgetHeight { get; }
-		
-		void OnStart();
-		void OnExit();
-		void OnResize();
+		BarButton SidebarButton { get; set; }
 		
 		void OnClick();
 	}
