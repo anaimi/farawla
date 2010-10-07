@@ -62,11 +62,19 @@ namespace Farawla.Features.Projects
 			Controller.Current.OnFileDropped += (paths) => {
 				foreach(var path in paths)
 				{
-					if (!Directory.Exists(path))
+					if (File.Exists(path))
+					{
+						Controller.Current.CreateNewTab(path);
 						continue;
-					
-					OpenProject(path);
-					return;
+					}
+					else if (!Directory.Exists(path))
+					{
+						continue;
+					}
+					else
+					{
+						OpenProject(path);
+					}
 				}
 			};
 			

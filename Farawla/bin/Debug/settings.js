@@ -4,11 +4,15 @@
   "WidgetHeight": -1.0,
   "SidebarButton": null,
   "ThemeName": "clouds.js",
-  "IsWindowMaximized": true,
+  "IsWindowMaximized": false,
   "OpenTabs": [
     "C:\\Users\\Ahmad\\Desktop\\test.js"
   ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\notes.txt",
+      "Index": 1
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\.gitignore",
       "Index": 1
@@ -44,10 +48,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\test.txt",
       "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\test.txt",
-      "Index": 0
     }
   ],
   "Widgets": [
@@ -61,7 +61,7 @@
       "Name": "Projects",
       "Values": {
         "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
-        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\CodeBox,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog"
+        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\CodeBox,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla,C:\\Users\\Ahmad\\Desktop\\clouds"
       }
     }
   ]
