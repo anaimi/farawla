@@ -83,6 +83,22 @@ namespace Farawla.Features.Projects
 					}
 				}
 			};
+
+			Controller.Current.Keyboard.AddBinding(KeyCombination.None, Key.F2, () =>
+			{
+				if (LastClickedFile != null && LastClickedFile.IsFocused)
+				{
+					RenameFile(LastClickedFile);
+				}
+			});
+
+			Controller.Current.Keyboard.AddBinding(KeyCombination.None, Key.Delete, () =>
+			{
+				if (LastClickedFile != null && LastClickedFile.IsFocused)
+				{
+					DeleteFile(LastClickedFile);
+				}
+			});
 			
 			OpenProject(LastOpenProject);
 		}
