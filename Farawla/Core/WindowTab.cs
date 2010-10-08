@@ -210,6 +210,14 @@ namespace Farawla.Core
 				completionItems.Add(new CompletionWindowItem(identifier.Name));
 			}
 		}
+		
+		public void Rename(string newPath)
+		{
+			Name = Path.GetFileName(newPath);
+			DocumentPath = newPath;
+
+			Tab.Header = Name;
+		}
 
 		public void Close()
 		{

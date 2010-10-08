@@ -185,12 +185,19 @@ namespace Farawla.Features.Projects
 
 		private void RenameFile(FileItem item)
 		{
-			
+			var input = new ModalInputBox("Rename", "Rename", item.Path, item.FileName, (canceled, inputStr) => {
+				if (!canceled)
+				{
+					item.Rename(inputStr);
+				}
+			});
+
+			input.ShowDialog();
 		}
 		
 		private void DeleteFile(FileItem item)
 		{
-			var result = MessageBox.Show("Move '" + Path.GetFileName(item.Path) + "' to Recycle Bin?", "Delete " + item.Path, MessageBoxButton.YesNo);
+			var result = MessageBox.Show("Move '" + Path.GetFileName(item.Path) + "' to Recycle Bin?", item.Path, MessageBoxButton.YesNo);
 
 			if (result == MessageBoxResult.Yes)
 			{
@@ -284,5 +291,35 @@ namespace Farawla.Features.Projects
 	{
 		public bool IsDirectory { get; set; }
 		public string Path { get; set; }
+		
+		public string FileName
+		{
+			get { return System.IO.Path.GetFileName(Path); }
+		}
+		
+		public void Rename(string newName)
+		{
+			var newPath = System.IO.Path.GetDirectoryName(Path) + "\\" + newName;
+			
+			if (newPath == Path)
+				return;
+			
+			if (IsDirectory)
+			{
+				Directory.Move(Path, newPath);
+			}
+			else
+			{
+				File.Move(Path, newPath);
+			}
+
+			var tab = Controller.Current.CurrentTabs.Where(t => t.DocumentPath == Path).FirstOrDefault();
+			
+			if (tab != null)
+				tab.Rename(newPath);
+
+			Path = newPath;
+			Header = FileName;
+		}
 	}
 }

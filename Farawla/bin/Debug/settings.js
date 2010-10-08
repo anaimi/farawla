@@ -10,6 +10,18 @@
   ],
   "ClosedTabs": [
     {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\Test2.txt",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\Test.txt",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\web.config",
+      "Index": 1
+    },
+    {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\app\\views\\home\\hiii.txt",
       "Index": 1
     },
@@ -36,25 +48,13 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\config\\locales\\en.yml",
       "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\.gems",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\test.js",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\test.txt",
-      "Index": 1
     }
   ],
   "Widgets": [
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#FF396EAF"
+        "Color": "#FF70A3E4"
       }
     },
     {

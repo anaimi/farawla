@@ -121,6 +121,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Features\Projects\ModalInputBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Features\Projects\Widget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -175,6 +179,9 @@
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Projects\FileOperationAPIWrapper.cs" />
+    <Compile Include="Features\Projects\ModalInputBox.xaml.cs">
+      <DependentUpon>ModalInputBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Features\Projects\Widget.xaml.cs">
       <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
