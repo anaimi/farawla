@@ -174,9 +174,11 @@
     <Compile Include="Core\Settings\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Features\Projects\FileOperationAPIWrapper.cs" />
     <Compile Include="Features\Projects\Widget.xaml.cs">
       <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\DelayedAction.cs" />
     <Compile Include="Utilities\Extensions\DateTimeExtension.cs" />
     <Compile Include="Utilities\Extensions\DoubleExtension.cs" />
     <Compile Include="Utilities\Extensions\IconExtension.cs" />

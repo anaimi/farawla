@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Farawla.Core;
 using Path=System.IO.Path;
 using Farawla.Core.Sidebar;
+using Farawla.Utilities;
 
 namespace Farawla.Features.Projects
 {
@@ -30,6 +31,7 @@ namespace Farawla.Features.Projects
 		public WidgetSettings Settings { get; set; }
 		
 		public string CurrentProjectPath { get; set; }
+		public List<FileItem> ExpandedNodes { get; set; }
 		public string LastOpenProject
 		{
 			get
@@ -52,9 +54,10 @@ namespace Farawla.Features.Projects
 		public Widget()
 		{
 			InitializeComponent();
-
+			
 			Loaded += (s, e) => OnLoaded();
 			Settings = Core.Settings.Instance.GetWidgetSettings("Projects");
+			ExpandedNodes = new List<FileItem>();
 		}
 
 		public void OnLoaded()
@@ -121,27 +124,32 @@ namespace Farawla.Features.Projects
 			
 			foreach (var dir in Directory.GetDirectories(path))
 			{
-				items.Add(CreateItem(dir, true));
+				items.Add(CreateFileItem(dir, true));
 			}
 
 			foreach (var file in Directory.GetFiles(path))
 			{
-				items.Add(CreateItem(file, false));
+				items.Add(CreateFileItem(file, false));
 			}
 
 			return items;
 		}
-		
-		private TreeViewItem CreateItem(string path, bool isDirectory)
+
+		private FileItem CreateFileItem(string path, bool isDirectory)
 		{
-			var item = new TreeViewItem();
+			var item = new FileItem();
 
+			item.Path = path;
+			item.IsDirectory = isDirectory;
 			item.Header = Path.GetFileName(path);
-
+			
+			// assign event handlers
 			if (isDirectory)
 			{
-				item.Expanded += (s, e) => { e.Handled = true; ExpandItem(item, path); };
-				item.Items.Add(new TreeViewItem {Header = "loading..."});
+				item.Expanded += (s, e) => { e.Handled = true; ExpandItem(item); };
+				item.Collapsed += (s, e) => { e.Handled = true; CollapseItem(item); };
+				
+				item.Items.Add(new FileItem {Header = "loading..."});
 			}
 			else
 			{
@@ -156,16 +164,58 @@ namespace Farawla.Features.Projects
 					}
 				};
 			}
+
+			// build context menu
+			item.ContextMenu = new ContextMenu();
+			item.ContextMenu.Items.Add(CreateMenuItem("Rename", () => RenameFile(item)));
+			item.ContextMenu.Items.Add(CreateMenuItem("Delete", () => DeleteFile(item)));
 			
 			return item;
 		}
+		
+		private MenuItem CreateMenuItem(string label, Action click)
+		{
+			var item = new MenuItem();
 
-		private void ExpandItem(TreeViewItem node, string path)
+			item.Header = label;
+			item.Click += (s, e) => click();
+
+			return item;
+		}
+
+		private void RenameFile(FileItem item)
+		{
+			
+		}
+		
+		private void DeleteFile(FileItem item)
+		{
+			var result = MessageBox.Show("Move '" + Path.GetFileName(item.Path) + "' to Recycle Bin?", "Delete " + item.Path, MessageBoxButton.YesNo);
+
+			if (result == MessageBoxResult.Yes)
+			{
+				FileOperationAPIWrapper.MoveToRecycleBin(item.Path);
+				DelayedAction.Invoke(500, () => RefreshProjectClicked(null, null));
+			}
+		}
+
+		private void ExpandItem(FileItem node)
 		{
 			node.Items.Clear();
 			
-			foreach(var item in GetSubItems(path))
+			foreach(var item in GetSubItems(node.Path))
 				node.Items.Add(item);
+
+			if (!ExpandedNodes.Any(f => f.Path == node.Path))
+				ExpandedNodes.Add(node);
+		}
+		
+		private void CollapseItem(FileItem node)
+		{
+			var oldNode = ExpandedNodes.FirstOrDefault(f => f.Path == node.Path);
+			
+			if (oldNode != null)
+				ExpandedNodes.Remove(oldNode);
 		}
 
 		private void AddPreviouslyOpenedProject(string path)
@@ -198,14 +248,7 @@ namespace Farawla.Features.Projects
 			foreach (var project in projects)
 			{
 				var path = project;
-				var item = new MenuItem();
-				item.Header = path;
-				
-				item.Click += (s, e2) => {
-					OpenProject(path); // using "project" instead of "path" will result in Access Closure error.
-				};
-				
-				OpenProjectsMenu.Items.Add(item);
+				OpenProjectsMenu.Items.Add(CreateMenuItem(path, () => OpenProject(path))); // After a long session of debugging, it was discorvered that using "project" instead of "path" will result in Access Closure error.
 			}
 			
 			OpenProjectsMenu.IsOpen = true;
@@ -214,6 +257,32 @@ namespace Farawla.Features.Projects
 		private void RefreshProjectClicked(object sender, RoutedEventArgs e)
 		{
 			OpenProject(CurrentProjectPath);
+			
+			ExpandExpandedNodes(Files.Items);
 		}
+		
+		private void ExpandExpandedNodes(ItemCollection items)
+		{
+			foreach(var item in items)
+			{
+				if (!(item is FileItem))
+					continue;
+
+				var file = item as FileItem;
+				
+				if (ExpandedNodes.Any(f => f.Path == file.Path))
+				{
+					file.IsExpanded = true;
+					
+					ExpandExpandedNodes(file.Items);
+				}
+			}
+		}
+	}
+	
+	public class FileItem : TreeViewItem
+	{
+		public bool IsDirectory { get; set; }
+		public string Path { get; set; }
 	}
 }
