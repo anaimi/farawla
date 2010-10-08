@@ -2,7 +2,6 @@ using System.Windows.Documents;
 using System.Collections.Generic;
 using System.IO;
 using Farawla.Core.Sidebar;
-using Farawla.Features.Notifier;
 using Newtonsoft.Json;
 using System.Linq;
 using Farawla.Features;
@@ -38,7 +37,7 @@ namespace Farawla.Core
 				{
 					if (!File.Exists(FILE_NAME))
 					{
-						Notifier.Instance.Show("Settings file does not exists... I'll create one for you");
+						Notifier.Show("Settings file does not exists... I'll create one for you");
 						_instance = new Settings();
 					}
 					else

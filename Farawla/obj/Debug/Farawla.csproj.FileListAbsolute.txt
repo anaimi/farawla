@@ -129,5 +129,5 @@ C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Core\Sidebar\Bar.baml
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Core\Sidebar\Bar.g.cs
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Core\Sidebar\BarButton.baml
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Core\Sidebar\BarButton.g.cs
-C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Projects\ModalInputBox.baml
-C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Projects\ModalInputBox.g.cs
+C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Core\Notifier\ModalInputBox.baml
+C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Core\Notifier\ModalInputBox.g.cs

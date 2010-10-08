@@ -10,9 +10,9 @@ none
 false
 DEBUG;TRACE
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\App.xaml
-11-2111425936
+1193674661
 
-45348451718
+45-1855357724
 15-379345455
-Core\Sidebar\Bar.xaml;Core\Sidebar\BarButton.xaml;Features\ColorPicker\AlphaSlider.xaml;Features\ColorPicker\HueSlider.xaml;Features\ColorPicker\SaturationBrightness.xaml;Features\ColorPicker\Widget.xaml;Core\Settings\SettingsWindow.xaml;Features\Projects\ModalInputBox.xaml;Features\Projects\Widget.xaml;MainWindow.xaml;Resources\Themes\Default.xaml;
+Core\Sidebar\Bar.xaml;Core\Sidebar\BarButton.xaml;Features\ColorPicker\AlphaSlider.xaml;Features\ColorPicker\HueSlider.xaml;Features\ColorPicker\SaturationBrightness.xaml;Features\ColorPicker\Widget.xaml;Core\Settings\SettingsWindow.xaml;Core\Notifier\ModalInputBox.xaml;Features\Projects\Widget.xaml;MainWindow.xaml;Resources\Themes\Default.xaml;
 

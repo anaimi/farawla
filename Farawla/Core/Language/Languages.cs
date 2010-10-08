@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using Farawla.Features;
 using Newtonsoft.Json;
-using Farawla.Features.Notifier;
 
 namespace Farawla.Core.Language
 {
@@ -43,13 +43,13 @@ namespace Farawla.Core.Language
 		{
 			if (!Directory.Exists("languages"))
 			{
-				Notifier.Instance.Show("The folder 'languages' was not found in the same directory of the executable. You should create it and load it with a folder for each language you want Farawla to support");
+				Notifier.Show("The folder 'languages' was not found in the same directory of the executable. You should create it and load it with a folder for each language you want Farawla to support");
 				return false;
 			}
 
 			if (Directory.GetDirectories("languages").Length == 0)
 			{
-				Notifier.Instance.Show("The folder 'languages' is empty. You should load it with folders of each language you want Farawla to support");
+				Notifier.Show("The folder 'languages' is empty. You should load it with folders of each language you want Farawla to support");
 				return false;
 			}
 			

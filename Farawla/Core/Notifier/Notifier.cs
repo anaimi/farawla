@@ -3,28 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using Farawla.Core;
 
-namespace Farawla.Features.Notifier
+namespace Farawla.Features
 {
-	class Notifier
+	public class Notifier
 	{
-		#region instance
-		private static Notifier _instance;
-		public static Notifier Instance
-		{
-			get
-			{
-				if (_instance == null)
-					_instance = new Notifier();
-
-					return _instance;
-			}
-		}
-		#endregion
+		public delegate void OnPromptEvent(bool canceled, string msg);
 		
-		public void Show(string message)
+		public static void Show(string message)
 		{
 			MessageBox.Show(message);
+		}
+		
+		public static void Prompt(string description, string detail, string input, OnPromptEvent action)
+		{
+			var prompt = new ModalInputBox(description, detail, input, action);
+
+			prompt.ShowDialog();
 		}
 	}
 }

@@ -31,7 +31,6 @@ namespace Farawla.Features.Projects
 		public WidgetSettings Settings { get; set; }
 		
 		public string CurrentProjectPath { get; set; }
-		public List<FileItem> ExpandedNodes { get; set; }
 		public string LastOpenProject
 		{
 			get
@@ -50,14 +49,18 @@ namespace Farawla.Features.Projects
 				return Settings["PreviouslyOpenedProjects"].Split(',').ToArray();
 			}
 		}
+		public List<FileItem> ExpandedNodes { get; set; }
+		public FileItem LastClickedFile { get; set; }
 		
 		public Widget()
 		{
 			InitializeComponent();
 			
-			Loaded += (s, e) => OnLoaded();
 			Settings = Core.Settings.Instance.GetWidgetSettings("Projects");
 			ExpandedNodes = new List<FileItem>();
+
+			Loaded += (s, e) => OnLoaded();
+			Files.MouseDown += (s, e) => { LastClickedFile = null; };
 		}
 
 		public void OnLoaded()
@@ -142,6 +145,7 @@ namespace Farawla.Features.Projects
 			item.Path = path;
 			item.IsDirectory = isDirectory;
 			item.Header = Path.GetFileName(path);
+			item.PreviewMouseDown += (s, e) => { LastClickedFile = item; };
 			
 			// assign event handlers
 			if (isDirectory)
@@ -160,7 +164,7 @@ namespace Farawla.Features.Projects
 					}
 					else
 					{
-						Notifier.Notifier.Instance.Show("File not found - consider refreshing the project");
+						Notifier.Show("File not found - consider refreshing the project");
 					}
 				};
 			}
@@ -168,8 +172,16 @@ namespace Farawla.Features.Projects
 			// build context menu
 			item.ContextMenu = new ContextMenu();
 			item.ContextMenu.Items.Add(CreateMenuItem("Rename", () => RenameFile(item)));
+			item.ContextMenu.Items.Add(new Separator());
 			item.ContextMenu.Items.Add(CreateMenuItem("Delete", () => DeleteFile(item)));
 			
+			if (isDirectory)
+			{
+				item.ContextMenu.Items.Add(new Separator());
+				item.ContextMenu.Items.Add(CreateMenuItem("Create File", () => ShowCreateFile(item.Path)));
+				item.ContextMenu.Items.Add(CreateMenuItem("Create Directory", () => ShowCreateDirectory(item.Path)));
+			}
+						
 			return item;
 		}
 		
@@ -185,14 +197,12 @@ namespace Farawla.Features.Projects
 
 		private void RenameFile(FileItem item)
 		{
-			var input = new ModalInputBox("Rename", "Rename", item.Path, item.FileName, (canceled, inputStr) => {
+			Notifier.Prompt("Rename", item.Path, item.FileName, (canceled, result) => {
 				if (!canceled)
 				{
-					item.Rename(inputStr);
+					item.Rename(result);
 				}
 			});
-
-			input.ShowDialog();
 		}
 		
 		private void DeleteFile(FileItem item)
@@ -245,7 +255,7 @@ namespace Farawla.Features.Projects
 
 			if (projects.Count() == 0)
 			{
-				Notifier.Notifier.Instance.Show("Nothing found in your projects history");
+				Notifier.Show("Nothing found in your projects history");
 				return;
 			}
 
@@ -285,6 +295,64 @@ namespace Farawla.Features.Projects
 				}
 			}
 		}
+		
+		#region Create File or Directory
+		
+		private string GetActivePath()
+		{
+			if (LastClickedFile == null)
+				return CurrentProjectPath;
+			
+			if (LastClickedFile.IsDirectory)
+				return LastClickedFile.Path;
+
+			return Path.GetDirectoryName(LastClickedFile.Path);
+		}
+		
+		private void CreateFileOrDirectoryClicked(object sender, RoutedEventArgs e)
+		{
+			CreateFileButton.ContextMenu.IsOpen = true;
+		}
+		
+		private void CreateFileClicked(object sender, RoutedEventArgs e)
+		{
+			var path = GetActivePath();
+			
+			ShowCreateFile(path);
+		}
+		
+		private void CreateDirectoryClicked(object sender, RoutedEventArgs e)
+		{
+			var path = GetActivePath();
+
+			ShowCreateDirectory(path);
+		}
+		
+		private void ShowCreateFile(string path)
+		{
+			Notifier.Prompt("Create File", "Inside " + path, "", (canceled, name) =>
+			{
+				if (!canceled)
+				{
+					File.Create(path + "\\" + name);
+					RefreshProjectClicked(null, null);
+				}
+			});
+		}
+		
+		private void ShowCreateDirectory(string path)
+		{
+			Notifier.Prompt("Create Directory", "Inside " + path, "", (canceled, name) =>
+			{
+				if (!canceled)
+				{
+					Directory.CreateDirectory(path + "\\" + name);
+					RefreshProjectClicked(null, null);
+				}
+			});
+		}
+		
+		#endregion
 	}
 	
 	public class FileItem : TreeViewItem

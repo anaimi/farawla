@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Media;
-using Farawla.Features.Notifier;
+using Farawla.Features;
 using Newtonsoft.Json;
 
 namespace Farawla.Core
@@ -27,14 +27,14 @@ namespace Farawla.Core
 				{
 					if (!Directory.Exists(DIRECTORY_NAME))
 					{
-						Notifier.Instance.Show("The directory '" + DIRECTORY_NAME + "', which is supposed to include the themes, does not exists. I'll create it, but you'll have to load it with themes (and activate one of the themes).");
+						Notifier.Show("The directory '" + DIRECTORY_NAME + "', which is supposed to include the themes, does not exists. I'll create it, but you'll have to load it with themes (and activate one of the themes).");
 						Directory.CreateDirectory(DIRECTORY_NAME);
 
 						_instance = new Theme();
 					}
 					else if (!File.Exists(DIRECTORY_NAME + "\\" + Settings.Instance.ThemeName))
 					{
-						Notifier.Instance.Show("The theme '" + Settings.Instance.ThemeName + "' does not exist in the folder '" + DIRECTORY_NAME + "'");
+						Notifier.Show("The theme '" + Settings.Instance.ThemeName + "' does not exist in the folder '" + DIRECTORY_NAME + "'");
 						_instance = new Theme();
 					}
 					else

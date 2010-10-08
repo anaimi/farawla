@@ -133,8 +133,14 @@
 					<Image Source="/Resources/loading.png" />
 				</Button>
 				
-				<Button ToolTip="Create file or folder" Style="{StaticResource ProjectsButton}" HorizontalAlignment="Right">
+				<Button x:Name="CreateFileButton" ToolTip="Create file or folder" Style="{StaticResource ProjectsButton}" HorizontalAlignment="Right" Click="CreateFileOrDirectoryClicked">
 					<Image Source="/Resources/add.png" />
+					<Button.ContextMenu>
+						<ContextMenu>
+							<MenuItem Header="Create File" Click="CreateFileClicked" />
+							<MenuItem Header="Create Directory" Click="CreateDirectoryClicked" />
+						</ContextMenu>
+					</Button.ContextMenu>
 				</Button>
 			</Grid>
 		</Grid>
