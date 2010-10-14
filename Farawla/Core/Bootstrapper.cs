@@ -15,6 +15,7 @@ namespace Farawla.Core
 		public static void PopulateFeatureList()
 		{
 			Controller.Current.Widgets.Add(new Features.Projects.Widget());
+			Controller.Current.Widgets.Add(new Features.Search.Widget());
 			Controller.Current.Widgets.Add(new Features.ColorPicker.Widget());
 			Controller.Current.Widgets.Add(Settings.Instance);
 		}

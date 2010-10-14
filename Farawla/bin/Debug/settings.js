@@ -1,7 +1,4 @@
 {
-  "WidgetName": "Settings",
-  "Expandable": false,
-  "WidgetHeight": -1.0,
   "SidebarButton": null,
   "ThemeName": "clouds.js",
   "IsWindowMaximized": true,
@@ -9,6 +6,10 @@
     "C:\\Users\\Ahmad\\Desktop\\test.js"
   ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\updater.cmd",
+      "Index": 1
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\Test2.txt",
       "Index": 1
@@ -44,17 +45,13 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\test.js",
       "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\config\\locales\\en.yml",
-      "Index": 1
     }
   ],
   "Widgets": [
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#FF70A3E4"
+        "Color": "#D4B2CD38"
       }
     },
     {

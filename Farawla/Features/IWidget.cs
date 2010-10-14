@@ -1,13 +1,14 @@
 using Farawla.Core.Sidebar;
+using System.Windows.Forms;
 namespace Farawla.Features
 {
 	public interface IWidget
 	{
-		string WidgetName { get; }
-		bool Expandable { get; }
-		double WidgetHeight { get; }
 		BarButton SidebarButton { get; set; }
+	}
+	
+	public static class WidgetExtensions
+	{
 		
-		void OnClick();
 	}
 }

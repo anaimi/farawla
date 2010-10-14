@@ -2,16 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Farawla.Core;
 using Path=System.IO.Path;
 using Farawla.Core.Sidebar;
@@ -21,13 +14,7 @@ namespace Farawla.Features.Projects
 {
 	public partial class Widget : IWidget
 	{
-		#region Widget: File Explorer
-		public string WidgetName { get { return "Projects"; } }
-		public bool Expandable { get { return true; } }
-		public double WidgetHeight { get { return -1; } }
 		public BarButton SidebarButton { get; set; }
-		#endregion
-
 		public WidgetSettings Settings { get; set; }
 		
 		public string CurrentProjectPath { get; set; }
@@ -55,10 +42,20 @@ namespace Farawla.Features.Projects
 		public Widget()
 		{
 			InitializeComponent();
+
+			// create sidebar button
+			SidebarButton = new BarButton(this, "Projects");
+			SidebarButton.IsExpandable = true;
+			SidebarButton.IsStretchable = true;
+			SidebarButton.ExpadedByDefault();
 			
+			// get settings
 			Settings = Core.Settings.Instance.GetWidgetSettings("Projects");
+			
+			// arrange
 			ExpandedNodes = new List<FileItem>();
 
+			// assign events
 			Loaded += (s, e) => OnLoaded();
 			Files.MouseDown += (s, e) => { LastClickedFile = null; };
 		}
@@ -101,11 +98,6 @@ namespace Farawla.Features.Projects
 			});
 			
 			OpenProject(LastOpenProject);
-		}
-
-		public void OnClick()
-		{
-			
 		}
 		
 		private void OpenProject(string path)

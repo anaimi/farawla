@@ -12,13 +12,7 @@ namespace Farawla.Core
 {
 	public class Settings: IWidget
 	{
-		#region Widget: Settings
-		public string WidgetName { get { return "Settings"; } }
-		public bool Expandable { get { return false; } }
-		public double WidgetHeight { get { return -1; } }
 		public BarButton SidebarButton { get; set; }
-		#endregion
-		
 		public static string ExecDir
 		{
 			get { return Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\"; }
@@ -43,6 +37,11 @@ namespace Farawla.Core
 					else
 					{
 						_instance = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(FILE_NAME));
+
+						// create sidebar button
+						_instance.SidebarButton = new BarButton(_instance, "Settings");
+						_instance.SidebarButton.IsExpandable = false;
+						_instance.SidebarButton.OnClick += () => SettingsWindow.Instance.ShowDialog();
 						
 						if (_instance == null)
 							_instance = new Settings();
@@ -91,14 +90,6 @@ namespace Farawla.Core
 			
 			File.WriteAllText(ExecDir + FILE_NAME, JsonConvert.SerializeObject(_instance, Formatting.Indented));
 		}
-
-		#region Widget Events
-		public void OnClick()
-		{
-			Controller.Current.ShowOverlay();
-			SettingsWindow.Instance.ShowDialog();
-		}
-		#endregion
 	}
 	
 	public class WidgetSettings

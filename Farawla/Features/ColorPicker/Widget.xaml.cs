@@ -1,40 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
-using System.Collections.ObjectModel;
 using Farawla.Core;
-using System.Diagnostics;
 using Farawla.Core.Sidebar;
 
 namespace Farawla.Features.ColorPicker
 {
-	public partial class Widget : UserControl, IWidget
+	public partial class Widget : IWidget
 	{
-		#region Widget: Color Picker
-		public string WidgetName { get { return "Color Picker"; } }
-		public bool Expandable { get { return true; } }
-		public double WidgetHeight { get { return 235; } }
 		public BarButton SidebarButton { get; set; }
-		#endregion
-			
 		public WidgetSettings Settings { get; set; }
 		
 		public Widget()
 		{
 			InitializeComponent();
+
+			// create sidebar button
+			SidebarButton = new BarButton(this, "Colors");
+			SidebarButton.IsExpandable = true;
+			SidebarButton.WidgetHeight = 235;
 			
-			Settings = Farawla.Core.Settings.Instance.GetWidgetSettings("ColorPicker");
+			// get settings
+			Settings = Core.Settings.Instance.GetWidgetSettings("ColorPicker");
 			
 			// assign events to selectors
 			HueSelector.ColorSelectionChanged += OnColorChanged;
@@ -139,11 +127,6 @@ namespace Farawla.Features.ColorPicker
 			
 			// remember it for next time
 			Settings["Color"] = CPUtilities.StringFromColor(color);
-		}
-		
-		public void OnClick()
-		{
-		
 		}
 	}
 }

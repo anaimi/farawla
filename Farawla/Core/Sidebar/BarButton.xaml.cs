@@ -11,34 +11,105 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Farawla.Features;
 
 namespace Farawla.Core.Sidebar
 {
-	/// <summary>
-	/// Interaction logic for SidebarButton.xaml
-	/// </summary>
-	public partial class BarButton : UserControl
+	public partial class BarButton
 	{
-		public BarButton()
+		public event Action OnClick;
+		public event Action OnExpand;
+		public event Action OnCollapse;
+		
+		public IWidget Widget { get; private set; }
+		public UserControl Control { get; private set; }
+		
+		public double WidgetHeight { get; set; }
+		
+		public bool IsExpandable { get; set; }
+		public bool IsStretchable { get; set; }
+		public bool IsExpanded { get; private set; }
+		
+		private bool isUserControl;
+		
+		public BarButton(IWidget widget, string name)
 		{
+			Widget = widget;
 			InitializeComponent();
-		}
+			
+			// assign values
+			isUserControl = widget is UserControl;
+			Control = widget as UserControl;
+			SetLabel(name);
 
-		public BarButton(string label, Action onClick)
-		{
-			InitializeComponent();
+			// default is collapsed
+			IsExpanded = false;
 			
-			SetLabel(label);
+			// defaults for control
+			if (isUserControl)
+			{
+				Control.Height = 0;
+				Control.Visibility = Visibility.Collapsed;
+			}
 			
-			MouseLeftButtonDown += (s, e) => {
-				if (onClick != null)
-					onClick();
-			};
+			// assign events
+			MouseLeftButtonDown += (s, e) => ButtonClicked();
 		}
 		
 		public void SetLabel(string label)
 		{
 			Label.Text = label;
+		}
+		
+		public void ButtonClicked()
+		{
+			if (OnClick != null)
+				OnClick();
+
+			if (!isUserControl)
+				return;
+
+			if (Math.Round(Control.Height, 2) == 0)
+			{
+				ExpandWidget();
+			}
+			else
+			{
+				CollapseWidget();
+			}
+		}
+
+		public void CollapseWidget()
+		{
+			if (OnCollapse != null)
+				OnCollapse();
+			
+			Control.VerticalSlide(0, 10, () =>
+			{
+				Control.Margin = new Thickness(Control.Margin.Left, 0, Control.Margin.Right, 0);
+				Control.Visibility = Visibility.Collapsed;
+			});
+
+			IsExpanded = false;
+		}
+
+		public void ExpandWidget()
+		{
+			Control.Visibility = Visibility.Visible;
+			
+			if (OnExpand != null)
+				OnExpand();
+
+			Control.Margin = new Thickness(Control.Margin.Left, 5, Control.Margin.Right, 5);
+			Control.VerticalSlide(WidgetHeight, 10);
+
+			IsExpanded = true;
+		}
+
+		public void ExpadedByDefault()
+		{
+			IsExpanded = true;
+			Loaded += (s, e) => ExpandWidget();
 		}
 	}
 }

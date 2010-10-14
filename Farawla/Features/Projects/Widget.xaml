@@ -78,27 +78,6 @@
 					</Setter.Value>
 				</Setter>
 			</Style>
-
-			<Style TargetType="{x:Type Button}" x:Key="ProjectsButton">
-				<Setter Property="Cursor" Value="Hand" />
-				<Setter Property="Template">
-					<Setter.Value>
-						<ControlTemplate TargetType="{x:Type Button}">
-							<Grid x:Name="Grid" SnapsToDevicePixels="True">
-								<Border x:Name="Background" CornerRadius="2" BorderBrush="#CCCCCC" BorderThickness="1" Background="#22606060" />
-								<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
-								<Border x:Name="FocusVisualElement" IsHitTestVisible="false" BorderBrush="{StaticResource HoverShineBrush}" BorderThickness="1" CornerRadius="3,3,3,3" Margin="1,1,1,1" Opacity="0" />
-								<TextBlock Foreground="White" Width="{TemplateBinding Width}" TextAlignment="Center" Padding="0,6.5,0,0" Text="{TemplateBinding Content}" />
-							</Grid>
-							<ControlTemplate.Triggers>
-								<Trigger Property="IsMouseOver" Value="true">
-									<Setter TargetName="Background" Property="BorderBrush" Value="White" />
-								</Trigger>
-							</ControlTemplate.Triggers>
-						</ControlTemplate>
-					</Setter.Value>
-				</Setter>
-			</Style>
 		</Grid.Resources>
 
 		<TextBlock x:Name="NoOpenProject" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="bold" TextAlignment="Center" Foreground="#88FFFFFF">
@@ -122,18 +101,18 @@
 			</TreeView>
 			
 			<Grid Grid.Row="1" Margin="0,5,0,0">
-				<Button ToolTip="Open recent projects" Style="{StaticResource ProjectsButton}" HorizontalAlignment="Left" Click="OpenProjectsClicked">
+				<Button ToolTip="Open recent projects" Style="{StaticResource SimpleButton}" HorizontalAlignment="Left" Click="OpenProjectsClicked">
 					<Image Source="/Resources/projects.png" />
 					<Button.ContextMenu>
 						<ContextMenu x:Name="OpenProjectsMenu"></ContextMenu>
 					</Button.ContextMenu>
 				</Button>
 				
-				<Button ToolTip="Refresh tree" Style="{StaticResource ProjectsButton}" HorizontalAlignment="Left" Margin="30,0,0,0" Click="RefreshProjectClicked">
+				<Button ToolTip="Refresh tree" Style="{StaticResource SimpleButton}" HorizontalAlignment="Left" Margin="30,0,0,0" Click="RefreshProjectClicked">
 					<Image Source="/Resources/loading.png" />
 				</Button>
 				
-				<Button x:Name="CreateFileButton" ToolTip="Create file or folder" Style="{StaticResource ProjectsButton}" HorizontalAlignment="Right" Click="CreateFileOrDirectoryClicked">
+				<Button x:Name="CreateFileButton" ToolTip="Create file or folder" Style="{StaticResource SimpleButton}" HorizontalAlignment="Right" Click="CreateFileOrDirectoryClicked">
 					<Image Source="/Resources/add.png" />
 					<Button.ContextMenu>
 						<ContextMenu>
