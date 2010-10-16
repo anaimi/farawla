@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Media;
 using Farawla.Core.Language;
 using System.Windows.Controls;
@@ -15,6 +13,7 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Rendering;
 using Microsoft.Win32;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using System.Windows.Input;
@@ -33,6 +32,7 @@ namespace Farawla.Core
 		public LanguageMeta Language { get; set; }
 		public TabItem Tab { get; private set; }
 		public TextEditor Editor { get; private set; }
+		public BlockHighlighter BlockHighlighter { get; private set; }
 
 		public bool IsNewDocument
 		{
@@ -80,15 +80,22 @@ namespace Farawla.Core
 			Editor.FontFamily = new FontFamily(Theme.Instance.FontFamily);
 			Editor.TextArea.TextEntered += (s, e) => TextEntered(e);
 			
+			// renderer
+			BlockHighlighter = new BlockHighlighter(Editor);
+			Editor.TextArea.TextView.BackgroundRenderers.Add(BlockHighlighter);
+			
 			// load?
 			if (!path.IsBlank())
+			{
 				Editor.Load(path);
+				Text = Editor.Text;				
+			}
 
 			// tab
 			Tab = new TabItem();
 			Tab.Header = Name;
 			Tab.Content = Editor;
-
+			
 			// syntax highlighter
 			if (Language.HasHighlighting)
 			{
@@ -273,4 +280,81 @@ namespace Farawla.Core
 			textArea.Document.Replace(completionSegment, this.Text);
 		}
 	}
+
+	public class BlockHighlighter : IBackgroundRenderer
+	{
+		private List<HighlightedBlocks> blocks;
+		private TextEditor editor;
+		
+		public BlockHighlighter(TextEditor editor)
+		{
+			this.editor = editor;
+			blocks = new List<HighlightedBlocks>();
+		}
+
+		public KnownLayer Layer
+		{
+			get { return KnownLayer.Background; }
+		}
+		
+		public void Add(object owner, int offset, int length, Color color)
+		{
+			blocks.Add(new HighlightedBlocks(owner, offset, length, color));
+		}
+		
+		public void Remove(object owner, int offset, int length)
+		{
+			var block = blocks.FirstOrDefault(b => b.Owner == owner && b.Offset == offset && b.Length == length);
+			blocks.Remove(block);
+		}
+		
+		public void ClearAll()
+		{
+			blocks.Clear();
+		}
+		
+		public void Clear(object owner)
+		{
+			blocks.RemoveAll(b => b.Owner == owner);
+		}
+
+		public void Draw(TextView textView, DrawingContext drawingContext)
+		{
+			textView.EnsureVisualLines();
+			
+			foreach(var block in blocks)
+			{
+				var startLocation = textView.Document.GetLocation(block.Offset);
+				var endLocation = textView.Document.GetLocation(block.Offset + block.Length);
+
+				var startPosition = textView.GetVisualPosition(new TextViewPosition(startLocation), VisualYPosition.LineTop);
+				var endPosition = textView.GetVisualPosition(new TextViewPosition(endLocation), VisualYPosition.LineBottom);
+
+				drawingContext.DrawRoundedRectangle(new SolidColorBrush(block.Color), new Pen(), new Rect(startPosition.X, startPosition.Y, endPosition.X - startPosition.X, endPosition.Y - startPosition.Y), 3, 3);
+			}
+		}
+
+		public void Redraw()
+		{
+			editor.TextArea.TextView.Redraw();
+		}
+	}
+
+	public class HighlightedBlocks
+	{
+		public object Owner { get; set; }
+		public int Offset { get; set; }
+		public int Length { get; set; }
+		public Color Color { get; set; }
+
+		public HighlightedBlocks(object owner, int offset, int length, Color color)
+		{
+			Owner = owner;
+			Offset = offset;
+			Length = length;
+			Color = color;
+		}
+	}
+	
+	
 }

@@ -29,6 +29,6 @@
 		"\\\".*?\\\"", /* double quoted strings */
 		"'.*?'", /* single quoted strings */
 		"//.+", /* line comments */
-		"/\\*(.+|\\n|\\r)*/" /* block comments */
+		"/\\*(.|\\n|\\r)+\\*/" /* block comments */
 	]
 }

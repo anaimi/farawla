@@ -40,7 +40,7 @@
 			</ComboBox>
 		</StackPanel>
 
-		<Button Grid.Row="1" Style="{StaticResource SimpleButton}" Padding="10,5,10,5" HorizontalAlignment="Left">Find</Button>
-		<Button Grid.Row="1" Style="{StaticResource SimpleButton}" Padding="10,5,10,5" HorizontalAlignment="Right">Replace All</Button>
+		<Button Grid.Row="1" Style="{StaticResource SimpleButton}" Padding="10,5,10,5" HorizontalAlignment="Left" Click="FindClicked">Find</Button>
+		<Button Grid.Row="1" Style="{StaticResource SimpleButton}" Padding="10,5,10,5" HorizontalAlignment="Right" Click="ReplaceClicked">Replace All</Button>
 	</Grid>
 </UserControl>

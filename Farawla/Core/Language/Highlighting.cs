@@ -112,7 +112,7 @@ namespace Farawla.Core.Language
 			color.Foreground = GetForeground();
 			color.FontWeight = GetFontWeight();
 			color.FontStyle = GetFontStyle();
-
+			
 			return color;
 		}
 
