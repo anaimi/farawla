@@ -27,7 +27,7 @@
 								</Border.Effect>
 							</Border>
 							<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
-							<Border x:Name="FocusVisualElement" IsHitTestVisible="false" BorderBrush="{StaticResource HoverShineBrush}" BorderThickness="1" CornerRadius="3,3,3,3" Margin="1,1,1,1" Opacity="0" />
+							<Border x:Name="FocusVisualElement" IsHitTestVisible="false" BorderBrush="#22606060" BorderThickness="1" CornerRadius="3,3,3,3" Margin="1,1,1,1" Opacity="0" />
 							<TextBlock Foreground="White" Width="{TemplateBinding Width}" TextAlignment="Center" Padding="0,6.5,0,0" Text="{TemplateBinding Content}" />
 						</Grid>
 						<ControlTemplate.Triggers>

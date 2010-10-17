@@ -2,9 +2,7 @@
   "SidebarButton": null,
   "ThemeName": "clouds.js",
   "IsWindowMaximized": true,
-  "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\test.js"
-  ],
+  "OpenTabs": [],
   "ClosedTabs": [
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\updater.cmd",

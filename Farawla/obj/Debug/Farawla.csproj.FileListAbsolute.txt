@@ -55,8 +55,6 @@ D:\Users\nuaimiaa\Desktop\Farawla\Farawla\obj\Debug\Features\ColorPicker\AlphaSl
 D:\Users\nuaimiaa\Desktop\Farawla\Farawla\obj\Debug\Features\ColorPicker\AlphaSlider.g.cs
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Farawla.exe
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Farawla.pdb
-D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\bin\Debug\Resources\directory.png
-D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\bin\Debug\Resources\file.png
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\bin\Debug\Farawla.exe
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\bin\Debug\Farawla.pdb
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\bin\Debug\Chrome.dll
@@ -69,22 +67,17 @@ D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\ResolveAssemblyR
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\ColorPicker\AlphaSlider.baml
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\ColorPicker\HueSlider.baml
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\ColorPicker\SaturationBrightness.baml
-D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\FileExplorer\FileList.baml
-D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Resources\Themes\Default.baml
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\App.baml
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\ColorPicker\AlphaSlider.g.cs
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\ColorPicker\HueSlider.g.cs
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\ColorPicker\SaturationBrightness.g.cs
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\ColorPicker\Widget.g.cs
-D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\FileExplorer\FileList.g.cs
-D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\FileExplorer\Widget.g.cs
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\MainWindow.g.cs
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\App.g.cs
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Farawla_MarkupCompile.cache
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Farawla_MarkupCompile.lref
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\ColorPicker\Widget.baml
-D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\FileExplorer\Widget.baml
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\MainWindow.baml
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Farawla.g.resources
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Farawla.Properties.Resources.resources
@@ -135,3 +128,16 @@ C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Search\Widget
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Resources\Theme\ComboBox.baml
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Resources\Theme\Misc.baml
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Resources\Theme\ScrollBar.baml
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Core\Sidebar\Bar.baml
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Core\Sidebar\BarButton.baml
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Core\Notifier\ModalInputBox.baml
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Resources\Theme\ComboBox.baml
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Resources\Theme\Misc.baml
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Resources\Theme\ScrollBar.baml
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Core\Sidebar\Bar.g.cs
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Core\Sidebar\BarButton.g.cs
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Core\Notifier\ModalInputBox.g.cs
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\Projects\Widget.g.cs
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\Search\Widget.g.cs
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\Projects\Widget.baml
+D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\Search\Widget.baml
