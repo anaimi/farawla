@@ -34,7 +34,6 @@
 			</TextBox>
 			
 			<ComboBox x:Name="SearchArea" Margin="0,0,0,10">
-				<ComboBoxItem x:Name="SearchAreaSelectedText">Selected Text</ComboBoxItem>
 				<ComboBoxItem x:Name="SearchAreaCurrentDocument" Selector.IsSelected="True">Current Document</ComboBoxItem>
 				<ComboBoxItem x:Name="SearchAreaOpenDocuments">Opened Documents</ComboBoxItem>
 			</ComboBox>

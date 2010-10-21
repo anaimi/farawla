@@ -2,8 +2,15 @@
   "SidebarButton": null,
   "ThemeName": "clouds.js",
   "IsWindowMaximized": true,
-  "OpenTabs": [],
+  "OpenTabs": [
+    "C:\\Users\\Ahmad\\Desktop\\test.js",
+    "C:\\Users\\Ahmad\\Desktop\\notes.txt"
+  ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\tmp",
+      "Index": 2
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\updater.cmd",
       "Index": 1
@@ -39,10 +46,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\.gitignore",
       "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\test.js",
-      "Index": 0
     }
   ],
   "Widgets": [

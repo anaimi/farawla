@@ -26,8 +26,6 @@ namespace Farawla.Core
 		public string Name { get; set; }
 		public string DocumentPath { get; set; }
 		public bool IsSaved { get; private set; }
-		public string Text { get; private set; }
-		public int CaretOffset { get; private set; }
 
 		public LanguageMeta Language { get; set; }
 		public TabItem Tab { get; private set; }
@@ -87,8 +85,7 @@ namespace Farawla.Core
 			// load?
 			if (!path.IsBlank())
 			{
-				Editor.Load(path);
-				Text = Editor.Text;				
+				Editor.Load(path);		
 			}
 
 			// tab
@@ -105,7 +102,7 @@ namespace Farawla.Core
 
 			// initialize completion worker and window
 			completionWorker = new BackgroundWorker();
-			completionWorker.DoWork += (s, e) => PopulateAutoComplete();
+			completionWorker.DoWork += (s, e) => PopulateAutoComplete(e);
 		}
 
 		public void MakeActive()
@@ -114,7 +111,7 @@ namespace Farawla.Core
 			Controller.Current.MainWindow.Tab.SelectedIndex = index;
 		}
 
-		public void Save(bool saveAs)
+		public bool Save(bool saveAs)
 		{
 			var dialog = new SaveFileDialog();
 
@@ -127,7 +124,7 @@ namespace Farawla.Core
 				}
 				else
 				{
-					return;
+					return false;
 				}
 			}
 
@@ -135,9 +132,10 @@ namespace Farawla.Core
 
 			IsSaved = true;
 			MarkWindowAsSaved();
+			return true;
 		}
 
-		public void PromptToSave()
+		public bool PromptToSave()
 		{
 			if (!IsSaved && !(IsNewDocument && Editor.Text == ""))
 			{
@@ -146,18 +144,17 @@ namespace Farawla.Core
 				switch (result)
 				{
 					case MessageBoxResult.Yes:
-						Save(false);
-						break;
-
+						return Save(false);
+						
 					case MessageBoxResult.No:
-						// do nothing
-						break;
-
+						return true;
+						
 					case MessageBoxResult.Cancel:
-						return;
-						break;
+						return false;
 				}
 			}
+
+			return true;
 		}
 		
 		public void TextEntered(TextCompositionEventArgs args)
@@ -165,8 +162,7 @@ namespace Farawla.Core
 			if (!Editor.IsLoaded)
 				return;
 
-			Text = Editor.Text;
-			CaretOffset = Editor.CaretOffset;
+			TextChanged();
 
 			// have auto complete?
 			if (Language.HasAutoComplete)
@@ -185,10 +181,13 @@ namespace Farawla.Core
 				}
 				else if (!completionWorker.IsBusy)
 				{
-					completionWorker.RunWorkerAsync();
+					completionWorker.RunWorkerAsync(new EditorState { Text = Editor.Text, CaretOffset = Editor.CaretOffset });
 				}
 			}
-
+		}
+		
+		public void TextChanged()
+		{
 			// mark as unsaved?
 			if (IsSaved || IsNewDocument)
 			{
@@ -207,9 +206,11 @@ namespace Farawla.Core
 			Tab.Header = Name;
 		}
 
-		public void PopulateAutoComplete()
+		public void PopulateAutoComplete(DoWorkEventArgs args)
 		{
-			var identifiers = Language.AutoComplete.GetIdentifiersFromCode(Text).Where(i => i.Scope.From < CaretOffset && i.Scope.To >= CaretOffset);
+			var state = args.Argument as EditorState;
+
+			var identifiers = Language.AutoComplete.GetIdentifiersFromCode(state.Text).Where(i => i.Scope.From < state.CaretOffset && i.Scope.To >= state.CaretOffset);
 			completionItems = new List<CompletionWindowItem>();
 
 			foreach (var identifier in identifiers)
@@ -229,7 +230,8 @@ namespace Farawla.Core
 		public void Close()
 		{
 			// save or ignore?
-			PromptToSave();
+			if (!PromptToSave())
+				return;
 
 			// add path to closed tabs, keep last ten tabs
 			if (!IsNewDocument)
@@ -248,6 +250,12 @@ namespace Farawla.Core
 			// update count (also open a new tab if tab count is zero)
 			Controller.Current.TabCountUpdated();
 		}
+	}
+	
+	internal class EditorState
+	{
+		public string Text { get; set; }
+		public int CaretOffset { get; set; }
 	}
 
 	public class CompletionWindowItem : ICompletionData

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using Farawla.Core.Sidebar;
 using Farawla.Core;
 using System.Windows.Input;
-using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Utils;
-using ICSharpCode.AvalonEdit.Rendering;
 using System.Windows.Media;
 
 namespace Farawla.Features.Search
@@ -24,6 +18,7 @@ namespace Farawla.Features.Search
 		
 		public BarButton SidebarButton { get; set; }
 
+		private WindowTab lastReachedTab;
 		private int lastReachedOffset;
 		private Color foundTextBackground;
 		
@@ -37,8 +32,13 @@ namespace Farawla.Features.Search
 			SidebarButton.WidgetHeight = 140;
 			
 			// add keyboard shortcut
-			Controller.Current.Keyboard.AddBinding(KeyCombination.None, Key.F3, ShowWidgetAndGetFocus);
 			Controller.Current.Keyboard.AddBinding(KeyCombination.Ctrl, Key.F, ShowWidgetAndGetFocus);
+			Controller.Current.Keyboard.AddBinding(KeyCombination.None, Key.F3, () => {
+				if (!Query.Text.IsBlank())
+					DoSearch(SearchAction.Jump);
+				else
+					ShowWidgetAndGetFocus();
+            });
 			
 			// set default color
 			foundTextBackground = Colors.Yellow;
@@ -89,12 +89,28 @@ namespace Farawla.Features.Search
 
 		private void DoSearch(SearchAction action)
 		{
-			var expression = Regex.Escape(Query.Text);
-			var regex = new Regex(expression);
-
-			foreach (var tab in Controller.Current.CurrentTabs)
+			var regex = GetRegexFromQuery();
+			
+			if (SearchAreaCurrentDocument.IsSelected)
 			{
-				DoSearch(action, tab, regex);
+				DoSearch(action, Controller.Current.ActiveTab, regex);
+			}
+			else if (SearchAreaOpenDocuments.IsSelected)
+			{
+				if (action == SearchAction.Highlight)
+				{
+					DoSearch(action, Controller.Current.ActiveTab, regex);
+					return;
+				}
+				
+				if (lastReachedTab == null)
+				{
+					lastReachedOffset = 0;
+					lastReachedTab = Controller.Current.CurrentTabs.First();
+				}
+				
+				DoSearch(action, lastReachedTab, regex);
+				
 			}
 		}
 
@@ -114,17 +130,17 @@ namespace Farawla.Features.Search
 				}
 			}
 			
-			// job to matches
+			// matches
 			else if (action == SearchAction.Jump)
 			{
 				// search
 				var match = regex.Match(tab.Editor.Text, lastReachedOffset);
 				
-				// end of document? restart
-				if (!match.Success && lastReachedOffset > 0)
+				// end of document?
+				if (!match.Success)
 				{
-					lastReachedOffset = 0;
-					match = regex.Match(tab.Editor.Text, lastReachedOffset);
+					NoResultsFound(action, tab, regex);
+					return;
 				}
 				
 				// update offset
@@ -145,6 +161,78 @@ namespace Farawla.Features.Search
 			tab.BlockHighlighter.Redraw();
 		}
 
+		private void DoReplace()
+		{
+			var regex = GetRegexFromQuery();
+			
+			if (SearchAreaCurrentDocument.IsSelected)
+			{
+				DoReplace(Controller.Current.ActiveTab, regex);
+			}
+			else if (SearchAreaOpenDocuments.IsSelected)
+			{
+				foreach (var tab in Controller.Current.CurrentTabs)
+				{
+					DoReplace(tab, regex);
+				}
+			}
+		}
+
+		private void DoReplace(WindowTab tab, Regex regex)
+		{
+			var replacement = ReplaceWith.Text;
+			var offset = 0;
+			
+			tab.Editor.Document.BeginUpdate();
+			
+			foreach(Match match in regex.Matches(tab.Editor.Text))
+			{
+				tab.Editor.Document.Replace(match.Index + offset, match.Length, replacement);
+				offset += replacement.Length - match.Length;
+			}
+			
+			tab.Editor.Document.EndUpdate();
+
+			tab.TextChanged();
+		}
+		
+		private Regex GetRegexFromQuery()
+		{
+			var expression = Regex.Escape(Query.Text);
+			return new Regex(expression);
+		}
+		
+		private void NoResultsFound(SearchAction action, WindowTab tab, Regex regex)
+		{
+			if (SearchAreaCurrentDocument.IsSelected)
+			{
+				if (lastReachedOffset == 0)
+					Notifier.Show("Zero matches");
+				else
+				{
+					lastReachedOffset = 0;
+					Notifier.Show("End of document reached...");
+				}
+			}
+			else if (SearchAreaOpenDocuments.IsSelected)
+			{
+				if (tab == Controller.Current.CurrentTabs.Last())
+				{
+					Notifier.Show("End of documents reached...");
+
+					lastReachedOffset = 0;
+					lastReachedTab = null;
+				}
+				else
+				{
+					lastReachedOffset = 0;
+					lastReachedTab = Controller.Current.CurrentTabs[tab.Index + 1];
+					
+					DoSearch(action, lastReachedTab, regex);
+				}
+			}
+		}
+
 		private void FindClicked(object sender, RoutedEventArgs e)
 		{
 			DoSearch(SearchAction.Jump);
@@ -152,7 +240,7 @@ namespace Farawla.Features.Search
 
 		private void ReplaceClicked(object sender, RoutedEventArgs e)
 		{
-			
+			DoReplace();
 		}
 	}
 }
