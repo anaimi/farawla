@@ -8,6 +8,10 @@
   ],
   "ClosedTabs": [
     {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\.gems",
+      "Index": 2
+    },
+    {
       "Path": "C:\\Users\\Ahmad\\Desktop\\tmp",
       "Index": 2
     },
@@ -41,10 +45,6 @@
     },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\web.config",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\.gitignore",
       "Index": 1
     }
   ],

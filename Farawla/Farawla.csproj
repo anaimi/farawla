@@ -125,6 +125,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Features\Projects\Jump.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Features\Projects\Widget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,6 +197,9 @@
     <Compile Include="Features\Projects\FileOperationAPIWrapper.cs" />
     <Compile Include="Core\Notifier\ModalInputBox.xaml.cs">
       <DependentUpon>ModalInputBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Projects\Jump.xaml.cs">
+      <DependentUpon>Jump.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Projects\Widget.xaml.cs">
       <DependentUpon>Widget.xaml</DependentUpon>

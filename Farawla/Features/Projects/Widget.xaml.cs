@@ -9,6 +9,8 @@ using Farawla.Core;
 using Path=System.IO.Path;
 using Farawla.Core.Sidebar;
 using Farawla.Utilities;
+using System.Threading;
+using System.ComponentModel;
 
 namespace Farawla.Features.Projects
 {
@@ -38,6 +40,7 @@ namespace Farawla.Features.Projects
 		}
 		public List<FileItem> ExpandedNodes { get; set; }
 		public FileItem LastClickedFile { get; set; }
+		public List<string> ProjectFiles { get; set; }
 		
 		public Widget()
 		{
@@ -58,8 +61,12 @@ namespace Farawla.Features.Projects
 			// assign events
 			Loaded += (s, e) => OnLoaded();
 			Files.MouseDown += (s, e) => { LastClickedFile = null; };
+			
+			// create jump box
+			ProjectFiles = new List<string>();
+			new Jump(this);
 		}
-
+		
 		public void OnLoaded()
 		{
 			Controller.Current.OnFileDropped += (paths) => {
@@ -125,8 +132,8 @@ namespace Farawla.Features.Projects
 					SidebarButton.SetLabel(Path.GetFileName(path));
 				
 				CurrentProjectPath = path;
+				Controller.Current.ProjectOpened(CurrentProjectPath);
 			}
-			
 		}
 		
 		private List<TreeViewItem> GetSubItems(string path)

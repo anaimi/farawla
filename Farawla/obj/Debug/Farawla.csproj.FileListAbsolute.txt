@@ -141,3 +141,5 @@ D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\Project
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\Search\Widget.g.cs
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\Projects\Widget.baml
 D:\Users\nuaimiaa\Desktop\P. Projects\Farawla\Farawla\obj\Debug\Features\Search\Widget.baml
+C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Projects\Jump.baml
+C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Projects\Jump.g.cs

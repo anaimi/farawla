@@ -1,0 +1,16 @@
+﻿<Window x:Class="Farawla.Features.Projects.Jump"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Height="400" Width="500" Background="#44606060" 
+    Title="Jump" ResizeMode="NoResize" WindowStyle="None" SnapsToDevicePixels="True" WindowStartupLocation="CenterScreen">
+    <Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="58" />
+			<RowDefinition  />
+		</Grid.RowDefinitions>
+		
+		<TextBox x:Name="FileName" Grid.Row="0" FontWeight="Bold" FontSize="25" Margin="10" Foreground="#444444" BorderBrush="#444444" BorderThickness="1" KeyUp="OnKeyUp" />
+		
+		<ListBox x:Name="Files" Grid.Row="1" />
+	</Grid>
+</Window>

@@ -67,6 +67,7 @@ namespace Farawla.Core
 		public event Action OnStart;
 		public event Action OnExit;
 		public event Action OnResize;
+		public event Action<string> OnProjectOpened;
 		public event Action<string[]> OnFileDropped;
 		
 		public static void Initialize(MainWindow instance)
@@ -164,6 +165,12 @@ namespace Farawla.Core
 			
 			// save current state
 			Settings.Instance.IsWindowMaximized = MainWindow.WindowState == WindowState.Maximized;
+		}
+		
+		public void ProjectOpened(string path)
+		{
+			if (OnProjectOpened != null)
+				OnProjectOpened(path);
 		}
 
 		public void FileDropped(string[] files)

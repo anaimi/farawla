@@ -143,8 +143,7 @@
 					<Thumb 
 			          Style="{StaticResource ScrollBarThumb}" 
 			          Margin="0,5,0,5"  
-			          Background="#C0C0C0"
-			          BorderBrush="#404040" />
+			          Background="#22606060" />
 				</Track.Thumb>
 				<Track.IncreaseRepeatButton>
 					<RepeatButton 

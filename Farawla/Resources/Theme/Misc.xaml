@@ -1,6 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+
+	<!-- watermarked input -->
+	<Style x:Key="WatermarkedInput" TargetType="{x:Type TextBlock}">
+		<Setter Property="Foreground" Value="#888888" />
+	</Style>
+
 	<!-- simple button -->
 	<Style TargetType="{x:Type Button}" x:Key="SimpleButton">
 		<Setter Property="Cursor" Value="Hand" />
