@@ -59,7 +59,7 @@
       "Name": "Projects",
       "Values": {
         "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
-        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\CodeBox,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla,C:\\Users\\Ahmad\\Desktop\\clouds,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog"
+        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\CodeBox,C:\\Users\\Ahmad\\Desktop\\clouds,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog"
       }
     }
   ]

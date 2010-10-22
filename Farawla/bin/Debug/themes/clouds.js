@@ -1,4 +1,5 @@
 {
+	MatchingTokensBackground: "#FFFF00",
 	Background: "#FFFFFFFF",
 	Foreground: "#FF000000",
 	

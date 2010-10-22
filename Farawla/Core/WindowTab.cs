@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -40,12 +41,16 @@ namespace Farawla.Core
 		{
 			get { return Controller.Current.MainWindow.Tab.Items.IndexOf(Tab); }
 		}
-		
+
+		private Color matchingTokensBackground;
 		private BackgroundWorker completionWorker;
 		private List<CompletionWindowItem> completionItems;
 
 		public WindowTab(string path)
 		{
+			// arrange
+			matchingTokensBackground = Theme.Instance.MatchingTokensBackground.ToColor();
+			
 			// get language
 			Language = Controller.Current.Languages.GetLanguage(path.Substring(path.LastIndexOf('.') + 1));
 
@@ -77,6 +82,7 @@ namespace Farawla.Core
 			Editor.Foreground = new SolidColorBrush(Theme.Instance.Foreground.ToColor());
 			Editor.FontFamily = new FontFamily(Theme.Instance.FontFamily);
 			Editor.TextArea.TextEntered += (s, e) => TextEntered(e);
+			Editor.TextArea.SelectionChanged += (s, e) => SelectionChanged();
 			
 			// renderer
 			BlockHighlighter = new BlockHighlighter(Editor);
@@ -225,6 +231,19 @@ namespace Farawla.Core
 			DocumentPath = newPath;
 
 			Tab.Header = Name;
+		}
+		
+		public void SelectionChanged()
+		{
+			BlockHighlighter.Clear(this);
+			
+			if (Editor.SelectionLength == 0 || Editor.SelectedText.Any(c => !char.IsLetterOrDigit(c)))
+				return;
+			
+			foreach(Match match in Regex.Matches(Editor.Text, Editor.SelectedText))
+			{
+				BlockHighlighter.Add(this, match.Index, match.Length, matchingTokensBackground);
+			}
 		}
 
 		public void Close()
