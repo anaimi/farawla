@@ -83,6 +83,7 @@ namespace Farawla.Core
 			Editor.FontFamily = new FontFamily(Theme.Instance.FontFamily);
 			Editor.TextArea.TextEntered += (s, e) => TextEntered(e);
 			Editor.TextArea.SelectionChanged += (s, e) => SelectionChanged();
+			Editor.TextArea.Caret.PositionChanged += (s, e) => CaretOffsetChanged();
 			
 			// renderer
 			BlockHighlighter = new BlockHighlighter(Editor);
@@ -235,17 +236,26 @@ namespace Farawla.Core
 		
 		public void SelectionChanged()
 		{
-			BlockHighlighter.Clear(this);
+			#region When highlighting a token, highlight all matching tokens
+			
+			BlockHighlighter.Clear("Selection");
 			
 			if (Editor.SelectionLength == 0 || Editor.SelectedText.Any(c => !char.IsLetterOrDigit(c)))
 				return;
 			
 			foreach(Match match in Regex.Matches(Editor.Text, Editor.SelectedText))
 			{
-				BlockHighlighter.Add(this, match.Index, match.Length, matchingTokensBackground);
+				BlockHighlighter.Add("Selection", match.Index, match.Length, matchingTokensBackground);
 			}
+			
+			#endregion
 		}
 
+		private void CaretOffsetChanged()
+		{
+			HighlightBracketsIfNextToCaret();
+		}
+		
 		public void Close()
 		{
 			// save or ignore?
@@ -269,6 +279,100 @@ namespace Farawla.Core
 			// update count (also open a new tab if tab count is zero)
 			Controller.Current.TabCountUpdated();
 		}
+
+		#region Highlight bracket paris
+
+		private void HighlightBracketsIfNextToCaret()
+		{
+			var brackets = new Dictionary<char, char> { { '(', ')' }, { '{', '}' }, { '[', ']' } };
+
+			BlockHighlighter.Clear("Brackets");
+
+			char begin = ' ';
+			var index = 0;
+			var increment = false;
+			var foundBracket = false;
+
+			var before = Editor.CaretOffset > 0 ? Editor.Text[Editor.CaretOffset - 1] : ' ';
+			var after = Editor.CaretOffset < Editor.Text.Length ? Editor.Text[Editor.CaretOffset] : ' ';
+
+			if (before.IsOneOf(')', '}', ']'))
+			{
+				index = Editor.CaretOffset - 1;
+				begin = Editor.Text[index];
+
+				foundBracket = true;
+			}
+
+			if (after.IsOneOf('(', '{', '['))
+			{
+				index = Editor.CaretOffset;
+				begin = Editor.Text[index];
+
+				foundBracket = true;
+			}
+
+			if (foundBracket)
+			{
+				char end;
+
+				if (brackets.ContainsKey(begin))
+				{
+					end = brackets[begin];
+					increment = true;
+				}
+				else
+				{
+					end = brackets.First(b => b.Value == begin).Key;
+				}
+
+				HighlightMatchingBracket(index, begin, end, increment);
+			}
+
+			BlockHighlighter.Redraw();
+		}
+
+		private void HighlightMatchingBracket(int index, char begin, char end, bool increment)
+		{
+			BlockHighlighter.Add("Brackets", index, 1, Theme.Instance.MatchingBracketsBackground.ToColor());
+
+			var limit = Editor.Text.Length;
+			var skip = 0;
+
+			if (increment)
+				index++;
+			else
+				index--;
+
+			while (index >= 0 && index < limit)
+			{
+				var _char = Editor.Text[index];
+
+				if (_char == begin)
+				{
+					skip++;
+				}
+				else if (_char == end)
+				{
+					if (skip > 0)
+					{
+						skip--;
+					}
+					else
+					{
+						BlockHighlighter.Add("Brackets", index, 1, Theme.Instance.MatchingBracketsBackground.ToColor());
+						break;
+					}
+				}
+
+				if (increment)
+					index++;
+				else
+					index--;
+			}
+		}
+
+		#endregion
 	}
 	
 	internal class EditorState
@@ -324,12 +428,12 @@ namespace Farawla.Core
 			get { return KnownLayer.Background; }
 		}
 		
-		public void Add(object owner, int offset, int length, Color color)
+		public void Add(string owner, int offset, int length, Color color)
 		{
 			blocks.Add(new HighlightedBlocks(owner, offset, length, color));
 		}
-		
-		public void Remove(object owner, int offset, int length)
+
+		public void Remove(string owner, int offset, int length)
 		{
 			var block = blocks.FirstOrDefault(b => b.Owner == owner && b.Offset == offset && b.Length == length);
 			blocks.Remove(block);
@@ -339,8 +443,8 @@ namespace Farawla.Core
 		{
 			blocks.Clear();
 		}
-		
-		public void Clear(object owner)
+
+		public void Clear(string owner)
 		{
 			blocks.RemoveAll(b => b.Owner == owner);
 		}
@@ -369,12 +473,12 @@ namespace Farawla.Core
 
 	public class HighlightedBlocks
 	{
-		public object Owner { get; set; }
+		public string Owner { get; set; }
 		public int Offset { get; set; }
 		public int Length { get; set; }
 		public Color Color { get; set; }
 
-		public HighlightedBlocks(object owner, int offset, int length, Color color)
+		public HighlightedBlocks(string owner, int offset, int length, Color color)
 		{
 			Owner = owner;
 			Offset = offset;

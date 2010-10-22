@@ -208,6 +208,7 @@
       <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\DelayedAction.cs" />
+    <Compile Include="Utilities\Extensions\CharacterExtension.cs" />
     <Compile Include="Utilities\Extensions\DateTimeExtension.cs" />
     <Compile Include="Utilities\Extensions\DoubleExtension.cs" />
     <Compile Include="Utilities\Extensions\IconExtension.cs" />

@@ -57,7 +57,7 @@ namespace Farawla.Features.Search
 		{
 			foreach (var tab in Controller.Current.CurrentTabs)
 			{
-				tab.BlockHighlighter.Clear(this);
+				tab.BlockHighlighter.Clear("Search");
 				tab.BlockHighlighter.Redraw();
 			}
 		}
@@ -117,7 +117,7 @@ namespace Farawla.Features.Search
 		private void DoSearch(SearchAction action, WindowTab tab, Regex regex)
 		{
 			// clear old blocks
-			tab.BlockHighlighter.Clear(this);
+			tab.BlockHighlighter.Clear("Search");
 			
 			// highlight matches
 			if (action == SearchAction.Highlight)
@@ -126,7 +126,7 @@ namespace Farawla.Features.Search
 				
 				foreach (Match match in regex.Matches(tab.Editor.Text))
 				{
-					tab.BlockHighlighter.Add(this, match.Index, match.Length, foundTextBackground);
+					tab.BlockHighlighter.Add("Search", match.Index, match.Length, foundTextBackground);
 				}
 			}
 			

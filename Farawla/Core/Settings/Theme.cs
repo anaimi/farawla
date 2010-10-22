@@ -12,6 +12,7 @@ namespace Farawla.Core
 	public class Theme
 	{
 		public const string DEFAULT_EDITOR_MATCHING_TOKENS_BACKGROUND = "#FFFFEE78";
+		public const string DEFAULT_EDITOR_MATCHING_BRACKETS_BACKGROUND = "#FFFFEE78";
 		public const string DEFAULT_EDITOR_BACKGROUND = "#FFFFFFFF";
 		public const string DEFAULT_EDITOR_FOREGROUND = "#FF000000";
 		public const string DEFAULT_EDITOR_FONT_FAMILY = "Courier New";
@@ -50,6 +51,7 @@ namespace Farawla.Core
 		#endregion
 		
 		public string MatchingTokensBackground { get; set; }
+		public string MatchingBracketsBackground { get; set; }
 		public string Background { get; set; }
 		public string Foreground { get; set; }
 		public string FontFamily { get; set; }
@@ -59,6 +61,7 @@ namespace Farawla.Core
 		public Theme()
 		{
 			MatchingTokensBackground = DEFAULT_EDITOR_MATCHING_TOKENS_BACKGROUND;
+			MatchingBracketsBackground = DEFAULT_EDITOR_MATCHING_BRACKETS_BACKGROUND;
 			Background = DEFAULT_EDITOR_BACKGROUND;
 			Foreground = DEFAULT_EDITOR_FOREGROUND;
 			FontFamily = DEFAULT_EDITOR_FONT_FAMILY;

@@ -52,8 +52,8 @@ namespace Farawla.Core.Language
 			foreach (var scope in Scopes)
 			{
 				var scopeStack = new Stack<int>();
-				var beginMatch = new Regex(scope.Begin);
-				var scopeMatch = new Regex("(" + scope.Begin + ")|(" + scope.End + ")").Match(sbCode.ToString());
+				var beginMatch = scope.BeginRegex;
+				var scopeMatch = scope.ScopeMatch.Match(sbCode.ToString());
 				
 				while (scopeMatch.Success)
 				{
@@ -124,7 +124,7 @@ namespace Farawla.Core.Language
 		{
 			get
 			{
-				if (!Match.IsBlank() && _regex == null)
+				if (_regex == null)
 					_regex = new Regex(Match);
 
 				return _regex;
@@ -176,6 +176,42 @@ namespace Farawla.Core.Language
 	{
 		public string Begin { get; set; }
 		public string End { get; set; }
+
+		private Regex beginRegex;
+		public Regex BeginRegex
+		{
+			get
+			{
+				if (beginRegex == null)
+					beginRegex = new Regex(Begin);
+
+				return beginRegex;
+			}
+		}
+
+		private Regex endRegex;
+		public Regex EndRegex
+		{
+			get
+			{
+				if (endRegex == null)
+					endRegex = new Regex(End);
+
+				return endRegex;
+			}
+		}
+
+		private Regex scopeMatch;
+		public Regex ScopeMatch
+		{
+			get
+			{
+				if (scopeMatch == null)
+					scopeMatch = new Regex("(" + Begin + ")|(" + End + ")");
+
+				return scopeMatch;
+			}
+		}
 	}
 	
 	public class ScopeRange
