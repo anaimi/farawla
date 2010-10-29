@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Farawla.Core;
 using Farawla.Core.Sidebar;
 using System.Diagnostics;
@@ -7,13 +9,14 @@ using Farawla.Core.Language;
 using System.IO;
 using System.Windows;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Farawla.Features.Snippets
 {
 	public partial class Widget : IWidget
 	{
 		public BarButton SidebarButton { get; set; }
-		public Dictionary<string, StackPanel> Snippets { get; set; }
+		public Dictionary<string, SnippetGroup> Snippets { get; set; }
 		
 		public Widget()
 		{
@@ -25,11 +28,16 @@ namespace Farawla.Features.Snippets
 			SidebarButton.IsStretchable = true;
 			
 			// initialize
-			Snippets = new Dictionary<string, StackPanel>();
+			Snippets = new Dictionary<string, SnippetGroup>();
 			
 			// assign on active window change event
 			Controller.Current.OnActiveTabChanged += ActiveTabChanged;
 			Controller.Current.OnStart += ActiveTabChanged;
+			
+			// assign on text enter event
+			Controller.Current.OnTabCreated += (tab) => {
+				tab.Editor.TextArea.KeyUp += (s, e) => OnTextEntered(tab, e);
+			};
 		}
 
 		private void ActiveTabChanged()
@@ -49,7 +57,7 @@ namespace Farawla.Features.Snippets
 					}
 					else
 					{
-						Snippets.Add(tab.Language.Name, null);
+						Snippets.Add(tab.Language.Name, new SnippetGroup());
 					}
 				}
 				
@@ -65,7 +73,7 @@ namespace Farawla.Features.Snippets
 				// show it otherwise
 				else
 				{
-					ShowSnippets(Snippets[tab.Language.Name]);
+					ShowSnippets(Snippets[tab.Language.Name].Panel);
 				}
 				
 			}
@@ -73,6 +81,27 @@ namespace Farawla.Features.Snippets
 			{
 				ShowNoSnippets();
 			}
+		}
+
+		private void OnTextEntered(WindowTab tab, KeyEventArgs e)
+		{
+			if (!Snippets.ContainsKey(tab.Language.Name) || e.Key != Key.Tab)
+				return;
+
+			var group = Snippets[tab.Language.Name];
+			var line = tab.Editor.Document.GetLineByOffset(tab.Editor.CaretOffset);
+			var text = tab.Editor.Document.GetText(line.Offset, tab.Editor.CaretOffset - line.Offset - 1);
+
+			var snippet = group.Snippets.FirstOrDefault(s => text.EndsWith(s.Trigger));
+			
+			if (snippet == null)
+				return;
+
+			tab.Editor.Document.Remove(tab.Editor.CaretOffset - (snippet.Trigger.Length + 1), snippet.Trigger.Length + 1);
+			
+			ApplySnippet(snippet);
+			
+			e.Handled = true;
 		}
 		
 		private void PopulateSnippets(string name, string path)
@@ -103,7 +132,7 @@ namespace Farawla.Features.Snippets
 			
 			#endregion
 			
-			Snippets.Add(name, panel);
+			Snippets.Add(name, new SnippetGroup { Panel = panel, Snippets = list });
 		}
 		
 		private void ShowSnippets(StackPanel panel)
@@ -124,7 +153,57 @@ namespace Farawla.Features.Snippets
 		{
 			var editor = Controller.Current.ActiveTab.Editor;
 			
-			editor.Document.Insert(editor.CaretOffset, snippet.Body);
+			#region Indent body
+			var lineNumber = editor.Document.GetLineByOffset(editor.CaretOffset);
+			var lineText = editor.Document.GetText(lineNumber);
+			var formatedBody = snippet.Body;
+			
+			foreach(var c in lineText)
+			{
+				if (c == '\t')
+				{
+					formatedBody = formatedBody.Replace("\n", "\n\t");
+					
+				}
+				else if (c == ' ')
+				{
+					formatedBody = formatedBody.Replace("\n", "\n ");					
+				}
+				else
+				{
+					break;
+				}
+
+			}
+			#endregion
+			
+			// get caret position
+			var caret = -1;
+			if (formatedBody.Contains("$0"))
+			{
+				var index = formatedBody.IndexOf("$0");
+				caret = editor.CaretOffset + index;
+				formatedBody = formatedBody.Remove(index, 2);
+			}
+			
+			editor.Document.Insert(editor.CaretOffset, formatedBody);
+			
+			// set caret
+			if (caret != -1)
+			{
+				editor.CaretOffset = caret;
+			}
+		}
+	}
+	
+	public class SnippetGroup
+	{
+		public List<Snippet> Snippets { get; set; }
+		public StackPanel Panel { get; set; }
+
+		public SnippetGroup()
+		{
+			Snippets = new List<Snippet>();
 		}
 	}
 	

@@ -135,6 +135,10 @@ namespace Farawla.Core
 			Keyboard.AddBinding(KeyCombination.Ctrl | KeyCombination.Shift, Key.T, OpenLastClosedTab);
 			#endregion
 			
+			// inform tab creation observers, since tabs are created before allowing observers to subscribe
+			if (OnTabCreated != null)
+				CurrentTabs.ForEach(OnTabCreated);
+			
 			if (OnStart != null)
 				OnStart();
 		}

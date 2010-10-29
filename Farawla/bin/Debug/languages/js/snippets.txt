@@ -2,17 +2,17 @@
 	{
 		Name: "Function",
 		Trigger: "func",
-		Body: "function name() {\n\t\n}"
+		Body: "function name() {\n\t$0\n}"
 	},
 	{
 		Name: "Function",
 		Trigger: "func:",
-		Body: "function: name() {\n\t\n}"
+		Body: "function: name() {\n\t$0\n}"
 	},
 	{
 		Name: "Debug",
 		Trigger: "debug",
-		Body: "debug.console(\"\");"
+		Body: "console.debug(\"$0\");"
 	}
 	
 ]

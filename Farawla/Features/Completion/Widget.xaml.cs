@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Farawla.Core;
 using Farawla.Core.Sidebar;
 using ICSharpCode.AvalonEdit.CodeCompletion;
@@ -27,7 +17,6 @@ namespace Farawla.Features.Completion
 		public Dictionary<string, AutoComplete> Completions { get; set; }
 		
 		private BackgroundWorker completionWorker;
-		private List<CompletionWindowItem> completionItems;
 		
 		public Widget()
 		{
@@ -43,7 +32,6 @@ namespace Farawla.Features.Completion
 			
 			// assign events
 			Controller.Current.OnTabCreated += OnNewTab;
-			Controller.Current.OnStart += () => Controller.Current.CurrentTabs.ForEach(OnNewTab);
 		}
 
 		private void OnNewTab(WindowTab tab)
@@ -83,21 +71,13 @@ namespace Farawla.Features.Completion
 
 		private void TextEntered(WindowTab tab, AutoComplete completion, TextCompositionEventArgs args)
 		{
-			if (completionItems != null && args.Text.Length == 1 && args.Text[0] == '.')
+			if (args.Text.Length == 1 && args.Text[0] == '.')
 			{
-				var cw = new CompletionWindow(tab.Editor.TextArea);
-
-				foreach (var item in completionItems)
-					cw.CompletionList.CompletionData.Add(item);
-
-				Debug.WriteLine("Refreshed completion list: " + completionItems.Count + " items.");
-
-				cw.Show();
-				cw.Closed += (s, e) => cw = null;
+				tab.ShowCompletionWindow();
 			}
 			else if (!completionWorker.IsBusy)
 			{
-				completionWorker.RunWorkerAsync(new EditorState { Text = tab.Editor.Text, CaretOffset = tab.Editor.CaretOffset, Completion = completion });
+				completionWorker.RunWorkerAsync(new EditorState { Text = tab.Editor.Text, CaretOffset = tab.Editor.CaretOffset, Completion = completion, Tab = tab });
 			}
 		}
 
@@ -106,19 +86,20 @@ namespace Farawla.Features.Completion
 			var state = args.Argument as EditorState;
 
 			var identifiers = state.Completion.GetIdentifiersFromCode(state.Text).Where(i => i.Scope.From < state.CaretOffset && i.Scope.To >= state.CaretOffset);
-			completionItems = new List<CompletionWindowItem>();
-
+			state.Tab.ClearCompletionItems("Completion");
+			
 			foreach (var identifier in identifiers)
 			{
-				completionItems.Add(new CompletionWindowItem(identifier.Name));
+				state.Tab.AddCompletionItem(new CompletionWindowItem("Completion", identifier.Name));
 			}
 		}
+	}
 
-		internal class EditorState
-		{
-			public AutoComplete Completion { get; set; }
-			public string Text { get; set; }
-			public int CaretOffset { get; set; }
-		}
+	internal class EditorState
+	{
+		public WindowTab Tab { get; set; }
+		public AutoComplete Completion { get; set; }
+		public string Text { get; set; }
+		public int CaretOffset { get; set; }
 	}
 }

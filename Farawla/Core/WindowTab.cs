@@ -43,6 +43,7 @@ namespace Farawla.Core
 		}
 
 		private Color matchingTokensBackground;
+		private List<CompletionWindowItem> completionItems;
 
 		public WindowTab(string path)
 		{
@@ -75,7 +76,7 @@ namespace Farawla.Core
 			//Editor.Options.ShowTabs = true;
 			//Editor.Options.ShowSpaces = true;
 			Editor.Options.ShowBoxForControlCharacters = true;
-			Editor.Options.ConvertTabsToSpaces = true;
+			//Editor.Options.ConvertTabsToSpaces = true;
 			Editor.Background = new SolidColorBrush(Theme.Instance.Background.ToColor());
 			Editor.Foreground = new SolidColorBrush(Theme.Instance.Foreground.ToColor());
 			Editor.FontFamily = new FontFamily(Theme.Instance.FontFamily);
@@ -104,6 +105,9 @@ namespace Farawla.Core
 				HighlightingManager.Instance.RegisterHighlighting(Language.Name, Language.Associations.ToArray(), Language.Highlighting.GetHighlighter());
 				Editor.SyntaxHighlighting = Language.Highlighting.GetHighlighter();
 			}
+			
+			// assign completion window
+			completionItems = new List<CompletionWindowItem>();
 		}
 
 		public void MakeActive()
@@ -239,6 +243,37 @@ namespace Farawla.Core
 			// update count (also open a new tab if tab count is zero)
 			Controller.Current.TabCountUpdated();
 		}
+		
+		#region Completion
+		
+		public void ClearCompletionItems(string owner)
+		{
+			completionItems.RemoveAll(i => i.Owner == owner);
+		}
+		
+		public void RemoveCompletionItem(CompletionWindowItem item)
+		{
+			if (completionItems.Contains(item))
+				completionItems.Remove(item);
+		}
+		
+		public void AddCompletionItem(CompletionWindowItem item)
+		{
+			completionItems.Add(item);
+		}
+		
+		public void ShowCompletionWindow()
+		{
+			var cw = new CompletionWindow(Editor.TextArea);
+
+			foreach (var item in completionItems)
+				cw.CompletionList.CompletionData.Add(item);
+
+			cw.Show();
+			cw.Closed += (s, e) => cw = null;
+		}
+		
+		#endregion
 
 		#region Highlight bracket paris
 
@@ -337,8 +372,11 @@ namespace Farawla.Core
 
 	public class CompletionWindowItem : ICompletionData
 	{
-		public CompletionWindowItem(string text)
+		public string Owner { get; private set; }
+		
+		public CompletionWindowItem(string owner, string text)
 		{
+			Owner = owner;
 			Text = text;
 		}
 
