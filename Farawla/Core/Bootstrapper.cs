@@ -16,6 +16,7 @@ namespace Farawla.Core
 		{
 			Controller.Current.Widgets.Add(new Features.Projects.Widget());
 			Controller.Current.Widgets.Add(new Features.Search.Widget());
+			Controller.Current.Widgets.Add(new Features.Snippets.Widget());
 			Controller.Current.Widgets.Add(new Features.ColorPicker.Widget());
 			Controller.Current.Widgets.Add(Settings.Instance);
 		}

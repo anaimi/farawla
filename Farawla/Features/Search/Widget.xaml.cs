@@ -41,7 +41,7 @@ namespace Farawla.Features.Search
             });
 			
 			// set default color
-			foundTextBackground = Colors.Yellow;
+			foundTextBackground = Theme.Instance.MatchingTokensBackground.ToColor();
 			
 			// set events
 			Query.KeyUp += OnQueryKeyUp;

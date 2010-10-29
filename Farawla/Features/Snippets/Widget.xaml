@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Farawla.Features.Snippets.Widget"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Width="240" Height="300" VerticalContentAlignment="Stretch"
+    >
+	<Grid>
+		<Grid.Resources>
+			
+		</Grid.Resources>
+		
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<TextBlock x:Name="NoSnippets" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="bold" TextAlignment="Center" Foreground="#88FFFFFF">
+				<Run>No Snippets</Run>
+				<LineBreak />
+				<Run>Found</Run>
+		</TextBlock>
+
+		<Border x:Name="Container" Visibility="Collapsed">
+			
+		</Border>
+	</Grid>
+</UserControl>

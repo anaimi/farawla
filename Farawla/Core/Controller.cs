@@ -2,18 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using Farawla.Core.Language;
-using ICSharpCode.AvalonEdit;
-using System.Xml;
-using ICSharpCode.AvalonEdit.Highlighting;
 using System.Linq;
 using System.IO;
 using Farawla.Features;
 using System.Windows.Input;
 using Microsoft.Win32;
-using System.Diagnostics;
-using System.ComponentModel;
 
 namespace Farawla.Core
 {
@@ -67,6 +61,7 @@ namespace Farawla.Core
 		public event Action OnStart;
 		public event Action OnExit;
 		public event Action OnResize;
+		public event Action OnActiveTabChanged;
 		public event Action<string> OnProjectOpened;
 		public event Action<string[]> OnFileDropped;
 		
@@ -93,6 +88,12 @@ namespace Farawla.Core
 					if (File.Exists(tab))
 						_current.CreateNewTab(tab);
 			}
+			
+			// assign active window change event
+			_current.MainWindow.Tab.SelectionChanged += (s, e) => {
+				if (_current.OnActiveTabChanged != null)
+					_current.OnActiveTabChanged();
+			};
 			
 			// never show zero tabs
 			if (_current.CurrentTabs.Count == 0)
@@ -142,10 +143,17 @@ namespace Farawla.Core
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.T, () => CreateNewTab(""));
 			Keyboard.AddBinding(KeyCombination.Ctrl | KeyCombination.Shift, Key.T, OpenLastClosedTab);
 			#endregion
+			
+			if (OnStart != null)
+				OnStart();
 		}
 
 		public void Exit()
 		{
+			// call observers
+			if (OnExit != null)
+				OnExit();
+			
 			// save opened tabs
 			Settings.Instance.OpenTabs = new List<string>();
 			foreach(var tab in CurrentTabs.Where(t => !t.IsNewDocument).OrderBy(t => t.Index))
@@ -165,6 +173,10 @@ namespace Farawla.Core
 			
 			// save current state
 			Settings.Instance.IsWindowMaximized = MainWindow.WindowState == WindowState.Maximized;
+			
+			// call observers
+			if (OnResize != null)
+				OnResize();
 		}
 		
 		public void ProjectOpened(string path)

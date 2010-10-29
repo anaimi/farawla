@@ -420,6 +420,7 @@ namespace Farawla.Core
 		public BlockHighlighter(TextEditor editor)
 		{
 			this.editor = editor;
+			
 			blocks = new List<HighlightedBlocks>();
 		}
 
@@ -461,7 +462,7 @@ namespace Farawla.Core
 				var startPosition = textView.GetVisualPosition(new TextViewPosition(startLocation), VisualYPosition.LineTop);
 				var endPosition = textView.GetVisualPosition(new TextViewPosition(endLocation), VisualYPosition.LineBottom);
 
-				drawingContext.DrawRoundedRectangle(new SolidColorBrush(block.Color), new Pen(), new Rect(startPosition.X, startPosition.Y, endPosition.X - startPosition.X, endPosition.Y - startPosition.Y), 3, 3);
+				drawingContext.DrawRoundedRectangle(new SolidColorBrush(block.Color), new Pen(), new Rect(startPosition.X - editor.TextArea.TextView.ScrollOffset.X, startPosition.Y - editor.TextArea.TextView.ScrollOffset.Y, endPosition.X - startPosition.X, endPosition.Y - startPosition.Y), 3, 3);
 			}
 		}
 

@@ -1,0 +1,18 @@
+[
+	{
+		Name: "Function",
+		Trigger: "func",
+		Body: "function name() {\n\t\n}"
+	},
+	{
+		Name: "Function",
+		Trigger: "func:",
+		Body: "function: name() {\n\t\n}"
+	},
+	{
+		Name: "Debug",
+		Trigger: "debug",
+		Body: "debug.console(\"\");"
+	}
+	
+]

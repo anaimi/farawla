@@ -8,11 +8,11 @@ namespace Farawla.Core.Language
 {
 	public class Languages
 	{
-		public List<LanguageMeta> List { get; private set; }
+		public List<LanguageMeta> Items { get; private set; }
 		
 		public Languages()
 		{
-			List = new List<LanguageMeta>();
+			Items = new List<LanguageMeta>();
 			
 			if (!VerifyLanguagesFolderExist())
 				return;
@@ -20,16 +20,17 @@ namespace Farawla.Core.Language
 			foreach(var lang in Directory.GetDirectories("languages"))
 			{
 				var json = File.ReadAllText(lang + "\\main.js");
-				var obj = JsonConvert.DeserializeObject<LanguageMeta>(json);
 				
+				var obj = JsonConvert.DeserializeObject<LanguageMeta>(json);
 				obj.Initialize(lang);
-				List.Add(obj);
+				
+				Items.Add(obj);
 			}
 		}
 		
 		public LanguageMeta GetLanguage(string extension)
 		{
-			foreach(var lang in List)
+			foreach(var lang in Items)
 				if (lang.Associations.Any(a => a == extension))
 					return lang;
 			

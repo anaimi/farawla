@@ -9,19 +9,29 @@ namespace Farawla.Core.Language
 {
 	public class LanguageMeta
 	{
+		public const string DEFAULT_NAME = "Default";
+		
 		public string Name { get; set; }
 		public string Directory { get; set; }
 		public List<string> Associations { get; set; }
 		
+		public bool IsDefault
+		{
+			get
+			{
+				return Name == DEFAULT_NAME;
+			}
+		}
+		
 		public bool HasHighlighting { get; private set; }
 		public Highlighting Highlighting { get; private set; }
-		
+
 		public bool HasAutoComplete { get; private set; }
 		public AutoComplete AutoComplete { get; private set; }
 
 		public LanguageMeta()
 		{
-			Name = "Default";
+			Name = DEFAULT_NAME;
 			Associations = new List<string>();
 		}
 		

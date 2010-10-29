@@ -11,7 +11,7 @@ namespace Farawla.Core
 {
 	public class Theme
 	{
-		public const string DEFAULT_EDITOR_MATCHING_TOKENS_BACKGROUND = "#FFFFEE78";
+		public const string DEFAULT_EDITOR_MATCHING_TOKENS_BACKGROUND = "#FFFFFF00";
 		public const string DEFAULT_EDITOR_MATCHING_BRACKETS_BACKGROUND = "#FFFFEE78";
 		public const string DEFAULT_EDITOR_BACKGROUND = "#FFFFFFFF";
 		public const string DEFAULT_EDITOR_FOREGROUND = "#FF000000";

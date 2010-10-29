@@ -137,6 +137,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Features\Snippets\SnippetButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\Snippets\Widget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -205,6 +213,12 @@
       <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Search\Widget.xaml.cs">
+      <DependentUpon>Widget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Snippets\SnippetButton.xaml.cs">
+      <DependentUpon>SnippetButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Snippets\Widget.xaml.cs">
       <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\DelayedAction.cs" />
@@ -304,9 +318,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\loading.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Features\Snippets\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

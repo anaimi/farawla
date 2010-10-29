@@ -81,9 +81,12 @@ namespace Farawla.Core.Sidebar
 
 			workspace = (workspace / count) - ((BUTTON_HEIGHT + 10) * count);
 
-			foreach (var button in stretchables)
+			foreach (var button in buttons.Where(b => b.IsStretchable))
 			{
-				button.Control.Height = button.WidgetHeight = workspace;
+				button.WidgetHeight = workspace;
+				
+				if (button.IsExpanded)
+					button.Control.Height = workspace;
 			}
 		}
 	}
