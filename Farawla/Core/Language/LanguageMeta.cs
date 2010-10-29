@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Farawla.Features.Completion;
 using Newtonsoft.Json;
 
 namespace Farawla.Core.Language
@@ -25,9 +26,6 @@ namespace Farawla.Core.Language
 		
 		public bool HasHighlighting { get; private set; }
 		public Highlighting Highlighting { get; private set; }
-
-		public bool HasAutoComplete { get; private set; }
-		public AutoComplete AutoComplete { get; private set; }
 
 		public LanguageMeta()
 		{
@@ -55,24 +53,6 @@ namespace Farawla.Core.Language
 
 			Highlighting.Initialize(this);
 			
-			#endregion
-
-			#region Initialize AutoComplete
-
-			if (File.Exists(directory + "\\autocomplete.js"))
-			{
-				HasAutoComplete = true;
-				
-				var json = File.ReadAllText(directory + "\\autocomplete.js");
-				AutoComplete = JsonConvert.DeserializeObject<AutoComplete>(json);
-			}
-			else
-			{
-				AutoComplete = new AutoComplete();
-			}
-
-			AutoComplete.Initialize(this);
-
 			#endregion
 		}
 		

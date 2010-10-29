@@ -43,7 +43,7 @@ namespace Farawla.Features.Snippets
 				{
 					var path = tab.Language.Directory;
 
-					if (File.Exists(path + "\\snippets.txt"))
+					if (File.Exists(Core.Settings.ExecDir + "\\" + path + "\\snippets.txt"))
 					{
 						PopulateSnippets(tab.Language.Name, path + "\\snippets.txt");
 					}

@@ -125,6 +125,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Features\Completion\Widget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Features\Projects\Jump.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -174,7 +178,7 @@
     <Compile Include="Core\Bootstrapper.cs" />
     <Compile Include="Core\Controller.cs" />
     <Compile Include="Core\KeyboardObserver.cs" />
-    <Compile Include="Core\Language\AutoComplete.cs" />
+    <Compile Include="Features\Completion\AutoComplete.cs" />
     <Compile Include="Core\Language\Highlighting.cs" />
     <Compile Include="Core\Language\Languages.cs" />
     <Compile Include="Core\Language\LanguageMeta.cs" />
@@ -201,6 +205,9 @@
     </Compile>
     <Compile Include="Core\Settings\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Completion\Widget.xaml.cs">
+      <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Projects\FileOperationAPIWrapper.cs" />
     <Compile Include="Core\Notifier\ModalInputBox.xaml.cs">

@@ -43,8 +43,6 @@ namespace Farawla.Core
 		}
 
 		private Color matchingTokensBackground;
-		private BackgroundWorker completionWorker;
-		private List<CompletionWindowItem> completionItems;
 
 		public WindowTab(string path)
 		{
@@ -106,10 +104,6 @@ namespace Farawla.Core
 				HighlightingManager.Instance.RegisterHighlighting(Language.Name, Language.Associations.ToArray(), Language.Highlighting.GetHighlighter());
 				Editor.SyntaxHighlighting = Language.Highlighting.GetHighlighter();
 			}
-
-			// initialize completion worker and window
-			completionWorker = new BackgroundWorker();
-			completionWorker.DoWork += (s, e) => PopulateAutoComplete(e);
 		}
 
 		public void MakeActive()
@@ -170,27 +164,6 @@ namespace Farawla.Core
 				return;
 
 			TextChanged();
-
-			// have auto complete?
-			if (Language.HasAutoComplete)
-			{
-				if (completionItems != null && args.Text.Length == 1 && args.Text[0] == '.')
-				{
-					var cw = new CompletionWindow(Editor.TextArea);
-					
-					foreach(var item in completionItems)
-						cw.CompletionList.CompletionData.Add(item);
-					
-					Debug.WriteLine("Refreshed completion list: " + completionItems.Count + " items.");
-					
-					cw.Show();
-					cw.Closed += (s, e) => cw = null;
-				}
-				else if (!completionWorker.IsBusy)
-				{
-					completionWorker.RunWorkerAsync(new EditorState { Text = Editor.Text, CaretOffset = Editor.CaretOffset });
-				}
-			}
 		}
 		
 		public void TextChanged()
@@ -211,19 +184,6 @@ namespace Farawla.Core
 		public void MarkWindowAsSaved()
 		{
 			Tab.Header = Name;
-		}
-
-		public void PopulateAutoComplete(DoWorkEventArgs args)
-		{
-			var state = args.Argument as EditorState;
-
-			var identifiers = Language.AutoComplete.GetIdentifiersFromCode(state.Text).Where(i => i.Scope.From < state.CaretOffset && i.Scope.To >= state.CaretOffset);
-			completionItems = new List<CompletionWindowItem>();
-
-			foreach (var identifier in identifiers)
-			{
-				completionItems.Add(new CompletionWindowItem(identifier.Name));
-			}
 		}
 		
 		public void Rename(string newPath)
@@ -373,12 +333,6 @@ namespace Farawla.Core
 		}
 
 		#endregion
-	}
-	
-	internal class EditorState
-	{
-		public string Text { get; set; }
-		public int CaretOffset { get; set; }
 	}
 
 	public class CompletionWindowItem : ICompletionData

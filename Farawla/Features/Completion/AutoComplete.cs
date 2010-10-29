@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Farawla.Core.Language;
 
-namespace Farawla.Core.Language
+namespace Farawla.Features.Completion
 {
 	public class AutoComplete
 	{
@@ -12,16 +13,9 @@ namespace Farawla.Core.Language
 		public List<Scope> Scopes { get; set; }
 		public List<string> IgnoreSections { get; set;}
 
-		private LanguageMeta language;
-		
 		public AutoComplete()
 		{
 			Identifiers = new List<Identifier>();
-		}
-		
-		public void Initialize(LanguageMeta language)
-		{
-			this.language = language;
 		}
 		
 		public List<IdentifierMatch> GetIdentifiersFromCode(string code)
@@ -131,7 +125,7 @@ namespace Farawla.Core.Language
 			}
 		}
 	}
-	
+
 	public class IdentifierMatch
 	{
 		public string Name { get; set; }
@@ -171,7 +165,7 @@ namespace Farawla.Core.Language
 		Object,
 		Function
 	}
-	
+
 	public class Scope
 	{
 		public string Begin { get; set; }
@@ -213,7 +207,7 @@ namespace Farawla.Core.Language
 			}
 		}
 	}
-	
+
 	public class ScopeRange
 	{
 		public int From { get; set; }

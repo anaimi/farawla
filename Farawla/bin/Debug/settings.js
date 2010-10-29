@@ -3,10 +3,17 @@
   "ThemeName": "clouds.js",
   "IsWindowMaximized": true,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\test.js",
-    "C:\\Users\\Ahmad\\Desktop\\notes.txt"
+    "C:\\Users\\Ahmad\\Desktop\\test.js"
   ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\test.js",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\notes.txt",
+      "Index": 1
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\.gems",
       "Index": 2
@@ -37,14 +44,6 @@
     },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\notes.txt",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\.gitignore",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\web.config",
       "Index": 1
     }
   ],

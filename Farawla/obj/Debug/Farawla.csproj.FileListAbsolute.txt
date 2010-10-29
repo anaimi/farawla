@@ -147,3 +147,5 @@ C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Snippets\Widg
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Snippets\Widget.baml
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Snippets\SnippetButton.baml
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Snippets\SnippetButton.g.cs
+C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Completion\Widget.baml
+C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Completion\Widget.g.cs

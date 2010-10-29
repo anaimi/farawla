@@ -32,29 +32,16 @@ namespace Farawla.Core
 		public List<WindowTab> CurrentTabs { get; private set; }
 		public Languages Languages { get; private set; }
 		public MainWindow MainWindow { get; private set; }
+		
 		public WindowTab ActiveTab
 		{
 			get
 			{
-				if (MainWindow.Tab.SelectedIndex == -1)
-					return null;
-				
 				foreach(var tab in CurrentTabs)
 					if (tab.Tab == MainWindow.Tab.SelectedItem as TabItem)
 						return tab;
-				
-				return null;
-			}
-		}
-		public string SelectedText
-		{
-			get
-			{
-				return "This is selected text"; // TODO
-			}
-			set
-			{
-				throw new Exception("settings selected text is not implemented");
+
+				return CurrentTabs.Last();
 			}
 		}
 
@@ -62,6 +49,7 @@ namespace Farawla.Core
 		public event Action OnExit;
 		public event Action OnResize;
 		public event Action OnActiveTabChanged;
+		public event Action<WindowTab> OnTabCreated;
 		public event Action<string> OnProjectOpened;
 		public event Action<string[]> OnFileDropped;
 		
@@ -122,14 +110,17 @@ namespace Farawla.Core
 				index = MainWindow.Tab.Items.Count;
 
 			// create and add new window
-			var window = new WindowTab(path);
-			CurrentTabs.Add(window);
-			MainWindow.Tab.Items.Insert(index, window.Tab);
+			var tab = new WindowTab(path);
+			CurrentTabs.Add(tab);
+			MainWindow.Tab.Items.Insert(index, tab.Tab);
 
 			// select/show las added item
-			window.MakeActive();
+			tab.MakeActive();
 
 			// inform observers
+			if (OnTabCreated != null)
+				OnTabCreated(tab);
+			
 			TabCountUpdated();
 		}
 		
