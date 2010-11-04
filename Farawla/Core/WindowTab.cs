@@ -27,6 +27,7 @@ namespace Farawla.Core
 		public string Name { get; set; }
 		public string DocumentPath { get; set; }
 		public bool IsSaved { get; private set; }
+		public bool IsShowingCompletionWindow { get; set; }
 
 		public LanguageMeta Language { get; set; }
 		public TabItem Tab { get; private set; }
@@ -44,6 +45,7 @@ namespace Farawla.Core
 
 		private Color matchingTokensBackground;
 		private List<CompletionWindowItem> completionItems;
+		private CompletionWindow completionWindow;
 
 		public WindowTab(string path)
 		{
@@ -100,10 +102,10 @@ namespace Farawla.Core
 			Tab.Content = Editor;
 			
 			// syntax highlighter
-			if (Language.HasHighlighting)
+			if (Language.HasSyntax)
 			{
-				HighlightingManager.Instance.RegisterHighlighting(Language.Name, Language.Associations.ToArray(), Language.Highlighting.GetHighlighter());
-				Editor.SyntaxHighlighting = Language.Highlighting.GetHighlighter();
+				HighlightingManager.Instance.RegisterHighlighting(Language.Name, Language.Associations.ToArray(), Language.Syntax.GetHighlighter());
+				Editor.SyntaxHighlighting = Language.Syntax.GetHighlighter();
 			}
 			
 			// assign completion window
@@ -249,28 +251,63 @@ namespace Farawla.Core
 		public void ClearCompletionItems(string owner)
 		{
 			completionItems.RemoveAll(i => i.Owner == owner);
+			
+			if (completionWindow != null)
+			{
+				var toRemove = new List<CompletionWindowItem>();
+				
+				foreach(CompletionWindowItem item in completionWindow.CompletionList.CompletionData)
+				{
+					if (item.Owner == owner)
+						toRemove.Add(item);
+				}
+				
+				foreach(var item in toRemove)
+					completionWindow.CompletionList.CompletionData.Remove(item);
+			}
 		}
 		
 		public void RemoveCompletionItem(CompletionWindowItem item)
 		{
 			if (completionItems.Contains(item))
 				completionItems.Remove(item);
+			
+			if (completionWindow != null)
+			{
+				completionWindow.CompletionList.CompletionData.Remove(item);
+			}
 		}
 		
 		public void AddCompletionItem(CompletionWindowItem item)
 		{
 			completionItems.Add(item);
+
+			if (completionWindow != null)
+			{
+				completionWindow.CompletionList.CompletionData.Add(item);
+			}
 		}
 		
 		public void ShowCompletionWindow()
 		{
-			var cw = new CompletionWindow(Editor.TextArea);
+			IsShowingCompletionWindow = true;
+
+			completionWindow = new CompletionWindow(Editor.TextArea);
 
 			foreach (var item in completionItems)
-				cw.CompletionList.CompletionData.Add(item);
+				completionWindow.CompletionList.CompletionData.Add(item);
 
-			cw.Show();
-			cw.Closed += (s, e) => cw = null;
+			completionWindow.Show();
+			
+			completionWindow.Closed += (s, e) => {
+				IsShowingCompletionWindow = false;
+			};
+		}
+		
+		public void HideCompletionWindow()
+		{
+			if (completionWindow != null)
+				completionWindow.Close();
 		}
 		
 		#endregion

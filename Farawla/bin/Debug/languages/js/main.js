@@ -1,6 +1,6 @@
 {
-	"Name": "JavaScript",
-	"Associations": [
+	Name: "JavaScript",
+	Associations: [
 		"js"
 	]
 }

@@ -9,7 +9,7 @@ using ICSharpCode.AvalonEdit.Highlighting;
 
 namespace Farawla.Core.Language
 {
-	public class Highlighting
+	public class Syntax
 	{
 		public List<Rule> Rules { get; set; }
 		public List<Span> Spans { get; set; }
@@ -17,7 +17,7 @@ namespace Farawla.Core.Language
 		private LanguageMeta language;
 		private HighlightingDefinition highlighter;
 
-		public Highlighting()
+		public Syntax()
 		{
 			Rules = new List<Rule>();
 			Spans = new List<Span>();

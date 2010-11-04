@@ -73,6 +73,15 @@ namespace Farawla.Core
 		{
 			if (SyntaxColors.ContainsKey(key))
 				return SyntaxColors[key].ToColor();
+			
+			if (key.Contains(" ") && key != " ")
+			{
+				// replace double space, if found
+				while(key.Contains("  "))
+					key.Replace("  ", " ");
+				
+				return GetColor(key.Substring(0, key.LastIndexOf(' ')));
+			}
 
 			return Foreground.ToColor();
 		}

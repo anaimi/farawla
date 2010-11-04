@@ -24,8 +24,8 @@ namespace Farawla.Core.Language
 			}
 		}
 		
-		public bool HasHighlighting { get; private set; }
-		public Highlighting Highlighting { get; private set; }
+		public bool HasSyntax { get; private set; }
+		public Syntax Syntax { get; private set; }
 
 		public LanguageMeta()
 		{
@@ -37,21 +37,21 @@ namespace Farawla.Core.Language
 		{
 			Directory = directory;
 			
-			#region Initialize Highlighting
+			#region Initialize Syntax
 			
-			if (File.Exists(directory + "\\highlighting.js"))
+			if (File.Exists(directory + "\\syntax.js"))
 			{
-				HasHighlighting = true;
+				HasSyntax = true;
 				
-				var json = File.ReadAllText(directory + "\\highlighting.js");
-				Highlighting = JsonConvert.DeserializeObject<Highlighting>(json);
+				var json = File.ReadAllText(directory + "\\syntax.js");
+				Syntax = JsonConvert.DeserializeObject<Syntax>(json);
 			}
 			else
 			{
-				Highlighting = new Highlighting();
+				Syntax = new Syntax();
 			}
 
-			Highlighting.Initialize(this);
+			Syntax.Initialize(this);
 			
 			#endregion
 		}

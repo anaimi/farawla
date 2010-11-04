@@ -1,12 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Windows.Input;
 using Farawla.Core;
 using Farawla.Core.Sidebar;
-using ICSharpCode.AvalonEdit.CodeCompletion;
 using Newtonsoft.Json;
 
 namespace Farawla.Features.Completion
@@ -14,9 +9,7 @@ namespace Farawla.Features.Completion
 	public partial class Widget : IWidget
 	{
 		public BarButton SidebarButton { get; set; }
-		public Dictionary<string, AutoComplete> Completions { get; set; }
-		
-		private BackgroundWorker completionWorker;
+		public Dictionary<string, AutoComplete> LanguageCompletions { get; set; }
 		
 		public Widget()
 		{
@@ -28,7 +21,7 @@ namespace Farawla.Features.Completion
 			SidebarButton.WidgetHeight = 140;
 			
 			// arrange
-			Completions = new Dictionary<string, AutoComplete>();
+			LanguageCompletions = new Dictionary<string, AutoComplete>();
 			
 			// assign events
 			Controller.Current.OnTabCreated += OnNewTab;
@@ -39,67 +32,50 @@ namespace Farawla.Features.Completion
 			if (tab.Language.IsDefault)
 				return;
 			
-			// make sure it exists in the cache
-			if (!Completions.ContainsKey(tab.Language.Name))
+			// get language completion from cache
+			if (!LanguageCompletions.ContainsKey(tab.Language.Name))
 			{
 				if (File.Exists(Core.Settings.ExecDir + "\\" + tab.Language.Directory + "\\autocomplete.js"))
 				{
 					var json = File.ReadAllText(Core.Settings.ExecDir + "\\" + tab.Language.Directory + "\\autocomplete.js");
-					
-					Completions.Add(tab.Language.Name, JsonConvert.DeserializeObject<AutoComplete>(json));
+
+					LanguageCompletions.Add(tab.Language.Name, JsonConvert.DeserializeObject<AutoComplete>(json));
 				}
 				else
 				{
-					Completions.Add(tab.Language.Name, null);
+					LanguageCompletions.Add(tab.Language.Name, null);
 				}
 			}
 			
 			// get from cache
-			var completion = Completions[tab.Language.Name];
+			var lanuageCompletion = LanguageCompletions[tab.Language.Name];
 			
 			// stop if has no completion rules
-			if (completion == null)
+			if (LanguageCompletions == null)
 				return;
+			
+			// get window completion
+			var windowCompleton = new AutoCompleteState(tab, lanuageCompletion);
 
 			// assign event
-			tab.Editor.TextArea.TextEntered += (s, e) => TextEntered(tab, completion, e);
+			tab.Editor.TextArea.TextEntered += (s, e) => TextEntered(windowCompleton);
 			
-			// initialize completion worker and window
-			completionWorker = new BackgroundWorker();
-			completionWorker.DoWork += (s, e) => PopulateAutoComplete(e);
+			// initial population
+			windowCompleton.TextChanged();
 		}
 
-		private void TextEntered(WindowTab tab, AutoComplete completion, TextCompositionEventArgs args)
+		private void TextEntered(AutoCompleteState windowCompletion)
 		{
-			if (args.Text.Length == 1 && args.Text[0] == '.')
+			if (windowCompletion.ShowWindow())
 			{
-				tab.ShowCompletionWindow();
+				windowCompletion.Tab.ShowCompletionWindow();
 			}
-			else if (!completionWorker.IsBusy)
+			else
 			{
-				completionWorker.RunWorkerAsync(new EditorState { Text = tab.Editor.Text, CaretOffset = tab.Editor.CaretOffset, Completion = completion, Tab = tab });
+				windowCompletion.Tab.HideCompletionWindow();
 			}
+
+			windowCompletion.TextChanged();
 		}
-
-		public void PopulateAutoComplete(DoWorkEventArgs args)
-		{
-			var state = args.Argument as EditorState;
-
-			var identifiers = state.Completion.GetIdentifiersFromCode(state.Text).Where(i => i.Scope.From < state.CaretOffset && i.Scope.To >= state.CaretOffset);
-			state.Tab.ClearCompletionItems("Completion");
-			
-			foreach (var identifier in identifiers)
-			{
-				state.Tab.AddCompletionItem(new CompletionWindowItem("Completion", identifier.Name));
-			}
-		}
-	}
-
-	internal class EditorState
-	{
-		public WindowTab Tab { get; set; }
-		public AutoComplete Completion { get; set; }
-		public string Text { get; set; }
-		public int CaretOffset { get; set; }
 	}
 }

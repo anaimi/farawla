@@ -61,4 +61,12 @@ public static class FrameworkElementExtension
 	{
 		return VerticalSlide(fe, to, duration, null);
 	}
+	
+	public static void Invoke(this FrameworkElement fe, Action action)
+	{
+		fe.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(delegate {
+			action();
+			return null;
+		}), null);
+	}
 }

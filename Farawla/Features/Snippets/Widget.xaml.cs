@@ -51,9 +51,9 @@ namespace Farawla.Features.Snippets
 				{
 					var path = tab.Language.Directory;
 
-					if (File.Exists(Core.Settings.ExecDir + "\\" + path + "\\snippets.txt"))
+					if (File.Exists(Core.Settings.ExecDir + "\\" + path + "\\snippets.js"))
 					{
-						PopulateSnippets(tab.Language.Name, path + "\\snippets.txt");
+						PopulateSnippets(tab.Language.Name, path + "\\snippets.js");
 					}
 					else
 					{
