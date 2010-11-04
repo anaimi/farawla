@@ -30,5 +30,15 @@ namespace Farawla.Features.Completion
 			ObjectAttributeDelimiters = new List<string>();
 			// DONOT initialize IgnoreExpressions
 		}
+
+		public Type GetGlobalType()
+		{
+			return Types.FirstOrDefault(t => t.Name == GlobalTypeName);
+		}
+
+		public Type GetDefaultType()
+		{
+			return Types.FirstOrDefault(t => t.Name == DefaultTypeName);
+		}
 	}
 }

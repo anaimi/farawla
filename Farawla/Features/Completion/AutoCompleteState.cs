@@ -36,6 +36,7 @@ namespace Farawla.Features.Completion
 
 		private void PopulateTokensBeforeCaret(string code, int caretOffset)
 		{
+			var insideParenthesis = 0;
 			var index = caretOffset - 1;
 			var delimiter = string.Empty;
 			var sequence = new StringBuilder();
@@ -45,25 +46,37 @@ namespace Farawla.Features.Completion
 			{
 				var _char = code[index];
 
-				if (char.IsLetterOrDigit(_char))
+				if (insideParenthesis == 0)
 				{
-					sequence.Insert(0, _char);
-				}
-				else if (LanguageCompletion.ObjectAttributeDelimiters.Any(d => d.Contains(_char)))
-				{
-					delimiter = _char + delimiter;
-
-					if (LanguageCompletion.ObjectAttributeDelimiters.Any(d => d == delimiter))
+					if (_char == ')')
 					{
-						delimiter = string.Empty;
+						insideParenthesis++;
+					}
+					else if (char.IsLetterOrDigit(_char))
+					{
+						sequence.Insert(0, _char);
+					}
+					else if (LanguageCompletion.ObjectAttributeDelimiters.Any(d => d.Contains(_char)))
+					{
+						delimiter = _char + delimiter;
+
+						if (LanguageCompletion.ObjectAttributeDelimiters.Any(d => d == delimiter))
+						{
+							delimiter = string.Empty;
+							result.Add(sequence.ToString());
+							sequence = new StringBuilder();
+						}
+					}
+					else
+					{
 						result.Add(sequence.ToString());
-						sequence = new StringBuilder();
+						break;
 					}
 				}
 				else
 				{
-					result.Add(sequence.ToString());
-					break;
+					if (_char == '(') insideParenthesis--;
+					else if (_char == ')') insideParenthesis++;
 				}
 
 				index--;
@@ -183,7 +196,7 @@ namespace Farawla.Features.Completion
 
 			#region Get options of global type
 
-			var global = LanguageCompletion.Types.FirstOrDefault(t => t.Name == LanguageCompletion.GlobalTypeName);
+			var global = LanguageCompletion.GetGlobalType();
 
 			if (global != null)
 			{
@@ -224,6 +237,19 @@ namespace Farawla.Features.Completion
 				});
 			}
 		}
+		
+		public Type GetPossibleType(Type type, string token)
+		{
+			if (type == null)
+				return null;
+
+			var option = type.Options.FirstOrDefault(o => o.Name == token);
+			
+			if (option == null)
+				return null;
+
+			return LanguageCompletion.Types.FirstOrDefault(t => t.Name == option.ReturnType);
+		}
 
 		public void PopulateAutoComplete(DoWorkEventArgs args)
 		{
@@ -236,7 +262,29 @@ namespace Farawla.Features.Completion
 			}
 			else
 			{
-				AvailableOptions = new List<AutoCompleteItem>() { new AutoCompleteItem("None") };
+				var type = LanguageCompletion.GetGlobalType();
+				
+				for(var i = TokensBeforeCaret.Count - 1; i > 0; i--)
+				{
+					if (type == null || TokensBeforeCaret[i].IsBlank())
+					{
+						break;
+					}
+					
+					type = GetPossibleType(type, TokensBeforeCaret[i]);
+				}
+
+				if (type == null)
+				{
+					AvailableOptions = new List<AutoCompleteItem>() { new AutoCompleteItem("None") };
+				}
+				else
+				{
+					AvailableOptions = new List<AutoCompleteItem>();
+					
+					foreach(var option in type.Options)
+						AvailableOptions.Add(new AutoCompleteItem(option.Name));
+				}
 			}
 
 			// clear items
