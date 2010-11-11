@@ -27,20 +27,14 @@
 	
 	Types: [
 		{
-			Name: "object",
-			Options: [
-				{ Name: "toString()", Description: "Returns a string representation of the current object", OptionType: "Function", ReturnType: "String" },
-				{ Name: "test2", Description: "test 2" }
-			]
-		},
-		{
-			Name: "this",
+			Name: "_Farawla_Global",
 			Options: [
 				{ Name: "Infinity", Description: "A numeric value that represents positive/negative infinity", OptionType: "Object", ReturnType: "Number" },
 				{ Name: "NaN", Description: "Not-a-Number value", OptionType: "Function", ReturnType: "Object" },
 				{ Name: "undefined", Description: "Indicates that a variable has not been assigned a value", OptionType: "Object", ReturnType: "Number" },
 				{ Name: "Math", Description: "A collection of Math functions", OptionType: "Object", ReturnType: "Math" },
 				{ Name: "document", Description: "Current document object", OptionType: "Object", ReturnType: "Document" },
+				{ Name: "window", Description: "Current window object", OptionType: "Object", ReturnType: "Window" },
 				
 				{ Name: "decodeURI()", Description: "Decodes a URI", OptionType: "Function", ReturnType: "String" },
 				{ Name: "decodeURIComponent()", Description: "Decodes a URI component", OptionType: "Function", ReturnType: "String" },
@@ -55,6 +49,12 @@
 				{ Name: "parseInt()", Description: "Parses a string and returns an integer", OptionType: "Function", ReturnType: "Number" },
 				{ Name: "String()", Description: "Converts an object's value to a string", OptionType: "Function", ReturnType: "String" },
 				{ Name: "unescape()", Description: "Decodes an encoded string", OptionType: "Function", ReturnType: "String" }
+			]
+		},
+		{
+			Name: "base",
+			Options: [
+				{ Name: "toString()", Description: "Returns a string representation of the current object", OptionType: "Function", ReturnType: "String" }
 			]
 		},
 		{
@@ -93,7 +93,7 @@
 				{ Name: "close()", Description: "Closes the current window", OptionType: "Function" },
 				{ Name: "confirm()", Description: "Displays a dialog box with a message and an OK and a Cancel button", OptionType: "Function", ReturnType: "Boolean" },
 				{ Name: "createPopup()", Description: "Creates a pop-up window", OptionType: "Function" },
-				{ Name: "focus()", Description: "Sets focus to the current window", OptionType: "Function"" },
+				{ Name: "focus()", Description: "Sets focus to the current window", OptionType: "Function" },
 				{ Name: "moveBy()", Description: "Moves a window relative to its current position", OptionType: "Function" },
 				{ Name: "moveTo()", Description: "Moves a window to the specified position", OptionType: "Function" },
 				{ Name: "open()", Description: "Opens a new browser window", OptionType: "Function" },
@@ -104,7 +104,7 @@
 				{ Name: "scrollBy()", Description: "Scrolls the content by the specified number of pixels", OptionType: "Function" },
 				{ Name: "scrollTo()", Description: "Scrolls the content to the specified coordinates", OptionType: "Function" },
 				{ Name: "setInterval()", Description: "Calls a function or evaluates an expression at specified intervals (in milliseconds)", OptionType: "Function" },
-				{ Name: "setTimeout()", Description: "Calls a function or evaluates an expression after a specified number of milliseconds", OptionType: "Function" },
+				{ Name: "setTimeout()", Description: "Calls a function or evaluates an expression after a specified number of milliseconds", OptionType: "Function" }
 			]
 		},
 		{
@@ -222,7 +222,7 @@
 			Options: [
 				{ Name: "prototype", Description: "Allows you to add properties and methods to an object", OptionType: "Object", ReturnType: "Number" },
 				{ Name: "toString()", Description: "Converts a Boolean value to a string, and returns the result", OptionType: "Function", ReturnType: "String" },
-				{ Name: "valueOf()", Description: "Returns the primitive value of a Boolean objec", OptionType: "Function", ReturnType: "Number" },
+				{ Name: "valueOf()", Description: "Returns the primitive value of a Boolean objec", OptionType: "Function", ReturnType: "Number" }
 			]
 		},
 		{
@@ -283,8 +283,7 @@
 		"/\\*(.|\\n|\\r)+\\*/" /* block comments */
 	],
 	
-	GlobalTypeName: "Global",
-	ParentTypeName: "Window",
-	DefaultTypeName: "object",
+	GlobalTypeName: "_Farawla_Global",
+	BaseTypeName: "base",
 	ObjectAttributeDelimiters: ["."]
 }

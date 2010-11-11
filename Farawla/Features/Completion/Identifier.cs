@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Farawla.Core;
 
 namespace Farawla.Features.Completion
 {
@@ -29,10 +30,10 @@ namespace Farawla.Features.Completion
 		public string Name { get; set; }
 		public string Expression { get; set; }
 		public int Offset { get; set; }
-		public IdentifierType Type { get; set; }
+		public CompletionItemType Type { get; set; }
 		public ScopeRange Scope { get; set; }
 
-		public IdentifierMatch(IdentifierType type, ScopeRange scope, int offset, string name, string expression)
+		public IdentifierMatch(CompletionItemType type, ScopeRange scope, int offset, string name, string expression)
 		{
 			Type = type;
 			Name = name;
@@ -56,11 +57,5 @@ namespace Farawla.Features.Completion
 		{
 			return Name.GetHashCode();
 		}
-	}
-
-	public enum IdentifierType
-	{
-		Object,
-		Function
 	}
 }

@@ -10,8 +10,7 @@ namespace Farawla.Features.Completion
 	{
 		public const string COMPLETION_OWNER_NAME = "Completion";
 
-		public AutoCompleteItem(string text)
-			: base(COMPLETION_OWNER_NAME, text)
+		public AutoCompleteItem(CompletionItemType type, string text, string description) : base(type, COMPLETION_OWNER_NAME, text, description)
 		{
 
 		}

@@ -169,12 +169,12 @@ namespace Farawla.Features.Completion
 					if (identifier.OptionType == "Object")
 					{
 						var expression = code.Substring(match.Groups["expression"].Index, match.Groups["expression"].Length);
-						matches.Add(new IdentifierMatch(IdentifierType.Object, scope, offset, match.Groups["name"].Value, expression));
+						matches.Add(new IdentifierMatch(CompletionItemType.Object, scope, offset, match.Groups["name"].Value, expression));
 					}
 					else if (identifier.OptionType == "Function")
 					{
 						var parameters = code.Substring(match.Groups["parameters"].Index, match.Groups["parameters"].Length);
-						matches.Add(new IdentifierMatch(IdentifierType.Function, scope, offset, match.Groups["name"].Value, parameters));
+						matches.Add(new IdentifierMatch(CompletionItemType.Function, scope, offset, match.Groups["name"].Value, "Parameters: " + parameters));
 					}
 
 					// remove the match, so its not processed again
@@ -191,7 +191,7 @@ namespace Farawla.Features.Completion
 			AvailableOptions = matches
 				.Where(i => i.Scope.From < caretOffset && i.Scope.To >= caretOffset)
 				.Distinct()
-				.Select(m => new AutoCompleteItem(m.Name))
+				.Select(m => new AutoCompleteItem(m.Type, m.Name, m.Expression))
 				.ToList();
 
 			#region Get options of global type
@@ -202,7 +202,7 @@ namespace Farawla.Features.Completion
 			{
 				foreach (var option in global.Options)
 				{
-					AvailableOptions.Add(new AutoCompleteItem(option.Name));
+					AvailableOptions.Add(new AutoCompleteItem(option.GetCompletionType(), option.Name, option.Description));
 				}
 			}
 
@@ -241,7 +241,7 @@ namespace Farawla.Features.Completion
 		public Type GetPossibleType(Type type, string token)
 		{
 			if (type == null)
-				return null;
+				return null; 
 
 			var option = type.Options.FirstOrDefault(o => o.Name == token);
 			
@@ -262,11 +262,13 @@ namespace Farawla.Features.Completion
 			}
 			else
 			{
+				List<TypeOption> typeOptions;
 				var type = LanguageCompletion.GetGlobalType();
+				AvailableOptions = new List<AutoCompleteItem>();
 				
 				for(var i = TokensBeforeCaret.Count - 1; i > 0; i--)
 				{
-					if (type == null || TokensBeforeCaret[i].IsBlank())
+					if (TokensBeforeCaret[i].IsBlank())
 					{
 						break;
 					}
@@ -276,26 +278,31 @@ namespace Farawla.Features.Completion
 
 				if (type == null)
 				{
-					AvailableOptions = new List<AutoCompleteItem>() { new AutoCompleteItem("None") };
+					typeOptions = LanguageCompletion.GetBaseType().Options;
 				}
 				else
 				{
-					AvailableOptions = new List<AutoCompleteItem>();
-					
-					foreach(var option in type.Options)
-						AvailableOptions.Add(new AutoCompleteItem(option.Name));
+					typeOptions = type.Options.Union(LanguageCompletion.GetBaseType().Options).ToList();
 				}
-			}
 
-			// clear items
-			Tab.Editor.Invoke(() => Tab.ClearCompletionItems(AutoCompleteItem.COMPLETION_OWNER_NAME));
-
-			// add to list
-			foreach (var option in AvailableOptions)
-			{
-				var item = option; // to avoid access closure
-				Tab.Editor.Invoke(() => Tab.AddCompletionItem(item));
+				foreach (var option in typeOptions)
+					AvailableOptions.Add(new AutoCompleteItem(option.GetCompletionType(), option.Name, option.Description));
 			}
+			
+			// add items
+			var items = AvailableOptions.Select(i => i as CompletionWindowItem).ToList();
+			Tab.Editor.Invoke(() => Tab.AddCompletionItems(AutoCompleteItem.COMPLETION_OWNER_NAME, items));
+		}
+
+		public int GetCompletionWindowOffset(string enteredText)
+		{
+			if (LanguageCompletion.ObjectAttributeDelimiters.Contains(enteredText))
+				return Tab.Editor.CaretOffset;
+
+			if (TokensBeforeCaret.Count > 0)
+				return Tab.Editor.CaretOffset - TokensBeforeCaret.First().Length;
+
+			return Tab.Editor.CaretOffset - enteredText.Length;
 		}
 	}
 

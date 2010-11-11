@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Farawla.Core;
 
 namespace Farawla.Features.Completion
 {
@@ -22,5 +23,13 @@ namespace Farawla.Features.Completion
 		public string Description { get; set; }
 		public string ReturnType { get; set; }
 		public string OptionType { get; set; }
+		
+		public CompletionItemType GetCompletionType()
+		{
+			if (OptionType.ToLower() == "function")
+				return CompletionItemType.Function;
+
+			return CompletionItemType.Object;
+		}
 	}
 }

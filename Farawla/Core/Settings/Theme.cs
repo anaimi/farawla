@@ -6,6 +6,8 @@ using System.Text;
 using System.Windows.Media;
 using Farawla.Features;
 using Newtonsoft.Json;
+using System.Drawing;
+using System.Windows.Media.Imaging;
 
 namespace Farawla.Core
 {
@@ -57,7 +59,11 @@ namespace Farawla.Core
 		public string FontFamily { get; set; }
 		
 		public Dictionary<string, string> SyntaxColors { get; set; }
-
+		
+		private ImageSource objectIcon;
+		private ImageSource functionIcon;
+		private ImageSource snippetIcon;
+		
 		public Theme()
 		{
 			MatchingTokensBackground = DEFAULT_EDITOR_MATCHING_TOKENS_BACKGROUND;
@@ -67,9 +73,44 @@ namespace Farawla.Core
 			FontFamily = DEFAULT_EDITOR_FONT_FAMILY;
 			
 			SyntaxColors = new Dictionary<string, string>();
+
+			objectIcon = LoadIcon("object.png");
+			functionIcon = LoadIcon("function.png");
+			snippetIcon = LoadIcon("snippet.png");
 		}
 		
-		public Color GetColor(string key)
+		private ImageSource LoadIcon(string name)
+		{
+			var path = Settings.ExecDir + "themes/" + name;
+			
+			if (!File.Exists(path))
+				return null;
+
+			var source = new BitmapImage();
+			
+			source.BeginInit();
+			source.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
+			source.EndInit();
+
+			return source;
+		}
+		
+		public ImageSource GetObjectIcon()
+		{
+			return objectIcon;
+		}
+
+		public ImageSource GetFunctionIcon()
+		{
+			return functionIcon;
+		}
+
+		public ImageSource GetSnippetIcon()
+		{
+			return snippetIcon;
+		}
+		
+		public System.Windows.Media.Color GetColor(string key)
 		{
 			if (SyntaxColors.ContainsKey(key))
 				return SyntaxColors[key].ToColor();

@@ -16,7 +16,7 @@ namespace Farawla.Features.Completion
 		public List<string> ObjectAttributeDelimiters { get; set; }
 		
 		public string GlobalTypeName { get; set; }
-		public string DefaultTypeName { get; set; }
+		public string BaseTypeName { get; set; }
 		
 		public List<Regex> IgnoreExpressions { get; set; }
 		public List<string> IgnoreSections { get; set; }
@@ -36,9 +36,9 @@ namespace Farawla.Features.Completion
 			return Types.FirstOrDefault(t => t.Name == GlobalTypeName);
 		}
 
-		public Type GetDefaultType()
+		public Type GetBaseType()
 		{
-			return Types.FirstOrDefault(t => t.Name == DefaultTypeName);
+			return Types.FirstOrDefault(t => t.Name == BaseTypeName);
 		}
 	}
 }

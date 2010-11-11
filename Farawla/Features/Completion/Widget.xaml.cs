@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Windows.Input;
 using Farawla.Core;
 using Farawla.Core.Sidebar;
 using Newtonsoft.Json;
@@ -58,24 +60,36 @@ namespace Farawla.Features.Completion
 			var windowCompleton = new AutoCompleteState(tab, lanuageCompletion);
 
 			// assign event
-			tab.Editor.TextArea.TextEntered += (s, e) => TextEntered(windowCompleton);
+			tab.Editor.TextArea.TextEntered += (s, e) => TextEntered(windowCompleton, e);
+			tab.Editor.TextArea.TextEntering += (s, e) => TextEntering(windowCompleton, e);
 			
 			// initial population
 			windowCompleton.TextChanged();
 		}
 
-		private void TextEntered(AutoCompleteState windowCompletion)
+		private void TextEntering(AutoCompleteState state, TextCompositionEventArgs e)
 		{
-			if (windowCompletion.ShowWindow())
+			if (e.Text.Length > 0)
 			{
-				windowCompletion.Tab.ShowCompletionWindow();
+				if (!char.IsLetterOrDigit(e.Text[0]))
+				{
+					state.Tab.CompletionRequestInsertion(e);
+				}
+			}
+		}
+
+		private void TextEntered(AutoCompleteState state, TextCompositionEventArgs e)
+		{
+			if (state.ShowWindow())
+			{
+				state.Tab.ShowCompletionWindow(state.GetCompletionWindowOffset(e.Text));
 			}
 			else
 			{
-				windowCompletion.Tab.HideCompletionWindow();
+				state.Tab.HideCompletionWindow();
 			}
 
-			windowCompletion.TextChanged();
+			state.TextChanged();
 		}
 	}
 }

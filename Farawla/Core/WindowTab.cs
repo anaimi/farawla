@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Media;
 using Farawla.Core.Language;
 using System.Windows.Controls;
@@ -18,7 +15,9 @@ using ICSharpCode.AvalonEdit.Rendering;
 using Microsoft.Win32;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using System.Windows.Input;
+using DrawingContext=System.Windows.Media.DrawingContext;
 using FontFamily=System.Windows.Media.FontFamily;
+using ImageSource=System.Windows.Media.ImageSource;
 
 namespace Farawla.Core
 {
@@ -288,12 +287,37 @@ namespace Farawla.Core
 			}
 		}
 		
-		public void ShowCompletionWindow()
+		public void AddCompletionItems(string owner, List<CompletionWindowItem> items)
 		{
+			var currentItems = completionItems.Where(i => i.Owner == owner);
+
+			var toRemove = currentItems.Except(items).ToList();
+			var toAdd = items.Except(currentItems).ToList();
+			
+			foreach(var item in toRemove)
+				RemoveCompletionItem(item);
+			
+			foreach(var item in toAdd)
+				AddCompletionItem(item);
+		}
+
+		public void CompletionRequestInsertion(TextCompositionEventArgs e)
+		{
+			if (completionWindow != null)
+				completionWindow.CompletionList.RequestInsertion(e);
+		}
+		
+		public void ShowCompletionWindow(int offset)
+		{
+			if (IsShowingCompletionWindow)
+				return;
+			
 			IsShowingCompletionWindow = true;
 
 			completionWindow = new CompletionWindow(Editor.TextArea);
 
+			completionWindow.StartOffset = offset;
+			
 			foreach (var item in completionItems)
 				completionWindow.CompletionList.CompletionData.Add(item);
 
@@ -312,7 +336,7 @@ namespace Farawla.Core
 		
 		#endregion
 
-		#region Highlight bracket paris
+		#region Highlight bracket pairs
 
 		private void HighlightBracketsIfNextToCaret()
 		{
@@ -406,39 +430,71 @@ namespace Farawla.Core
 
 		#endregion
 	}
-
+	
+	public enum CompletionItemType
+	{
+		Object,
+		Function,
+		Snippet
+	}
+	
 	public class CompletionWindowItem : ICompletionData
 	{
 		public string Owner { get; private set; }
+		public string Text { get; private set; }
+		public object Description { get; private set; }
+		public object Content { get; private set; }
+		public CompletionItemType Type { get; private set; }
+		public ImageSource Image { get; private set; }
 		
-		public CompletionWindowItem(string owner, string text)
+		public CompletionWindowItem(CompletionItemType type, string owner, string text, string description)
 		{
 			Owner = owner;
 			Text = text;
-		}
+			Type = type;
 
-		public ImageSource Image
-		{
-			get { return null; }
-		}
-
-		public string Text { get; private set; }
-
-		// Use this property if you want to show a fancy UIElement in the list.
-		public object Content
-		{
-			get { return Text; }
-		}
-
-		public object Description
-		{
-			get { return "Description goes here... " + Text; }
+			switch (type)
+			{
+				case CompletionItemType.Object:
+					Image = Theme.Instance.GetObjectIcon();
+					break;
+				
+				case CompletionItemType.Function:
+					Image = Theme.Instance.GetFunctionIcon();
+					break;
+				
+				case CompletionItemType.Snippet:
+					Image = Theme.Instance.GetSnippetIcon();
+					break;
+			}
+			
+			Content = text; // use this property for fancy UI
+			Description = description;
 		}
 
 		public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
 		{
-			textArea.Document.Replace(completionSegment, this.Text);
+			textArea.Document.Replace(completionSegment, Text);
 		}
+		
+		#region Equal & GetHashCode
+		
+		public override bool Equals(object obj)
+		{
+			if (!(obj is CompletionWindowItem))
+				return false;
+
+			var other = obj as CompletionWindowItem;
+			
+			return other.Owner == Owner && other.Text == Text;
+		}
+
+		public override int GetHashCode()
+		{
+			return (Text + Owner).GetHashCode();
+		}
+		
+		#endregion
 	}
 
 	public class BlockHighlighter : IBackgroundRenderer
