@@ -18,7 +18,7 @@ namespace Farawla.Core
 			get { return Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\"; }
 		}
 
-		public const string DEFAULT_THEME = "clouds.js";
+		public const string DEFAULT_THEME = "clouds";
 		public const string FILE_NAME = "settings.js";
 		
 		#region Instance

@@ -1,6 +1,6 @@
 {
   "SidebarButton": null,
-  "ThemeName": "clouds.js",
+  "ThemeName": "clouds",
   "IsWindowMaximized": false,
   "OpenTabs": [
     "C:\\Users\\Ahmad\\Desktop\\test.js"

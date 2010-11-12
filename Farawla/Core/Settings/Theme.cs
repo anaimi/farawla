@@ -22,6 +22,7 @@ namespace Farawla.Core
 		public const string DIRECTORY_NAME = "themes";
 		
 		#region Instance
+		
 		private static Theme _instance;
 		public static Theme Instance
 		{
@@ -29,27 +30,24 @@ namespace Farawla.Core
 			{
 				if (_instance == null)
 				{
-					if (!Directory.Exists(DIRECTORY_NAME))
-					{
-						Notifier.Show("The directory '" + DIRECTORY_NAME + "', which is supposed to include the themes, does not exists. I'll create it, but you'll have to load it with themes (and activate one of the themes).");
-						Directory.CreateDirectory(DIRECTORY_NAME);
-
-						_instance = new Theme();
-					}
-					else if (!File.Exists(DIRECTORY_NAME + "\\" + Settings.Instance.ThemeName))
+					var path = Settings.ExecDir + DIRECTORY_NAME + "\\" + Settings.Instance.ThemeName + "\\theme.js";
+					
+					if (!File.Exists(path))
 					{
 						Notifier.Show("The theme '" + Settings.Instance.ThemeName + "' does not exist in the folder '" + DIRECTORY_NAME + "'");
+						
 						_instance = new Theme();
 					}
 					else
 					{
-						_instance = JsonConvert.DeserializeObject<Theme>(File.ReadAllText(DIRECTORY_NAME + "\\" + Settings.Instance.ThemeName)) ?? new Theme();
+						_instance = JsonConvert.DeserializeObject<Theme>(File.ReadAllText(path)) ?? new Theme();
 					}
 				}
 
 				return _instance;
 			}
 		}
+		
 		#endregion
 		
 		public string MatchingTokensBackground { get; set; }
@@ -63,7 +61,7 @@ namespace Farawla.Core
 		private ImageSource objectIcon;
 		private ImageSource functionIcon;
 		private ImageSource snippetIcon;
-		
+
 		public Theme()
 		{
 			MatchingTokensBackground = DEFAULT_EDITOR_MATCHING_TOKENS_BACKGROUND;
@@ -81,7 +79,7 @@ namespace Farawla.Core
 		
 		private ImageSource LoadIcon(string name)
 		{
-			var path = Settings.ExecDir + "themes/" + name;
+			var path = Settings.ExecDir + "themes\\" + Settings.Instance.ThemeName + "\\" + name;
 			
 			if (!File.Exists(path))
 				return null;
