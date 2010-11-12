@@ -149,3 +149,4 @@ C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Snippets\Snip
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Snippets\SnippetButton.g.cs
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Completion\Widget.baml
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Completion\Widget.g.cs
+C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Resources\Theme\CompletionWindow.baml

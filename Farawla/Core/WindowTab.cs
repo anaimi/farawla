@@ -315,7 +315,7 @@ namespace Farawla.Core
 			IsShowingCompletionWindow = true;
 
 			completionWindow = new CompletionWindow(Editor.TextArea);
-
+			
 			completionWindow.StartOffset = offset;
 			
 			foreach (var item in completionItems)
@@ -471,13 +471,18 @@ namespace Farawla.Core
 			Content = text; // use this property for fancy UI
 			Description = description;
 		}
-
+		
 		public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
 		{
 			var value = Text;
 			
 			if (Type == CompletionItemType.Function)
-				value = value.Substring(0, value.IndexOf('('));
+			{
+				var index = value.IndexOf('(');
+				
+				if (index > 0)
+					value = value.Substring(0, index);
+			}
 
 			textArea.Document.Replace(completionSegment, value);
 		}

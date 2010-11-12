@@ -44,9 +44,9 @@
 		{
 			Name: "_Farawla_Global",
 			Options: [
-				{ Name: "Infinity", Description: "A numeric value that represents positive/negative infinity", OptionType: "Object", ReturnType: "Number" },
-				{ Name: "NaN", Description: "Not-a-Number value", OptionType: "Function", ReturnType: "Object" },
-				{ Name: "undefined", Description: "Indicates that a variable has not been assigned a value", OptionType: "Object", ReturnType: "Number" },
+				{ Name: "Infinity", Description: "A numeric value that represents positive/negative infinity", OptionType: "Object", ReturnType: "Object" },
+				{ Name: "NaN", Description: "Not-a-Number value", OptionType: "Object", ReturnType: "Object" },
+				{ Name: "undefined", Description: "Indicates that a variable has not been assigned a value", OptionType: "Object", ReturnType: "Object" },
 				{ Name: "Math", Description: "A collection of Math functions", OptionType: "Object", ReturnType: "Math" },
 				{ Name: "document", Description: "Current document object", OptionType: "Object", ReturnType: "Document" },
 				{ Name: "window", Description: "Current window object", OptionType: "Object", ReturnType: "Window" },

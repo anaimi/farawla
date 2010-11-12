@@ -7,6 +7,7 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Resources/Theme/ScrollBar.xaml" />
 				<ResourceDictionary Source="Resources/Theme/ComboBox.xaml" />
+				<ResourceDictionary Source="Resources/Theme/CompletionWindow.xaml" />
 				<ResourceDictionary Source="Resources/Theme/Misc.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
