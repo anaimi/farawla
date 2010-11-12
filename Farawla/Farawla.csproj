@@ -209,6 +209,7 @@
     <Compile Include="Features\Completion\AutoCompleteItem.cs" />
     <Compile Include="Features\Completion\AutoCompleteState.cs" />
     <Compile Include="Features\Completion\Identifier.cs" />
+    <Compile Include="Features\Completion\Inference.cs" />
     <Compile Include="Features\Completion\Scope.cs" />
     <Compile Include="Features\Completion\Type.cs" />
     <Compile Include="Features\Completion\Widget.xaml.cs">

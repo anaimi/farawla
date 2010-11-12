@@ -13,11 +13,13 @@ namespace Farawla.Features.Completion
 		public List<Identifier> Identifiers { get; set; }
 		public List<Scope> Scopes { get; set; }
 		public List<Type> Types { get; set; }
+		public List<Inference> Inference { get; set; }
 		public List<string> ObjectAttributeDelimiters { get; set; }
 		
-		public string GlobalTypeName { get; set; }
 		public string BaseTypeName { get; set; }
-		
+		public string GlobalTypeName { get; set; }
+		public string FunctionTypeName { get; set; }
+				
 		public List<Regex> IgnoreExpressions { get; set; }
 		public List<string> IgnoreSections { get; set; }
 
@@ -26,6 +28,7 @@ namespace Farawla.Features.Completion
 			Identifiers = new List<Identifier>();
 			Scopes = new List<Scope>();
 			Types = new List<Type>();
+			Inference = new List<Inference>();
 			
 			ObjectAttributeDelimiters = new List<string>();
 			// DONOT initialize IgnoreExpressions
@@ -39,6 +42,11 @@ namespace Farawla.Features.Completion
 		public Type GetBaseType()
 		{
 			return Types.FirstOrDefault(t => t.Name == BaseTypeName);
+		}
+		
+		public Type GetFunctionType()
+		{
+			return Types.FirstOrDefault(t => t.Name == FunctionTypeName);
 		}
 	}
 }

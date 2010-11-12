@@ -13,6 +13,21 @@
 			Match: "function(\\s)(?<name>\\w+)(\\s?)\\((?<parameters>.*)\\)(\\s?){"
 		}
 	],
+	
+	Inference: [
+		{
+			Expression: "(\\s?)\\\"(.*)\\\"(\\s?)",
+			Type: "String"
+		},
+		{
+			Expression: "(\\s?)(\\d|\\.)+(\\s?)",
+			Type: "Number"
+		},
+		{
+			Expression: "(\\s?)\\[(.*)\\](\\s?)",
+			Type: "Array"
+		}
+	],
 		
 	Scopes: [
 		{
@@ -52,7 +67,13 @@
 			]
 		},
 		{
-			Name: "base",
+			Name: "_Farawla_Function",
+			Options: [
+				{ Name: "apply(args)", Description: "Applies the method of another object in the context of a different object (the calling object); arguments can be passed as an Array object.", OptionType: "Function", ReturnType: "Object" }
+			]
+		},
+		{
+			Name: "Object",
 			Options: [
 				{ Name: "toString()", Description: "Returns a string representation of the current object", OptionType: "Function", ReturnType: "String" }
 			]
@@ -117,13 +138,13 @@
 				{ Name: "URL", Description: "Returns the full URL of the document", OptionType: "Object", ReturnType: "String" },
 				{ Name: "URL", Description: "Returns the full URL of the document", OptionType: "Object", ReturnType: "String" },
 				
-				{ Name: "close", Description: "Closes the output stream previously opened with document.open()", OptionType: "Function" },
-				{ Name: "getElementById", Description: "Accesses the first element with the specified id", OptionType: "Function" },
-				{ Name: "getElementsByName", Description: "Accesses all elements with a specified name", OptionType: "Function" },
-				{ Name: "getElementsByTagName", Description: "Accesses all elements with a specified tagname", OptionType: "Function" },
-				{ Name: "open", Description: "Opens an output stream to collect the output from document.write() or document.writeln()", OptionType: "Function" },
-				{ Name: "write", Description: "Writes HTML expressions or JavaScript code to a document", OptionType: "Function" },
-				{ Name: "writeln", Description: "Same as write(), but adds a newline character after each statement", OptionType: "Function" }
+				{ Name: "close()", Description: "Closes the output stream previously opened with document.open()", OptionType: "Function" },
+				{ Name: "getElementById(id)", Description: "Accesses the first element with the specified id", OptionType: "Function" },
+				{ Name: "getElementsByName(name)", Description: "Accesses all elements with a specified name", OptionType: "Function" },
+				{ Name: "getElementsByTagName(tagName)", Description: "Accesses all elements with a specified tagname", OptionType: "Function" },
+				{ Name: "open()", Description: "Opens an output stream to collect the output from document.write() or document.writeln()", OptionType: "Function" },
+				{ Name: "write(str)", Description: "Writes HTML expressions or JavaScript code to a document", OptionType: "Function" },
+				{ Name: "writeln(str)", Description: "Same as write(), but adds a newline character after each statement", OptionType: "Function" }
 			]
 		},
 		{
@@ -131,22 +152,22 @@
 			Options: [
 				{ Name: "length", Description: "Returns the number of characters in the string", OptionType: "Object", ReturnType: "Number" },
 				
-				{ Name: "charAt", Description: "Returns the character at the specified index", OptionType: "Function", ReturnType: "String" },
-				{ Name: "charCodeAt", Description: "Returns the Unicode of the character at the specified index", OptionType: "Function", ReturnType: "Number" },
-				{ Name: "concat", Description: "Joins two or more strings, and returns a copy of the joined strings", OptionType: "Function", ReturnType: "String" },
-				{ Name: "fromCharCode", Description: "Converts Unicode values to characters", OptionType: "Function", ReturnType: "String" },
-				{ Name: "indexOf", Description: "Returns the position of the first found occurrence of a specified value in a string", OptionType: "Function", ReturnType: "Number" },
-				{ Name: "lastIndexOf", Description: "Returns the position of the last found occurrence of a specified value in a string", OptionType: "Function", ReturnType: "Number" },
-				{ Name: "match", Description: "Searches for a match between a regular expression and a string, and returns the matches", OptionType: "Function" },
-				{ Name: "replace", Description: "Searches for a match between a substring (or regular expression) and a string, and replaces the matched substring with a new substring", OptionType: "Function", ReturnType: "String" },
-				{ Name: "search", Description: "Searches for a match between a regular expression and a string, and returns the position of the match", OptionType: "Function", ReturnType: "Number" },
-				{ Name: "slice", Description: "Extracts a part of a string and returns a new string", OptionType: "Function", ReturnType: "String" },
-				{ Name: "split", Description: "Splits a string into an array of substrings", OptionType: "Function", ReturnType: "Array" },
-				{ Name: "substr", Description: "Extracts the characters from a string, beginning at a specified start position, and through the specified number of character", OptionType: "Function", ReturnType: "String" },
-				{ Name: "substring", Description: "Extracts the characters from a string, between two specified indices", OptionType: "Function", ReturnType: "String" },
-				{ Name: "toLowerCase", Description: "Converts a string to lowercase letters", OptionType: "Function", ReturnType: "String" },
-				{ Name: "toUpperCase", Description: "Converts a string to uppercase letters", OptionType: "Function", ReturnType: "String" },
-				{ Name: "valueOf", Description: "Returns the primitive value of a String object", OptionType: "Function", ReturnType: "String" }
+				{ Name: "charAt(index)", Description: "Returns the character at the specified index", OptionType: "Function", ReturnType: "String" },
+				{ Name: "charCodeAt(index)", Description: "Returns the Unicode of the character at the specified index", OptionType: "Function", ReturnType: "Number" },
+				{ Name: "concat(str, str, ...)", Description: "Joins two or more strings, and returns a copy of the joined strings", OptionType: "Function", ReturnType: "String" },
+				{ Name: "fromCharCode(char)", Description: "Converts Unicode values to characters", OptionType: "Function", ReturnType: "String" },
+				{ Name: "indexOf(str)", Description: "Returns the position of the first found occurrence of a specified value in a string", OptionType: "Function", ReturnType: "Number" },
+				{ Name: "lastIndexOf(str)", Description: "Returns the position of the last found occurrence of a specified value in a string", OptionType: "Function", ReturnType: "Number" },
+				{ Name: "match(regexp)", Description: "Searches for a match between a regular expression and a string, and returns the matches", OptionType: "Function" },
+				{ Name: "replace(regexp/substr, newstring)", Description: "Searches for a match between a substring (or regular expression) and a string, and replaces the matched substring with a new substring", OptionType: "Function", ReturnType: "String" },
+				{ Name: "search(regexp)", Description: "Searches for a match between a regular expression and a string, and returns the position of the match", OptionType: "Function", ReturnType: "Number" },
+				{ Name: "slice(begin, end)", Description: "Extracts a part of a string and returns a new string", OptionType: "Function", ReturnType: "String" },
+				{ Name: "split(separator, limit)", Description: "Splits a string into an array of substrings", OptionType: "Function", ReturnType: "Array" },
+				{ Name: "substr(start, length)", Description: "Extracts the characters from a string, beginning at a specified start position, and through the specified number of character", OptionType: "Function", ReturnType: "String" },
+				{ Name: "substring(from, to)", Description: "Extracts the characters from a string, between two specified indices", OptionType: "Function", ReturnType: "String" },
+				{ Name: "toLowerCase()", Description: "Converts a string to lowercase letters", OptionType: "Function", ReturnType: "String" },
+				{ Name: "toUpperCase()", Description: "Converts a string to uppercase letters", OptionType: "Function", ReturnType: "String" },
+				{ Name: "valueOf()", Description: "Returns the primitive value of a String object", OptionType: "Function", ReturnType: "String" }
 				
 			]
 		},
@@ -284,6 +305,7 @@
 	],
 	
 	GlobalTypeName: "_Farawla_Global",
-	BaseTypeName: "base",
+	FunctionTypeName: "_Farawla_Function",
+	BaseTypeName: "Object",
 	ObjectAttributeDelimiters: ["."]
 }

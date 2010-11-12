@@ -32,14 +32,16 @@ namespace Farawla.Features.Completion
 		public int Offset { get; set; }
 		public CompletionItemType Type { get; set; }
 		public ScopeRange Scope { get; set; }
+		public Type InferenceType { get; set; }
 
-		public IdentifierMatch(CompletionItemType type, ScopeRange scope, int offset, string name, string expression)
+		public IdentifierMatch(CompletionItemType type, ScopeRange scope, int offset, string name, string expression, Type inferenceType)
 		{
 			Type = type;
 			Name = name;
 			Expression = expression;
 			Offset = offset;
 			Scope = scope;
+			InferenceType = inferenceType;
 		}
 
 		public override bool Equals(object obj)

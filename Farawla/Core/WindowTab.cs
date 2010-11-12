@@ -474,7 +474,12 @@ namespace Farawla.Core
 
 		public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
 		{
-			textArea.Document.Replace(completionSegment, Text);
+			var value = Text;
+			
+			if (Type == CompletionItemType.Function)
+				value = value.Substring(0, value.IndexOf('('));
+
+			textArea.Document.Replace(completionSegment, value);
 		}
 		
 		#region Equal & GetHashCode
