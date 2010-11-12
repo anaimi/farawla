@@ -19,7 +19,15 @@ namespace Farawla.Core.Language
 			
 			foreach(var lang in Directory.GetDirectories("languages"))
 			{
-				var json = File.ReadAllText(lang + "\\main.js");
+				var path = lang + "\\main.js";
+				
+				if (!File.Exists(path))
+				{
+					Notifier.Show(string.Format("Definition for language '{0}' was skipped because 'main.js' is missing. Either delete the directory or create a main.js with correct values.", lang));
+					continue;
+				}
+				
+				var json = File.ReadAllText(path);
 				
 				var obj = JsonConvert.DeserializeObject<LanguageMeta>(json);
 				obj.Initialize(lang);

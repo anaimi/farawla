@@ -1,0 +1,6 @@
+{
+	Name: "Ruby",
+	Associations: [
+		"rb"
+	]
+}

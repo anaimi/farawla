@@ -62,10 +62,10 @@ namespace Farawla.Features.Snippets
 				}
 				
 				// get the cached panel
-				var panel = Snippets[tab.Language.Name];
+				var snippets = Snippets[tab.Language.Name];
 				
 				// hide it if null
-				if (panel == null)
+				if (snippets == null || snippets.Snippets.Count == 0)
 				{
 					ShowNoSnippets();
 				}

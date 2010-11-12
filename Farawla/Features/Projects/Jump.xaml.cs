@@ -77,8 +77,10 @@ namespace Farawla.Features.Projects
 			if (e.Key == Key.Enter)
 			{
 				var path = (string)(Files.SelectedItem as ListBoxItem).Tag;
+				
 				Controller.Current.CreateNewTab(projectManager.CurrentProjectPath + "\\" + path);
-
+				Controller.Current.CurrentTabs.Last().MakeActive();
+				
 				Hide();
 				return;
 			}

@@ -1,11 +1,20 @@
 {
   "SidebarButton": null,
   "ThemeName": "clouds",
-  "IsWindowMaximized": false,
+  "IsWindowMaximized": true,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\test.js"
+    "C:\\Users\\Ahmad\\Desktop\\test.js",
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\config\\database.yml"
   ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\app\\controllers\\admin_controller.rb",
+      "Index": 2
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\config\\environment.rb",
+      "Index": 1
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\test.js",
       "Index": 0
@@ -36,14 +45,6 @@
     },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\web.config",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\app\\views\\home\\hiii.txt",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\notes.txt",
       "Index": 1
     }
   ],

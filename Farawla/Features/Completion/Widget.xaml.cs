@@ -53,7 +53,7 @@ namespace Farawla.Features.Completion
 			var lanuageCompletion = LanguageCompletions[tab.Language.Name];
 			
 			// stop if has no completion rules
-			if (LanguageCompletions == null)
+			if (lanuageCompletion == null)
 				return;
 			
 			// get window completion
