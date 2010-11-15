@@ -49,11 +49,11 @@ namespace Farawla.Features.Snippets
 				// not cached? populate it
 				if (!Snippets.ContainsKey(tab.Language.Name))
 				{
-					var path = tab.Language.Directory;
+					var path = Core.Settings.ExecDir + "\\" + tab.Language.Directory + "\\snippets.js";
 
-					if (File.Exists(Core.Settings.ExecDir + "\\" + path + "\\snippets.js"))
+					if (File.Exists(path))
 					{
-						PopulateSnippets(tab.Language.Name, path + "\\snippets.js");
+						PopulateSnippets(tab.Language.Name, path);
 					}
 					else
 					{

@@ -17,7 +17,7 @@ namespace Farawla.Features.Completion
 			get
 			{
 				if (_expressionRegex == null)
-					_expressionRegex = new Regex(Expression);
+					_expressionRegex = new Regex(Expression, RegexOptions.Compiled);
 
 				return _expressionRegex;
 			}

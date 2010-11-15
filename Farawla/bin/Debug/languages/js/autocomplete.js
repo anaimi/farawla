@@ -40,6 +40,13 @@
 		}
 	],
 	
+	IgnoreSections: [
+		"\\\".*?\\\"", /* double quoted strings */
+		"'.*?'", /* single quoted strings */
+		"//.+", /* line comments */
+		"/\\*.*?\\*/" /* block comments */
+	],
+	
 	Types: [
 		{
 			Name: "_Farawla_Global",
@@ -295,13 +302,6 @@
 				{ Name: "valueOf()", Description: "Returns the primitive value of a Date object", OptionType: "Function", ReturnType: "Number" }
 			]
 		}
-	],
-	
-	IgnoreSections: [
-		"\\\".*?\\\"", /* double quoted strings */
-		"'.*?'", /* single quoted strings */
-		"//.+", /* line comments */
-		"/\\*(.|\\n|\\r)+\\*/" /* block comments */
 	],
 	
 	GlobalTypeName: "_Farawla_Global",
