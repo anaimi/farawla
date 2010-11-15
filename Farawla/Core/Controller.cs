@@ -114,12 +114,12 @@ namespace Farawla.Core
 			CurrentTabs.Add(tab);
 			MainWindow.Tab.Items.Insert(index, tab.Tab);
 
-			// select/show las added item
-			tab.MakeActive();
-
 			// inform observers
 			if (OnTabCreated != null)
 				OnTabCreated(tab);
+
+			// select/show last added item
+			tab.MakeActive();
 			
 			TabCountUpdated();
 		}

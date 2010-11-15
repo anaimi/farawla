@@ -212,6 +212,7 @@
     </Compile>
     <Compile Include="Features\Completion\AutoCompleteItem.cs" />
     <Compile Include="Features\Completion\AutoCompleteState.cs" />
+    <Compile Include="Features\Completion\Framework.cs" />
     <Compile Include="Features\Completion\Identifier.cs" />
     <Compile Include="Features\Completion\Inference.cs" />
     <Compile Include="Features\Completion\Scope.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Features\Completion\Widget.xaml.cs">
       <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Features\Completion\WindowTab.cs" />
     <Compile Include="Features\Projects\FileOperationAPIWrapper.cs" />
     <Compile Include="Core\Notifier\ModalInputBox.xaml.cs">
       <DependentUpon>ModalInputBox.xaml</DependentUpon>

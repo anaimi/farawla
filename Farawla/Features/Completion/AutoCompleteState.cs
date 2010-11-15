@@ -180,7 +180,13 @@ namespace Farawla.Features.Completion
 					{
 						var name = match.Groups["name"].Value;
 						var parameters = code.Substring(match.Groups["parameters"].Index, match.Groups["parameters"].Length);
-						GlobalIdentifiers.Add(new IdentifierMatch(CompletionItemType.Function, scope, offset, name, "Parameters: " + parameters, LanguageCompletion.GetFunctionType()));
+						
+						if (parameters.IsBlank())
+							parameters = "Parameterless";
+						else
+							parameters = "Parameters: " + parameters;
+						
+						GlobalIdentifiers.Add(new IdentifierMatch(CompletionItemType.Function, scope, offset, name, parameters, LanguageCompletion.GetFunctionType()));
 					}
 
 					// remove the match, so its not processed again
@@ -279,8 +285,9 @@ namespace Farawla.Features.Completion
 			}
 			else
 			{
-				List<TypeOption> typeOptions;
+				List<TypeOption> typeOptions = new List<TypeOption>();
 				var type = LanguageCompletion.GetGlobalType();
+				var baseType = LanguageCompletion.GetBaseType();
 				AvailableOptions = new List<AutoCompleteItem>();
 				
 				for(var i = TokensBeforeCaret.Count - 1; i > 0; i--)
@@ -305,11 +312,13 @@ namespace Farawla.Features.Completion
 
 				if (type == null)
 				{
-					typeOptions = LanguageCompletion.GetBaseType().Options;
+					if (baseType != null)
+						typeOptions = baseType.Options;
 				}
 				else
 				{
-					typeOptions = type.Options.Union(LanguageCompletion.GetBaseType().Options).ToList();
+					if (baseType != null)
+						typeOptions = type.Options.Union(LanguageCompletion.GetBaseType().Options).ToList();
 				}
 
 				foreach (var option in typeOptions)

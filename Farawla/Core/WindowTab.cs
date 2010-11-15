@@ -21,7 +21,7 @@ using ImageSource=System.Windows.Media.ImageSource;
 
 namespace Farawla.Core
 {
-	public class WindowTab
+	public partial class WindowTab
 	{
 		public string Name { get; set; }
 		public string DocumentPath { get; set; }
@@ -301,9 +301,9 @@ namespace Farawla.Core
 				AddCompletionItem(item);
 		}
 
-		public void CompletionRequestInsertion(TextCompositionEventArgs e)
+		public void CompletionRequestInsertion(TextCompositionEventArgs e, bool isDelimiterText)
 		{
-			if (completionWindow != null)
+			if (completionWindow != null && (completionWindow.IsActive || isDelimiterText))
 				completionWindow.CompletionList.RequestInsertion(e);
 		}
 		

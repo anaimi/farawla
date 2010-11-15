@@ -2,12 +2,12 @@
 	Spans: [
 		{
 			Name: "comment multi-line",
-			Start: "/\\*",
-			End: "\\*/"
+			Start: "=begin",
+			End: "=end"
 		},
 		{
 			Name: "comment single-line",
-			Start: "//",
+			Start: "#",
 			End: ".*"
 		},
 		{
@@ -31,11 +31,11 @@
 		},
 		{
 			Name: "object",
-			Regex: "\\b(Array|Boolean|Date|Function|Math|Number|Object|RegExp|Global|String)\\b"
+			Regex: "\\b(Array|Bignum|Binding|Class|Continuation|Dir|Exception|FalseClass|File::Stat|File|Fixnum|Float|Hash|Integer|IO|MatchData|Method|Module|NilClass|Numeric|Object|Proc|Range|Regexp|String|Struct|Symbol|ThreadGroup|Thread|Time|TrueClass)\\b"
 		},
 		{
 			Name: "terminal",
-			Regex: "\\b(true|false|null|NaN|Infinity|undefined)\\b"
+			Regex: "\\b(true|false|nil)\\b"
 		}
 		
 	]

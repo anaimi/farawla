@@ -45,6 +45,8 @@ namespace Farawla.Features.Projects
 		public void ShowBox()
 		{
 			FileName.Focus();
+			FileName.SelectAll();
+			
 			RefreshFileList();
 
 			ShowDialog();
