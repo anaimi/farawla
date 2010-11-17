@@ -3,7 +3,7 @@
   "ThemeName": "clouds",
   "IsWindowMaximized": true,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js"
+    "C:\\Users\\Ahmad\\Desktop\\test.js"
   ],
   "ClosedTabs": [
     {

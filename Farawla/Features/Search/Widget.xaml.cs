@@ -29,7 +29,7 @@ namespace Farawla.Features.Search
 			// create sidebar button
 			SidebarButton = new BarButton(this, "Search");
 			SidebarButton.IsExpandable = true;
-			SidebarButton.WidgetHeight = 140;
+			SidebarButton.WidgetHeight = 190;
 			
 			// add keyboard shortcut
 			Controller.Current.Keyboard.AddBinding(KeyCombination.Ctrl, Key.F, ShowWidgetAndGetFocus);
@@ -164,23 +164,26 @@ namespace Farawla.Features.Search
 		private void DoReplace()
 		{
 			var regex = GetRegexFromQuery();
+			var replacement = ReplaceWith.Text;
+			
+			if (ExtendQuery.IsChecked.Value)
+				replacement = GetExtendedString(replacement);
 			
 			if (SearchAreaCurrentDocument.IsSelected)
 			{
-				DoReplace(Controller.Current.ActiveTab, regex);
+				DoReplace(Controller.Current.ActiveTab, regex, replacement);
 			}
 			else if (SearchAreaOpenDocuments.IsSelected)
 			{
 				foreach (var tab in Controller.Current.CurrentTabs)
 				{
-					DoReplace(tab, regex);
+					DoReplace(tab, regex, replacement);
 				}
 			}
 		}
 
-		private void DoReplace(WindowTab tab, Regex regex)
+		private void DoReplace(WindowTab tab, Regex regex, string replacement)
 		{
-			var replacement = ReplaceWith.Text;
 			var offset = 0;
 			
 			tab.Editor.Document.BeginUpdate();
@@ -198,8 +201,20 @@ namespace Farawla.Features.Search
 		
 		private Regex GetRegexFromQuery()
 		{
-			var expression = Regex.Escape(Query.Text);
-			return new Regex(expression);
+			var query = Query.Text;
+			
+			if (ExtendQuery.IsChecked.Value)
+				query = GetExtendedString(query);
+
+			return new Regex(Regex.Escape(query));
+		}
+		
+		private string GetExtendedString(string str)
+		{
+			return str
+					.Replace("\\t", "\t")
+					.Replace("\\r", "\r")
+					.Replace("\\n", "\n");
 		}
 		
 		private void NoResultsFound(SearchAction action, WindowTab tab, Regex regex)

@@ -157,7 +157,6 @@ namespace Farawla.Features.Completion
 				var cb = new CheckBox();
 
 				cb.Content = content;
-				cb.Foreground = new SolidColorBrush(Colors.White);
 				
 				if (frameworks.Contains(content))
 				{

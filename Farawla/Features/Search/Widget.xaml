@@ -33,6 +33,8 @@
 				<ComboBoxItem x:Name="SearchAreaCurrentDocument" Selector.IsSelected="True">Current Document</ComboBoxItem>
 				<ComboBoxItem x:Name="SearchAreaOpenDocuments">Opened Documents</ComboBoxItem>
 			</ComboBox>
+			
+			<CheckBox x:Name="ExtendQuery" IsChecked="True">Extended: \t, \n, \r</CheckBox>
 		</StackPanel>
 
 		<Button Grid.Row="1" Style="{StaticResource SimpleButton}" Padding="10,5,10,5" HorizontalAlignment="Left" Click="FindClicked">Find</Button>

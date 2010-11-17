@@ -557,7 +557,16 @@ namespace Farawla.Core
 				var startPosition = textView.GetVisualPosition(new TextViewPosition(startLocation), VisualYPosition.LineTop);
 				var endPosition = textView.GetVisualPosition(new TextViewPosition(endLocation), VisualYPosition.LineBottom);
 
-				drawingContext.DrawRoundedRectangle(new SolidColorBrush(block.Color), new Pen(), new Rect(startPosition.X - editor.TextArea.TextView.ScrollOffset.X, startPosition.Y - editor.TextArea.TextView.ScrollOffset.Y, endPosition.X - startPosition.X, endPosition.Y - startPosition.Y), 3, 3);
+				var x = startPosition.X - editor.TextArea.TextView.ScrollOffset.X;
+				var y = startPosition.Y - editor.TextArea.TextView.ScrollOffset.Y;
+
+				var width = endPosition.X - startPosition.X;
+				var height = endPosition.Y - startPosition.Y;
+				
+				if (width <= 0 || height <= 0)
+					continue;
+
+				drawingContext.DrawRoundedRectangle(new SolidColorBrush(block.Color), new Pen(), new Rect(x, y, width, height), 3, 3);
 			}
 		}
 

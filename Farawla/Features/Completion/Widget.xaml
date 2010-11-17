@@ -11,9 +11,9 @@
 		</TextBlock>
 		
 		<StackPanel x:Name="CompletionSettings" Visibility="Collapsed">
-			<CheckBox x:Name="CompletionState" Foreground="#FFFFFFFF" FontSize="14" Click="CompletionStateChanged">Enable for Language</CheckBox>
+			<CheckBox x:Name="CompletionState" FontSize="14" Height="16" Click="CompletionStateChanged">Enable for Language</CheckBox>
 
-			<Border Margin="0,10,0,0" BorderBrush="#FFFFFFFF" BorderThickness="0,1,0,0">
+			<Border Margin="0,5,0,0" BorderBrush="#FFFFFFFF" BorderThickness="0,1,0,0">
 				<StackPanel>
 					<TextBlock Foreground="#FFFFFFFF" Margin="0,5,0,0">Frameworks:</TextBlock>
 
