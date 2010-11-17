@@ -8,6 +8,8 @@ namespace Farawla.Core.Sidebar
 	{
 		private const double BUTTON_HEIGHT = 26;
 		
+		public bool DontHideSidebar { get; set; }
+		
 		public Bar()
 		{
 			InitializeComponent();

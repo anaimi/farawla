@@ -1,4 +1,4 @@
-﻿<Window x:Class="Farawla.Features.Settings.SettingsWindow"
+﻿<Window x:Class="Farawla.Core.SettingsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Name="CurrentSettingsWindow" Title="Settings"
@@ -57,14 +57,14 @@
 				<StackPanel>
 					<GroupBox Header="Editor">
 						<StackPanel>
-							<CheckBox x:Name="cbShowTabs" Content="Show tabs" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowTabsInEditor}" Click="ShowTabsAndSpacesChanged" />
-							<CheckBox x:Name="cbShowSpaces" Content="Show spaces" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowSpacesInEditor}" Click="ShowTabsAndSpacesChanged" />
+							<CheckBox Content="Show tabs" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowTabsInEditor}" Click="ShowTabsAndSpacesChanged" />
+							<CheckBox Content="Show spaces" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowSpacesInEditor}" Click="ShowTabsAndSpacesChanged" />
 						</StackPanel>
 					</GroupBox>
 
 					<GroupBox Header="Project Manager">
 						<StackPanel>
-							<CheckBox Content="Show files with names starting with a dot" />
+							<CheckBox Content="Show files with names starting with a dot" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowFilesStartingWithDot}" Click="ShowFilesStartingWithDotChanged"  />
 						</StackPanel>
 					</GroupBox>
 					

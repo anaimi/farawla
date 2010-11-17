@@ -10,17 +10,16 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Farawla.Core;
 using System.Windows.Forms;
 
-namespace Farawla.Features.Settings
+namespace Farawla.Core
 {
 	/// <summary>
 	/// Interaction logic for SettingsWindow.xaml
 	/// </summary>
 	public partial class SettingsWindow : Window
 	{
-		public Core.Settings Settings { get; private set; }
+		public Settings Settings { get; private set; }
 		
 		#region Instance
 		private static SettingsWindow _instance;
@@ -40,7 +39,7 @@ namespace Farawla.Features.Settings
 		
 		public SettingsWindow()
 		{
-			Settings = Core.Settings.Instance;
+			Settings = Settings.Instance;
 			
 			InitializeComponent();
 			
@@ -67,6 +66,13 @@ namespace Farawla.Features.Settings
 		private void SaveButtonClicked(object sender, RoutedEventArgs e)
 		{
 			Close();
+		}
+
+		private void ShowFilesStartingWithDotChanged(object sender, RoutedEventArgs e)
+		{
+			var manager = Controller.Current.Widgets.FirstOrDefault(w => w is Features.Projects.Widget) as Features.Projects.Widget;
+			
+			manager.RefreshProject();
 		}
 	}
 }

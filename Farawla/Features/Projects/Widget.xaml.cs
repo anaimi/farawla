@@ -107,6 +107,13 @@ namespace Farawla.Features.Projects
 			OpenProject(LastOpenProject);
 		}
 		
+		public void RefreshProject()
+		{
+			OpenProject(CurrentProjectPath);
+
+			ExpandExpandedNodes(Files.Items);
+		}
+		
 		private void OpenProject(string path)
 		{
 			if (path.IsBlank() || !Directory.Exists(path))
@@ -142,11 +149,17 @@ namespace Farawla.Features.Projects
 			
 			foreach (var dir in Directory.GetDirectories(path))
 			{
+				if (!Core.Settings.Instance.ShowFilesStartingWithDot && Path.GetFileName(dir).StartsWith("."))
+					continue;
+				
 				items.Add(CreateFileItem(dir, true));
 			}
 
 			foreach (var file in Directory.GetFiles(path))
 			{
+				if (!Core.Settings.Instance.ShowFilesStartingWithDot && Path.GetFileName(file).StartsWith("."))
+					continue;
+				
 				items.Add(CreateFileItem(file, false));
 			}
 
@@ -288,9 +301,7 @@ namespace Farawla.Features.Projects
 
 		private void RefreshProjectClicked(object sender, RoutedEventArgs e)
 		{
-			OpenProject(CurrentProjectPath);
-			
-			ExpandExpandedNodes(Files.Items);
+			RefreshProject();
 		}
 		
 		private void ExpandExpandedNodes(ItemCollection items)

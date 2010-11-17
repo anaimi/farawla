@@ -71,7 +71,7 @@ namespace Farawla.Core.Sidebar
 
 			if (Math.Round(Control.Height, 2) == 0)
 			{
-				ExpandWidget();
+				ExpandWidget(null);
 			}
 			else
 			{
@@ -93,7 +93,7 @@ namespace Farawla.Core.Sidebar
 			IsExpanded = false;
 		}
 
-		public void ExpandWidget()
+		public void ExpandWidget(Action callback)
 		{
 			Control.Visibility = Visibility.Visible;
 			
@@ -101,7 +101,7 @@ namespace Farawla.Core.Sidebar
 				OnExpand();
 
 			Control.Margin = new Thickness(Control.Margin.Left, 5, Control.Margin.Right, 5);
-			Control.VerticalSlide(WidgetHeight, 10);
+			Control.VerticalSlide(WidgetHeight, 10, callback);
 
 			IsExpanded = true;
 		}
@@ -109,7 +109,7 @@ namespace Farawla.Core.Sidebar
 		public void ExpadedByDefault()
 		{
 			IsExpanded = true;
-			Loaded += (s, e) => ExpandWidget();
+			Loaded += (s, e) => ExpandWidget(null);
 		}
 	}
 }

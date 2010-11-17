@@ -43,12 +43,22 @@ namespace Farawla.Core
 				e.Handled = true;
 			
 			foreach(var binding in bindings)
-				binding.Command();
+				binding.ExecuteCommand(e);
+		}
+		
+		public void AddBinding(KeyboardBinding binding)
+		{
+			Bindings.Add(binding);
 		}
 
 		public void AddBinding(KeyCombination combination, Key key, Action command)
 		{
-			Bindings.Add(new KeyboardBinding(combination, key, command));
+			AddBinding(new KeyboardBinding(combination, key, command));
+		}
+		
+		public void AddBinding(KeyCombination combination, Action<Key> command, params Key[] keys)
+		{
+			AddBinding(new KeyboardBinding(combination, command, keys));
 		}
 	}
 	
@@ -57,6 +67,9 @@ namespace Farawla.Core
 		public Key Key { get; set; }
 		public Action Command { get; set; }
 		public KeyCombination Combination { get; set; }
+		
+		public Key[] KeySet { get; set; }
+		public Action<Key> ParameterizedCommand { get; set; }
 
 		public KeyboardBinding(KeyCombination combination, Key key, Action command)
 		{
@@ -65,12 +78,37 @@ namespace Farawla.Core
 			Command = command;
 		}
 
+		public KeyboardBinding(KeyCombination combination, Action<Key> command, params Key[] keys)
+		{
+			Combination = combination;
+			ParameterizedCommand = command;
+			KeySet = keys;
+		}
+
 		public bool Equals(KeyCombination combination, Key key)
 		{
 			if (Combination != combination) return false;
-			if (key != Key) return false;
+			
+			if (KeySet == null)
+			{
+				if (key != Key) return false;
+			}
+			else
+			{
+				if (KeySet.Contains(key)) return true;
+			}
+			
 
 			return true;
+		}
+		
+		public void ExecuteCommand(KeyEventArgs e)
+		{
+			if (Command != null)
+				Command();
+			
+			if (ParameterizedCommand != null)
+				ParameterizedCommand(e.Key);
 		}
 	}
 }

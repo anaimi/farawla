@@ -19,6 +19,7 @@ using DrawingContext=System.Windows.Media.DrawingContext;
 using FontFamily=System.Windows.Media.FontFamily;
 using ImageSource=System.Windows.Media.ImageSource;
 using System.Windows.Markup;
+using Farawla.Utilities;
 
 namespace Farawla.Core
 {
@@ -80,9 +81,10 @@ namespace Farawla.Core
 			Editor.Background = new SolidColorBrush(Theme.Instance.Background.ToColor());
 			Editor.Foreground = new SolidColorBrush(Theme.Instance.Foreground.ToColor());
 			Editor.FontFamily = new FontFamily(Theme.Instance.FontFamily);
-			Editor.TextArea.TextEntered += (s, e) => TextEntered(e);
-			Editor.TextArea.SelectionChanged += (s, e) => SelectionChanged();
-			Editor.TextArea.Caret.PositionChanged += (s, e) => CaretOffsetChanged();
+			Editor.TextArea.TextEntered += TextEntered;
+			Editor.TextArea.SelectionChanged += SelectionChanged;
+			Editor.TextArea.Caret.PositionChanged += CaretOffsetChanged;
+			Editor.TextArea.GotFocus += EditorGotFocus;
 			
 			// renderer
 			BlockHighlighter = new BlockHighlighter(Editor);
@@ -113,7 +115,10 @@ namespace Farawla.Core
 		public void MakeActive()
 		{
 			var index = Controller.Current.CurrentTabs.IndexOf(this);
+			
 			Controller.Current.MainWindow.Tab.SelectedIndex = index;
+
+			DelayedAction.Invoke(250, () => Editor.Focus());
 		}
 
 		public bool Save(bool saveAs)
@@ -162,14 +167,6 @@ namespace Farawla.Core
 			return true;
 		}
 		
-		public void TextEntered(TextCompositionEventArgs args)
-		{
-			if (!Editor.IsLoaded)
-				return;
-
-			TextChanged();
-		}
-		
 		public void TextChanged()
 		{
 			// mark as unsaved?
@@ -198,28 +195,6 @@ namespace Farawla.Core
 			Tab.Header = Name;
 		}
 		
-		public void SelectionChanged()
-		{
-			#region When highlighting a token, highlight all matching tokens
-			
-			BlockHighlighter.Clear("Selection");
-			
-			if (Editor.SelectionLength == 0 || Editor.SelectedText.Any(c => !char.IsLetterOrDigit(c)))
-				return;
-			
-			foreach(Match match in Regex.Matches(Editor.Text, Editor.SelectedText))
-			{
-				BlockHighlighter.Add("Selection", match.Index, match.Length, matchingTokensBackground);
-			}
-			
-			#endregion
-		}
-
-		private void CaretOffsetChanged()
-		{
-			HighlightBracketsIfNextToCaret();
-		}
-		
 		public void Close()
 		{
 			// save or ignore?
@@ -242,6 +217,41 @@ namespace Farawla.Core
 
 			// update count (also open a new tab if tab count is zero)
 			Controller.Current.TabCountUpdated();
+		}
+
+		private void TextEntered(object sender, TextCompositionEventArgs args)
+		{
+			if (!Editor.IsLoaded)
+				return;
+
+			TextChanged();
+		}
+		
+		private void SelectionChanged(object sender, EventArgs e)
+		{
+			#region When highlighting a token, highlight all matching tokens
+
+			BlockHighlighter.Clear("Selection");
+
+			if (Editor.SelectionLength == 0 || Editor.SelectedText.Any(c => !char.IsLetterOrDigit(c)))
+				return;
+
+			foreach (Match match in Regex.Matches(Editor.Text, Editor.SelectedText))
+			{
+				BlockHighlighter.Add("Selection", match.Index, match.Length, matchingTokensBackground);
+			}
+
+			#endregion
+		}
+
+		private void EditorGotFocus(object sender, RoutedEventArgs e)
+		{
+			Controller.Current.MainWindow.Sidebar.DontHideSidebar = false;
+		}
+
+		private void CaretOffsetChanged(object sender, EventArgs e)
+		{
+			HighlightBracketsIfNextToCaret();
 		}
 		
 		#region Completion
@@ -553,6 +563,8 @@ namespace Farawla.Core
 		public void Draw(TextView textView, DrawingContext ctx)
 		{
 			textView.EnsureVisualLines();
+			
+			//TODO: probably should only draw lines inside the view area (i.e. inside the fold)
 
 			// draw tabs
 			if (Settings.Instance.ShowTabsInEditor)
@@ -561,13 +573,22 @@ namespace Farawla.Core
 				{
 					var point = GetPositionFromOffset(textView, VisualYPosition.LineMiddle, match.Index);
 
+					var x1 = point.X - editor.TextArea.TextView.ScrollOffset.X + 3;
+					var y1 = point.Y - editor.TextArea.TextView.ScrollOffset.Y;
+
+					var x2 = point.X - editor.TextArea.TextView.ScrollOffset.X + 23;
+					var y2 = point.Y - editor.TextArea.TextView.ScrollOffset.Y;
+
+					if (x1 < 0 || y1 < 0 || x2 < 0 || y2 < 0 || x1 == x2)
+						continue;
+					
 					var pen = new Pen
 					{
 						Brush = tabsColor,
 						Thickness = 0.3
 					};
 
-					ctx.DrawLine(pen, new Point(point.X + 3, point.Y), new Point(point.X + 23, point.Y));
+					ctx.DrawLine(pen, new Point(x1, y1), new Point(x2, y2));
 				}
 			}
 
@@ -578,13 +599,22 @@ namespace Farawla.Core
 				{
 					var point = GetPositionFromOffset(textView, VisualYPosition.LineMiddle, match.Index);
 
+					var x1 = point.X - editor.TextArea.TextView.ScrollOffset.X + 2;
+					var y1 = point.Y - editor.TextArea.TextView.ScrollOffset.Y;
+					
+					var x2 = point.X - editor.TextArea.TextView.ScrollOffset.X + 4;
+					var y2 = point.Y - editor.TextArea.TextView.ScrollOffset.Y;
+
+					if (x1 < 0 || y1 < 0 || x2 < 0 || y2 < 0 || x1 == x2)
+						continue;
+
 					var pen = new Pen
 					{
 						Brush = spacesColor,
 						Thickness = 1
 					};
 
-					ctx.DrawLine(pen, new Point(point.X + 2, point.Y), new Point(point.X + 4, point.Y));
+					ctx.DrawLine(pen, new Point(x1, y1), new Point(x2, y2));
 				}
 			}
 			
@@ -611,7 +641,7 @@ namespace Farawla.Core
 		{
 			var startLocation = textView.Document.GetLocation(offset);
 			var point = textView.GetVisualPosition(new TextViewPosition(startLocation), position);
-			
+
 			return new Point(Math.Round(point.X), Math.Round(point.Y));
 		}
 		

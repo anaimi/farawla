@@ -127,12 +127,18 @@ namespace Farawla.Core
 		public void Start()
 		{
 			#region Bind keyboard shortcuts
+			
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.O, BrowseFile);
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.S, () => ActiveTab.Save(false));
 			Keyboard.AddBinding(KeyCombination.Ctrl | KeyCombination.Shift, Key.S, () => ActiveTab.Save(true));
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.F4, CloseActiveTab);
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.T, () => CreateNewTab(""));
 			Keyboard.AddBinding(KeyCombination.Ctrl | KeyCombination.Shift, Key.T, OpenLastClosedTab);
+			
+			// keybindings for ctrl+#
+			Keyboard.AddBinding(KeyCombination.Ctrl, KeyboardNumberNavigation, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9);
+			Keyboard.AddBinding(KeyCombination.Ctrl, KeyboardNumberNavigation, Key.NumPad1, Key.NumPad2, Key.NumPad3, Key.NumPad4, Key.NumPad5, Key.NumPad6, Key.NumPad7, Key.NumPad8, Key.NumPad9);
+			
 			#endregion
 			
 			// inform tab creation observers, since tabs are created before allowing observers to subscribe
@@ -223,6 +229,26 @@ namespace Farawla.Core
 				// update list of last closed tabs
 				Settings.Instance.ClosedTabs = Settings.Instance.ClosedTabs.Skip(1).ToList();
 			}
+		}
+		
+		public void KeyboardNumberNavigation(Key key)
+		{
+			var index = -1;
+			
+			if (key == Key.D1 || key == Key.NumPad1) index = 0;
+			if (key == Key.D2 || key == Key.NumPad2) index = 1;
+			if (key == Key.D3 || key == Key.NumPad3) index = 2;
+			if (key == Key.D4 || key == Key.NumPad4) index = 3;
+			if (key == Key.D5 || key == Key.NumPad5) index = 4;
+			if (key == Key.D6 || key == Key.NumPad6) index = 5;
+			if (key == Key.D7 || key == Key.NumPad7) index = 6;
+			if (key == Key.D8 || key == Key.NumPad8) index = 7;
+			if (key == Key.D9 || key == Key.NumPad9) index = 8;
+			
+			if (index <= -1 || index >= CurrentTabs.Count)
+				return;
+			
+			CurrentTabs[index].MakeActive();
 		}
 
 		#region Overlay Show/Hide

@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Farawla.Core;
+using Farawla.Utilities;
 
 namespace Farawla.Features.Projects
 {
@@ -81,7 +82,7 @@ namespace Farawla.Features.Projects
 				var path = (string)(Files.SelectedItem as ListBoxItem).Tag;
 				
 				Controller.Current.CreateNewTab(projectManager.CurrentProjectPath + "\\" + path);
-				Controller.Current.CurrentTabs.Last().MakeActive();
+				DelayedAction.Invoke(200, Controller.Current.CurrentTabs.Last().MakeActive);
 				
 				Hide();
 				return;

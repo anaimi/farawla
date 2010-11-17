@@ -5,7 +5,6 @@ using Farawla.Core.Sidebar;
 using Newtonsoft.Json;
 using System.Linq;
 using Farawla.Features;
-using Farawla.Features.Settings;
 using System;
 
 namespace Farawla.Core
@@ -63,6 +62,7 @@ namespace Farawla.Core
 		
 		public bool ShowSpacesInEditor { get; set; }
 		public bool ShowTabsInEditor { get; set; }
+		public bool ShowFilesStartingWithDot { get; set; }
 
 		public List<string> OpenTabs { get; set; }
 		public List<ClosedTabs> ClosedTabs { get; set; }

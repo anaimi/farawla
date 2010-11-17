@@ -82,9 +82,14 @@ namespace Farawla.Features.Search
 
 		private void ShowWidgetAndGetFocus()
 		{
-			SidebarButton.ExpandWidget();
-
-			Query.Focus();
+			Controller.Current.MainWindow.Sidebar.DontHideSidebar = true;
+			
+			Controller.Current.MainWindow.Sidebar.Visibility = Visibility.Visible;
+			Controller.Current.MainWindow.Sidebar.Opacity = 1;
+			
+			SidebarButton.ExpandWidget(() => {
+				Query.Focus();
+			});
 		}
 
 		private void DoSearch(SearchAction action)

@@ -28,6 +28,9 @@ namespace Farawla
 		
 		private void ChangeSidebarVisibility(object sender, MouseEventArgs e)
 		{
+			if (Sidebar.DontHideSidebar)
+				return;
+			
 			var distance = e.GetPosition(Sidebar).X;
 			
 			if (distance > -20)
