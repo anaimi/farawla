@@ -90,8 +90,12 @@ namespace Farawla.Features.Snippets
 
 			var group = Snippets[tab.Language.Name];
 			var line = tab.Editor.Document.GetLineByOffset(tab.Editor.CaretOffset);
-			var text = tab.Editor.Document.GetText(line.Offset, tab.Editor.CaretOffset - line.Offset - 1);
-
+			var length = tab.Editor.CaretOffset - line.Offset - 1;
+			
+			if (length <= 0)
+				return;
+			
+			var text = tab.Editor.Document.GetText(line.Offset, length);
 			var snippet = group.Snippets.FirstOrDefault(s => text.EndsWith(s.Trigger));
 			
 			if (snippet == null)

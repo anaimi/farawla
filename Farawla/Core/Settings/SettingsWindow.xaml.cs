@@ -20,6 +20,8 @@ namespace Farawla.Features.Settings
 	/// </summary>
 	public partial class SettingsWindow : Window
 	{
+		public Core.Settings Settings { get; private set; }
+		
 		#region Instance
 		private static SettingsWindow _instance;
 		public static SettingsWindow Instance
@@ -27,7 +29,9 @@ namespace Farawla.Features.Settings
 			get
 			{
 				if (_instance == null)
+				{
 					_instance = new SettingsWindow();
+				}
 				
 				return _instance;
 			}
@@ -36,6 +40,8 @@ namespace Farawla.Features.Settings
 		
 		public SettingsWindow()
 		{
+			Settings = Core.Settings.Instance;
+			
 			InitializeComponent();
 			
 			Closing += (s, e) => {
@@ -45,9 +51,22 @@ namespace Farawla.Features.Settings
 			};
 			
 			KeyDown += (s, e) => {
-				if (e.Key == System.Windows.Input.Key.Escape)
+				if (e.Key == Key.Escape)
 					Close();
 			};
+		}
+
+		private void ShowTabsAndSpacesChanged(object sender, RoutedEventArgs e)
+		{
+			foreach(var tab in Controller.Current.CurrentTabs)
+			{
+				tab.BlockHighlighter.Redraw();
+			}
+		}
+
+		private void SaveButtonClicked(object sender, RoutedEventArgs e)
+		{
+			Close();
 		}
 	}
 }

@@ -18,6 +18,7 @@ using System.Windows.Input;
 using DrawingContext=System.Windows.Media.DrawingContext;
 using FontFamily=System.Windows.Media.FontFamily;
 using ImageSource=System.Windows.Media.ImageSource;
+using System.Windows.Markup;
 
 namespace Farawla.Core
 {
@@ -74,8 +75,6 @@ namespace Farawla.Core
 			Editor.ShowLineNumbers = true;
 			Editor.Options.EnableEmailHyperlinks = false;
 			Editor.Options.EnableHyperlinks = false;
-			//Editor.Options.ShowTabs = true;
-			//Editor.Options.ShowSpaces = true;
 			Editor.Options.ShowBoxForControlCharacters = true;
 			//Editor.Options.ConvertTabsToSpaces = true;
 			Editor.Background = new SolidColorBrush(Theme.Instance.Background.ToColor());
@@ -512,11 +511,17 @@ namespace Farawla.Core
 		private List<HighlightedBlocks> blocks;
 		private TextEditor editor;
 		
+		private SolidColorBrush tabsColor;
+		private SolidColorBrush spacesColor;
+		
 		public BlockHighlighter(TextEditor editor)
 		{
 			this.editor = editor;
 			
 			blocks = new List<HighlightedBlocks>();
+			
+			tabsColor = new SolidColorBrush(Theme.Instance.TabColor.ToColor());
+			spacesColor = new SolidColorBrush(Theme.Instance.SpaceColor.ToColor());
 		}
 
 		public KnownLayer Layer
@@ -545,17 +550,49 @@ namespace Farawla.Core
 			blocks.RemoveAll(b => b.Owner == owner);
 		}
 
-		public void Draw(TextView textView, DrawingContext drawingContext)
+		public void Draw(TextView textView, DrawingContext ctx)
 		{
 			textView.EnsureVisualLines();
+
+			// draw tabs
+			if (Settings.Instance.ShowTabsInEditor)
+			{
+				foreach (Match match in Regex.Matches(editor.Text, "\t"))
+				{
+					var point = GetPositionFromOffset(textView, VisualYPosition.LineMiddle, match.Index);
+
+					var pen = new Pen
+					{
+						Brush = tabsColor,
+						Thickness = 0.3
+					};
+
+					ctx.DrawLine(pen, new Point(point.X + 3, point.Y), new Point(point.X + 23, point.Y));
+				}
+			}
+
+			// draw spaces
+			if (Settings.Instance.ShowSpacesInEditor)
+			{
+				foreach (Match match in Regex.Matches(editor.Text, " "))
+				{
+					var point = GetPositionFromOffset(textView, VisualYPosition.LineMiddle, match.Index);
+
+					var pen = new Pen
+					{
+						Brush = spacesColor,
+						Thickness = 1
+					};
+
+					ctx.DrawLine(pen, new Point(point.X + 2, point.Y), new Point(point.X + 4, point.Y));
+				}
+			}
 			
+			// draw blocks
 			foreach(var block in blocks)
 			{
-				var startLocation = textView.Document.GetLocation(block.Offset);
-				var endLocation = textView.Document.GetLocation(block.Offset + block.Length);
-
-				var startPosition = textView.GetVisualPosition(new TextViewPosition(startLocation), VisualYPosition.LineTop);
-				var endPosition = textView.GetVisualPosition(new TextViewPosition(endLocation), VisualYPosition.LineBottom);
+				var startPosition = GetPositionFromOffset(textView, VisualYPosition.LineTop, block.Offset);
+				var endPosition = GetPositionFromOffset(textView, VisualYPosition.LineBottom, block.Offset + block.Length);
 
 				var x = startPosition.X - editor.TextArea.TextView.ScrollOffset.X;
 				var y = startPosition.Y - editor.TextArea.TextView.ScrollOffset.Y;
@@ -566,10 +603,18 @@ namespace Farawla.Core
 				if (width <= 0 || height <= 0)
 					continue;
 
-				drawingContext.DrawRoundedRectangle(new SolidColorBrush(block.Color), new Pen(), new Rect(x, y, width, height), 3, 3);
+				ctx.DrawRoundedRectangle(new SolidColorBrush(block.Color), new Pen(), new Rect(x, y, width, height), 3, 3);
 			}
 		}
-
+		
+		private Point GetPositionFromOffset(TextView textView, VisualYPosition position, int offset)
+		{
+			var startLocation = textView.Document.GetLocation(offset);
+			var point = textView.GetVisualPosition(new TextViewPosition(startLocation), position);
+			
+			return new Point(Math.Round(point.X), Math.Round(point.Y));
+		}
+		
 		public void Redraw()
 		{
 			editor.TextArea.TextView.Redraw();

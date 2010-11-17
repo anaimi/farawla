@@ -2,6 +2,8 @@
   "SidebarButton": null,
   "ThemeName": "clouds",
   "IsWindowMaximized": true,
+  "ShowSpacesInEditor": false,
+  "ShowTabsInEditor": true,
   "OpenTabs": [
     "C:\\Users\\Ahmad\\Desktop\\test.js"
   ],
@@ -51,7 +53,7 @@
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#D4B9E560"
+        "Color": "#FF85B626"
       }
     },
     {
@@ -60,7 +62,7 @@
         "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
         "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\CodeBox,C:\\Users\\Ahmad\\Desktop\\clouds,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
         "JavaScript": "Enable",
-        "JavaScriptFrameworks": ",Core,Browser Objects",
+        "JavaScriptFrameworks": ",Core",
         "Farawla.Core.Language.LanguageMetaFrameworks": ",Core"
       }
     }

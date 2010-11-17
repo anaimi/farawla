@@ -60,6 +60,9 @@ namespace Farawla.Core
 		
 		public string ThemeName { get; set; }
 		public bool IsWindowMaximized { get; set; }
+		
+		public bool ShowSpacesInEditor { get; set; }
+		public bool ShowTabsInEditor { get; set; }
 
 		public List<string> OpenTabs { get; set; }
 		public List<ClosedTabs> ClosedTabs { get; set; }

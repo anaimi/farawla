@@ -2,7 +2,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
 	<Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
-		<Setter Property="Height" Value="14"/>
+		<Setter Property="Height" Value="15"/>
 		<Setter Property="Foreground" Value="#FFFFFF"/>
 		<Setter Property="Cursor" Value="Hand"/>
 		<Setter Property="Margin" Value="0,0,0,5"/>
@@ -13,7 +13,7 @@
 				<ControlTemplate TargetType="{x:Type CheckBox}">
 					<BulletDecorator Background="Transparent">
 						<BulletDecorator.Bullet>
-							<Border x:Name="Border" Width="14" Height="14" CornerRadius="2" Background="#C0C0C0" BorderThickness="1" BorderBrush="#CCCCCC">
+							<Border x:Name="Border" Width="14" Height="14" CornerRadius="1" Background="#C0C0C0" BorderThickness="1" BorderBrush="#CCCCCC">
 								<Path Width="7" Height="7" x:Name="CheckMark" SnapsToDevicePixels="False" Stroke="#FFFFFF" StrokeThickness="2" Data="M 0 0 L 7 7 M 0 7 L 7 0" />
 							</Border>
 						</BulletDecorator.Bullet>
