@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Data;
+using System.Windows.Markup;
 using System.Windows.Media;
 using Farawla.Features;
 using Newtonsoft.Json;
@@ -15,10 +19,16 @@ namespace Farawla.Core
 	{
 		public const string DEFAULT_EDITOR_MATCHING_TOKENS_BACKGROUND = "#FFFFFF00";
 		public const string DEFAULT_EDITOR_MATCHING_BRACKETS_BACKGROUND = "#FFFFEE78";
-		public const string DEFAULT_EDITOR_BACKGROUND = "#FFFFFFFF";
-		public const string DEFAULT_EDITOR_FOREGROUND = "#FF000000";
+		
 		public const string DEFAULT_EDITOR_TAB_COLOR = "#FFCCCCCC";
 		public const string DEFAULT_EDITOR_SPACE_COLOR = "#FFAAAAAA";
+		
+		public const string DEFAULT_PRIMARY_WIDGET_COLOR = "#22606060";
+		public const string DEFAULT_SECONDARY_WIDGET_COLOR = "#22606060";
+		public const string DEFAULT_TEXT_WIDGET_COLOR = "#FFFFFFFF";
+
+		public const string DEFAULT_EDITOR_BACKGROUND = "#FFFFFFFF";
+		public const string DEFAULT_EDITOR_FOREGROUND = "#FF000000";
 		public const string DEFAULT_EDITOR_FONT_FAMILY = "Courier New";
 		
 		public const string DIRECTORY_NAME = "themes";
@@ -54,8 +64,17 @@ namespace Farawla.Core
 		
 		public string MatchingTokensBackground { get; set; }
 		public string MatchingBracketsBackground { get; set; }
+		
 		public string TabColor { get; set; }
 		public string SpaceColor { get; set; }
+
+		public string PrimaryWidgetColor { get; set; }
+		public string SecondaryWidgetColor { get; set; }
+		public string TextWidgetColor { get; set; }
+		
+		public string CompletionWindowBackground { get; set; }
+		public string CompletionWindowForeground { get; set; }
+		
 		public string Background { get; set; }
 		public string Foreground { get; set; }
 		public string FontFamily { get; set; }
@@ -70,8 +89,14 @@ namespace Farawla.Core
 		{
 			MatchingTokensBackground = DEFAULT_EDITOR_MATCHING_TOKENS_BACKGROUND;
 			MatchingBracketsBackground = DEFAULT_EDITOR_MATCHING_BRACKETS_BACKGROUND;
+			
 			TabColor = DEFAULT_EDITOR_TAB_COLOR;
 			SpaceColor = DEFAULT_EDITOR_SPACE_COLOR;
+
+			PrimaryWidgetColor = DEFAULT_PRIMARY_WIDGET_COLOR;
+			SecondaryWidgetColor = DEFAULT_SECONDARY_WIDGET_COLOR;
+			TextWidgetColor = DEFAULT_TEXT_WIDGET_COLOR;
+			
 			Background = DEFAULT_EDITOR_BACKGROUND;
 			Foreground = DEFAULT_EDITOR_FOREGROUND;
 			FontFamily = DEFAULT_EDITOR_FONT_FAMILY;
@@ -129,6 +154,73 @@ namespace Farawla.Core
 			}
 
 			return Foreground.ToColor();
+		}
+	}
+
+	public class ThemeColorConverter : MarkupExtension, IValueConverter
+	{
+		public SolidColorBrush DefaultColor;
+		
+		public ThemeColorConverter()
+		{
+			DefaultColor = new SolidColorBrush(Colors.Orange); // TODO:: either change to white of get from Theme or both
+			
+			Debug.WriteLine("Created instance of ThemeColorConverter");
+		}
+		
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			var colorName = parameter as string;
+			
+			if (colorName == null)
+				return DefaultColor;
+			
+			var colorInfo = Theme.Instance.GetType().GetProperty(colorName);
+			var colorStr = colorInfo.GetValue(Theme.Instance, new object[0]) as string;
+			
+			if (colorStr == null)
+				return DefaultColor;
+
+			return new SolidColorBrush(colorStr.ToColor());
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+
+		public override object ProvideValue(IServiceProvider serviceProvider)
+		{
+			return this;
+		}
+	}
+	
+	public class ThemeImageConverter : MarkupExtension, IValueConverter
+	{
+		public ThemeImageConverter()
+		{
+			Debug.WriteLine("Created instance of ThemeImageConverter");
+		}
+		
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			var imageName = parameter as string;
+			var path = Settings.ExecDir + Theme.DIRECTORY_NAME + "\\" + Settings.Instance.ThemeName + "\\" + imageName;
+			
+			if (!File.Exists(path))
+				return null;
+
+			return new BitmapImage(new Uri(path));
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+
+		public override object ProvideValue(IServiceProvider serviceProvider)
+		{
+			return this;
 		}
 	}
 }

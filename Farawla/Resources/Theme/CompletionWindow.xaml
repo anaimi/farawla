@@ -1,9 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:CodeCompletion="clr-namespace:ICSharpCode.AvalonEdit.CodeCompletion;assembly=ICSharpCode.AvalonEdit">
+    xmlns:CodeCompletion="clr-namespace:ICSharpCode.AvalonEdit.CodeCompletion;assembly=ICSharpCode.AvalonEdit"
+    xmlns:Core="clr-namespace:Farawla.Core">
 
 	<Style TargetType="{x:Type CodeCompletion:CompletionWindow}">
 		<Setter Property="ResizeMode" Value="NoResize" />
+		<Setter Property="Background" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='CompletionWindowBackground'}" />
+		<Setter Property="Foreground" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='CompletionWindowForeground'}" />
 	</Style>
 	
 </ResourceDictionary>

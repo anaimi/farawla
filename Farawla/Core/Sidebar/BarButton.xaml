@@ -1,8 +1,9 @@
 ﻿<UserControl x:Class="Farawla.Core.Sidebar.BarButton"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Core="clr-namespace:Farawla.Core"
     Height="300" Width="300">
-	<Border Background="#60606060" Padding="5" Cursor="Hand" Grid.Row="0">
-		<TextBlock x:Name="Label" Foreground="#FFFFFFFF" Text="Loading..." />
+	<Border Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}" Padding="5" Cursor="Hand" Grid.Row="0">
+		<TextBlock x:Name="Label" Foreground="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='TextWidgetColor'}" Text="Loading..." />
 	</Border>
 </UserControl>

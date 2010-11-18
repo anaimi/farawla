@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Core="clr-namespace:Farawla.Core">
 	<Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
 		<Setter Property="SnapsToDevicePixels" Value="True"/>
 		<Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -12,13 +13,12 @@
 			          Margin="1" 
 			          CornerRadius="2" 
 			          Background="Transparent"
-			          BorderBrush="#404040"
 			          BorderThickness="0">
 						<Path 
 			          	Name="Arrow"
 			            HorizontalAlignment="Center"
 			            VerticalAlignment="Center"
-			            Fill="#22606060"
+			            Fill="{Binding Converter={Core:ThemeColorConverter}, ConverterParameter='SecondaryWidgetColor'}"
 			            Data="{Binding Path=Content,RelativeSource={RelativeSource TemplatedParent}}" />
 					</Border>
 					<ControlTemplate.Triggers>
@@ -26,7 +26,7 @@
 							<Setter TargetName="Arrow" Property="Fill" Value="Gray" />
 						</Trigger>
 						<Trigger Property="IsEnabled" Value="false">
-							<Setter Property="Foreground" Value="#888888"/>
+							<Setter Property="Opacity" Value="0.5"/>
 						</Trigger>
 					</ControlTemplate.Triggers>
 				</ControlTemplate>
@@ -96,7 +96,7 @@
 					<Thumb 
 			          Style="{StaticResource ScrollBarThumb}" 
 			          Margin="5,0,5,0"  
-			          Background="#22606060" />
+			          Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='SecondaryWidgetColor'}" />
 				</Track.Thumb>
 				<Track.IncreaseRepeatButton>
 					<RepeatButton 
@@ -143,7 +143,7 @@
 					<Thumb 
 			          Style="{StaticResource ScrollBarThumb}" 
 			          Margin="0,5,0,5"  
-			          Background="#22606060" />
+			          Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='SecondaryWidgetColor'}" />
 				</Track.Thumb>
 				<Track.IncreaseRepeatButton>
 					<RepeatButton 

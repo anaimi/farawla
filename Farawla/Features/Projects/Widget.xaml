@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Projects="clr-namespace:Farawla.Features.Projects"
+    xmlns:Core="clr-namespace:Farawla.Core"
     Width="240" Height="300" VerticalContentAlignment="Stretch"
     Name="MainControl">
     <Grid>
@@ -14,7 +15,7 @@
 				<Setter Property="Template">
 					<Setter.Value>
 						<ControlTemplate TargetType="{x:Type TreeView}">
-							<Border Name="Border" Background="#22606060" BorderThickness="0">
+							<Border Name="Border" Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}" BorderThickness="0">
 								<ScrollViewer Focusable="False" CanContentScroll="False" Padding="4">
 									<ItemsPresenter/>
 								</ScrollViewer>
@@ -30,7 +31,7 @@
 					<Setter.Value>
 						<ControlTemplate TargetType="{x:Type ToggleButton}">
 							<Grid Width="15" Height="13" Background="Transparent"> 
-								<Path x:Name="ExpandPath" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,1,1,1" Fill="#88FFFFFF" Data="M 4 0 L 8 4 L 4 8 Z"/>
+								<Path x:Name="ExpandPath" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,1,1,1" Fill="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='TextWidgetColor'}" Data="M 4 0 L 8 4 L 4 8 Z"/>
 							</Grid>
 							<ControlTemplate.Triggers>
 								<Trigger Property="IsChecked" Value="True">
@@ -43,7 +44,7 @@
 			</Style>
 
 			<Style TargetType="{x:Type Projects:FileItem}">
-				<Setter Property="Foreground" Value="White" />
+				<Setter Property="Foreground" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='TextWidgetColor'}" />
 				<Setter Property="Template">
 					<Setter.Value>
 						<ControlTemplate TargetType="{x:Type Projects:FileItem}">
@@ -71,7 +72,7 @@
 									<Setter TargetName="Expander" Property="Visibility" Value="Hidden"/>
 								</Trigger>
 								<Trigger Property="IsSelected" Value="true">
-									<Setter TargetName="Border" Property="Background" Value="#22606060"/>
+									<Setter TargetName="Border" Property="Background" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='SecondaryWidgetColor'}"/>
 								</Trigger>
 							</ControlTemplate.Triggers>
 						</ControlTemplate>
@@ -102,18 +103,18 @@
 			
 			<Grid Grid.Row="1" Margin="0,5,0,0">
 				<Button ToolTip="Open recent projects" Style="{StaticResource SimpleButton}" HorizontalAlignment="Left" Click="OpenProjectsClicked">
-					<Image Source="/Resources/projects.png" />
+					<Image Source="{Binding Converter={Core:ThemeImageConverter}, ConverterParameter='projects.png'}" />
 					<Button.ContextMenu>
 						<ContextMenu x:Name="OpenProjectsMenu"></ContextMenu>
 					</Button.ContextMenu>
 				</Button>
 				
 				<Button ToolTip="Refresh tree" Style="{StaticResource SimpleButton}" HorizontalAlignment="Left" Margin="30,0,0,0" Click="RefreshProjectClicked">
-					<Image Source="/Resources/loading.png" />
+					<Image Source="{Binding Converter={Core:ThemeImageConverter}, ConverterParameter='loading.png'}" />
 				</Button>
 				
 				<Button x:Name="CreateFileButton" ToolTip="Create file or folder" Style="{StaticResource SimpleButton}" HorizontalAlignment="Right" Click="CreateFileOrDirectoryClicked">
-					<Image Source="/Resources/add.png" />
+					<Image Source="{Binding Converter={Core:ThemeImageConverter}, ConverterParameter='add.png'}" />
 					<Button.ContextMenu>
 						<ContextMenu>
 							<MenuItem Header="Create File" Click="CreateFileClicked" />

@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="Farawla.Features.Completion.Widget"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Core="clr-namespace:Farawla.Core"
     Width="240" Height="300" VerticalContentAlignment="Stretch"
     >
 	<Grid>
@@ -13,9 +14,9 @@
 		<StackPanel x:Name="CompletionSettings" Visibility="Collapsed">
 			<CheckBox x:Name="CompletionState" FontSize="14" Height="16" Click="CompletionStateChanged">Enable for Language</CheckBox>
 
-			<Border Margin="0,5,0,0" BorderBrush="#FFFFFFFF" BorderThickness="0,1,0,0">
+			<Border Margin="0,5,0,0" BorderBrush="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='TextWidgetColor'}" BorderThickness="0,1,0,0">
 				<StackPanel>
-					<TextBlock Foreground="#FFFFFFFF" Margin="0,5,0,0">Frameworks:</TextBlock>
+					<TextBlock Foreground="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='TextWidgetColor'}" Margin="0,5,0,0">Frameworks:</TextBlock>
 
 					<StackPanel x:Name="FrameworksContainer" Margin="20,5,0,0">
 

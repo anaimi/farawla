@@ -31,20 +31,21 @@ namespace Farawla.Core
 					if (!File.Exists(FILE_NAME))
 					{
 						Notifier.Show("Settings file does not exists... I'll create one for you");
+						
 						_instance = new Settings();
 					}
 					else
 					{
 						_instance = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(FILE_NAME));
-
-						// create sidebar button
-						_instance.SidebarButton = new BarButton(_instance, "Settings");
-						_instance.SidebarButton.IsExpandable = false;
-						_instance.SidebarButton.OnClick += () => SettingsWindow.Instance.ShowDialog();
 						
 						if (_instance == null)
 							_instance = new Settings();
 					}
+
+					// create sidebar button
+					_instance.SidebarButton = new BarButton(_instance, "Settings");
+					_instance.SidebarButton.IsExpandable = false;
+					_instance.SidebarButton.OnClick += () => SettingsWindow.Instance.ShowDialog();
 					
 					if (_instance.OpenTabs == null)
 					{

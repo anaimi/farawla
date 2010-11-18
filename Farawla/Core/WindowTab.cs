@@ -324,7 +324,8 @@ namespace Farawla.Core
 			IsShowingCompletionWindow = true;
 
 			completionWindow = new CompletionWindow(Editor.TextArea);
-			
+
+			completionWindow.Background = new SolidColorBrush(Colors.Purple);
 			completionWindow.StartOffset = offset;
 			
 			foreach (var item in completionItems)
