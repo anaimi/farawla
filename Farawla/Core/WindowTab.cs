@@ -524,6 +524,7 @@ namespace Farawla.Core
 		
 		private SolidColorBrush tabsColor;
 		private SolidColorBrush spacesColor;
+		private SolidColorBrush lineOfCaret;
 		
 		public BlockHighlighter(TextEditor editor)
 		{
@@ -533,6 +534,11 @@ namespace Farawla.Core
 			
 			tabsColor = new SolidColorBrush(Theme.Instance.TabColor.ToColor());
 			spacesColor = new SolidColorBrush(Theme.Instance.SpaceColor.ToColor());
+			
+			if (Theme.Instance.HighlightLineOfCaret)
+			{
+				lineOfCaret = new SolidColorBrush(Theme.Instance.LineOfCaretColor.ToColor());
+			}
 		}
 
 		public KnownLayer Layer
@@ -617,6 +623,16 @@ namespace Farawla.Core
 
 					ctx.DrawLine(pen, new Point(x1, y1), new Point(x2, y2));
 				}
+			}
+			
+			// draw highlighted line
+			if (Theme.Instance.HighlightLineOfCaret && editor.TextArea.IsFocused)
+			{
+				var line = editor.Document.GetLineByOffset(editor.CaretOffset);
+				var start = GetPositionFromOffset(textView, VisualYPosition.LineTop, line.Offset);
+				var end = GetPositionFromOffset(textView, VisualYPosition.LineBottom, line.Offset);
+
+				ctx.DrawRoundedRectangle(lineOfCaret, new Pen(), new Rect(start.X, start.Y, textView.ActualWidth, end.Y - start.Y), 3, 3);
 			}
 			
 			// draw blocks

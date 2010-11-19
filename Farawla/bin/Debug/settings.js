@@ -54,7 +54,7 @@
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#FFC0C0C0"
+        "Color": "#FFC26464"
       }
     },
     {

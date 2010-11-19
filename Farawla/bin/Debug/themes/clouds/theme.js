@@ -14,8 +14,11 @@
 	TabColor: "#FF86B626", /* if Show Tabs is enabled, lines of this color whill be drawn */
 	SpaceColor: "#FFFF0000", /* if Show Spaces in enabled, dots of this color will be drawn */
 	
+	HighlightLineOfCaret: true,
+	LineOfCaretColor: "#22FFFF00",
+	
 	PrimaryWidgetColor: "#44606060",
-	SecondaryWidgetColor: "#22C0C0C0",
+	SecondaryWidgetColor: "#99C0C0C0",
 	TextWidgetColor: "#FFFFFFFF",
 	
 	CompletionWindowBackground: "#919AD429",

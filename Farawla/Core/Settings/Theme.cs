@@ -22,9 +22,10 @@ namespace Farawla.Core
 		
 		public const string DEFAULT_EDITOR_TAB_COLOR = "#FFCCCCCC";
 		public const string DEFAULT_EDITOR_SPACE_COLOR = "#FFAAAAAA";
+		public const string DEFAULT_EDITOR_LINE_OF_CARET = "#22FFFF00";
 		
 		public const string DEFAULT_PRIMARY_WIDGET_COLOR = "#44606060";
-		public const string DEFAULT_SECONDARY_WIDGET_COLOR = "#22606060";
+		public const string DEFAULT_SECONDARY_WIDGET_COLOR = "#99C0C0C0";
 		public const string DEFAULT_TEXT_WIDGET_COLOR = "#FFFFFFFF";
 
 		public const string DEFAULT_EDITOR_BACKGROUND = "#FFFFFFFF";
@@ -74,6 +75,9 @@ namespace Farawla.Core
 		
 		public string CompletionWindowBackground { get; set; }
 		public string CompletionWindowForeground { get; set; }
+
+		public bool HighlightLineOfCaret { get; set; }
+		public string LineOfCaretColor { get; set; }
 		
 		public string Background { get; set; }
 		public string Foreground { get; set; }
@@ -92,6 +96,7 @@ namespace Farawla.Core
 			
 			TabColor = DEFAULT_EDITOR_TAB_COLOR;
 			SpaceColor = DEFAULT_EDITOR_SPACE_COLOR;
+			LineOfCaretColor = DEFAULT_EDITOR_LINE_OF_CARET;
 
 			PrimaryWidgetColor = DEFAULT_PRIMARY_WIDGET_COLOR;
 			SecondaryWidgetColor = DEFAULT_SECONDARY_WIDGET_COLOR;

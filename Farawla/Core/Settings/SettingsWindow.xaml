@@ -91,7 +91,7 @@
 					
 					<GroupBox Header="Theme">
 						<StackPanel Orientation="Horizontal">
-							<ComboBox x:Name="cbThemes" Width="200" HorizontalAlignment="Left" /> <TextBlock HorizontalAlignment="Left" Margin="20,0,0,0">requires a restart.</TextBlock>
+							<ComboBox x:Name="cbThemes" Width="200" HorizontalAlignment="Left" /> <TextBlock Opacity="0.6" HorizontalAlignment="Left" Margin="10,0,0,0">requires a restart.</TextBlock>
 						</StackPanel>
 					</GroupBox>
 				</StackPanel>
