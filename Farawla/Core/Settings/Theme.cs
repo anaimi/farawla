@@ -23,7 +23,7 @@ namespace Farawla.Core
 		public const string DEFAULT_EDITOR_TAB_COLOR = "#FFCCCCCC";
 		public const string DEFAULT_EDITOR_SPACE_COLOR = "#FFAAAAAA";
 		
-		public const string DEFAULT_PRIMARY_WIDGET_COLOR = "#22606060";
+		public const string DEFAULT_PRIMARY_WIDGET_COLOR = "#44606060";
 		public const string DEFAULT_SECONDARY_WIDGET_COLOR = "#22606060";
 		public const string DEFAULT_TEXT_WIDGET_COLOR = "#FFFFFFFF";
 

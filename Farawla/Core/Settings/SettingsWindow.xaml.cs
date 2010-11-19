@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Forms;
+using System.IO;
+using Path=System.IO.Path;
 
 namespace Farawla.Core
 {
@@ -43,6 +45,8 @@ namespace Farawla.Core
 			
 			InitializeComponent();
 			
+			PopulateThemesList();
+			
 			Closing += (s, e) => {
 				Hide();
 				Controller.Current.HideOverlay();
@@ -53,6 +57,31 @@ namespace Farawla.Core
 				if (e.Key == Key.Escape)
 					Close();
 			};
+		}
+		
+		private void PopulateThemesList()
+		{
+			var path = Settings.ExecDir + Theme.DIRECTORY_NAME;
+			
+			if (!Directory.Exists(path))
+				return;
+			
+			foreach(var dir in Directory.GetDirectories(path))
+			{
+				var name = Path.GetFileName(dir);
+				var option = new ComboBoxItem();
+
+				option.Content = name;
+
+				if (name == Settings.Instance.ThemeName)
+					option.IsSelected = true;
+				
+				option.Selected += (s, e) => {
+					Settings.Instance.ThemeName = name;
+				};
+				
+				cbThemes.Items.Add(option);
+			}
 		}
 
 		private void ShowTabsAndSpacesChanged(object sender, RoutedEventArgs e)

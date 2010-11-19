@@ -61,11 +61,11 @@
 						<Setter.Value>
 							<ControlTemplate TargetType="{x:Type TabItem}">
 								<Border x:Name="TitleBorder" Margin="0,0,25,5" Padding="0" BorderBrush="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='SecondaryWidgetColor'}" BorderThickness="0,0,0,1" Background="#01FFFFFF" Cursor="Hand">
-									<TextBlock x:Name="Title" Foreground="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='TextWidgetColor'}" Text="{TemplateBinding Header}" Height="15" />
+									<TextBlock x:Name="Title" Foreground="Orange" Text="{TemplateBinding Header}" Height="15" />
 								</Border>
 								<ControlTemplate.Triggers>
 									<Trigger Property="IsMouseOver" Value="True">
-										<Setter TargetName="TitleBorder" Property="BorderBrush" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='TextWidgetColor'}" />
+										<!--<Setter TargetName="TitleBorder" Property="BorderBrush" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}" />-->
 									</Trigger>
 								</ControlTemplate.Triggers>
 							</ControlTemplate>
@@ -86,6 +86,12 @@
 					<GroupBox Header="Project Manager">
 						<StackPanel>
 							<CheckBox Content="Show files with names starting with a dot" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowFilesStartingWithDot}" Click="ShowFilesStartingWithDotChanged"  />
+						</StackPanel>
+					</GroupBox>
+					
+					<GroupBox Header="Theme">
+						<StackPanel Orientation="Horizontal">
+							<ComboBox x:Name="cbThemes" Width="200" HorizontalAlignment="Left" /> <TextBlock HorizontalAlignment="Left" Margin="20,0,0,0">requires a restart.</TextBlock>
 						</StackPanel>
 					</GroupBox>
 				</StackPanel>
