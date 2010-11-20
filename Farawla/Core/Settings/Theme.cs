@@ -12,6 +12,7 @@ using Farawla.Features;
 using Newtonsoft.Json;
 using System.Drawing;
 using System.Windows.Media.Imaging;
+using System.Windows;
 
 namespace Farawla.Core
 {
@@ -85,12 +86,16 @@ namespace Farawla.Core
 		
 		public Dictionary<string, string> SyntaxColors { get; set; }
 		
-		private ImageSource objectIcon;
-		private ImageSource functionIcon;
-		private ImageSource snippetIcon;
-
+		public ImageSource ObjectIcon { get; private set; }
+		public ImageSource FunctionIcon { get; private set; }
+		public ImageSource SnippetIcon { get; private set; }
+		
+		public ImageSource BackgroundImage { get; private set; }
+		public Rect BackgroundImageViewport { get; private set; }
+		
 		public Theme()
 		{
+			// default values
 			MatchingTokensBackground = DEFAULT_EDITOR_MATCHING_TOKENS_BACKGROUND;
 			MatchingBracketsBackground = DEFAULT_EDITOR_MATCHING_BRACKETS_BACKGROUND;
 			
@@ -106,11 +111,18 @@ namespace Farawla.Core
 			Foreground = DEFAULT_EDITOR_FOREGROUND;
 			FontFamily = DEFAULT_EDITOR_FONT_FAMILY;
 			
+			// colors
 			SyntaxColors = new Dictionary<string, string>();
 
-			objectIcon = LoadIcon("object.png");
-			functionIcon = LoadIcon("function.png");
-			snippetIcon = LoadIcon("snippet.png");
+			// icons
+			ObjectIcon = LoadIcon("object.png");
+			FunctionIcon = LoadIcon("function.png");
+			SnippetIcon = LoadIcon("snippet.png");
+			
+			// background dimensions
+			BackgroundImage = LoadIcon("background.png");
+			if (BackgroundImage != null)
+				BackgroundImageViewport = new Rect(0, 0, BackgroundImage.Width, BackgroundImage.Height);
 		}
 		
 		private ImageSource LoadIcon(string name)
@@ -127,21 +139,6 @@ namespace Farawla.Core
 			source.EndInit();
 
 			return source;
-		}
-		
-		public ImageSource GetObjectIcon()
-		{
-			return objectIcon;
-		}
-
-		public ImageSource GetFunctionIcon()
-		{
-			return functionIcon;
-		}
-
-		public ImageSource GetSnippetIcon()
-		{
-			return snippetIcon;
 		}
 		
 		public System.Windows.Media.Color GetColor(string key)
@@ -170,15 +167,22 @@ namespace Farawla.Core
 		{
 			DefaultColor = new SolidColorBrush(Colors.Orange); // TODO:: either change to white of get from Theme or both
 			
-			Debug.WriteLine("Created instance of ThemeColorConverter");
+			//Debug.WriteLine("Created instance of ThemeColorConverter");
 		}
 		
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
+			var opacity = 1.0;
 			var colorName = parameter as string;
 			
 			if (colorName == null)
 				return DefaultColor;
+			
+			if (colorName.Contains(','))
+			{
+				opacity = colorName.Extract(",", "").ToDouble();
+				colorName = colorName.Extract("", ",");
+			}
 			
 			var colorInfo = Theme.Instance.GetType().GetProperty(colorName);
 			var colorStr = colorInfo.GetValue(Theme.Instance, new object[0]) as string;
@@ -186,7 +190,14 @@ namespace Farawla.Core
 			if (colorStr == null)
 				return DefaultColor;
 
-			return new SolidColorBrush(colorStr.ToColor());
+			var colorObj = colorStr.ToColor();
+			
+			if (opacity < 1)
+			{
+				colorObj.A = (byte) (opacity * 255);
+			}
+
+			return new SolidColorBrush(colorObj);
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -202,11 +213,6 @@ namespace Farawla.Core
 	
 	public class ThemeImageConverter : MarkupExtension, IValueConverter
 	{
-		public ThemeImageConverter()
-		{
-			Debug.WriteLine("Created instance of ThemeImageConverter");
-		}
-		
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var imageName = parameter as string;

@@ -45,10 +45,21 @@
 									</Grid.RowDefinitions>
 									
 									<TabPanel Name="HeaderPanel" Grid.Row="0" Panel.ZIndex="1"  Margin="0,0,4,-1" IsItemsHost="True" KeyboardNavigation.TabIndex="1" Background="Transparent" />
-									<Border Grid.Row="1" Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}">
-										<Border Padding="10"  Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}">
-											<ContentPresenter Name="PART_SelectedContentHost" ContentSource="SelectedContent" />
-										</Border>
+									
+									<Border Grid.Row="1" Padding="10">
+										<Border.Background>
+											<VisualBrush Stretch="None" ViewportUnits="Absolute" Viewport="{Binding ElementName=CurrentSettingsWindow, Path=Theme.BackgroundImageViewport}" TileMode="Tile">
+												<VisualBrush.Visual>
+													<Border Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}">
+														<Border Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}">
+															<Image Source="{Binding ElementName=CurrentSettingsWindow, Path=Theme.BackgroundImage}" />
+														</Border>
+													</Border>
+												</VisualBrush.Visual>
+											</VisualBrush>
+										</Border.Background>
+										
+										<ContentPresenter Name="PART_SelectedContentHost" ContentSource="SelectedContent" />
 									</Border>
 								</Grid>
 							</ControlTemplate>
@@ -96,20 +107,6 @@
 					</GroupBox>
 				</StackPanel>
 			</TabItem>
-			
-			<TabItem Header="Hooks">
-				<StackPanel>
-					<GroupBox Header="Enable hooks for">
-						<StackPanel>
-							<CheckBox Content="On file open" />
-							<CheckBox Content="On file close" />
-							<CheckBox Content="On file save" />
-							<CheckBox Content="On project open" />
-							<CheckBox Content="On project close" />
-						</StackPanel>
-					</GroupBox>
-				</StackPanel>
-			</TabItem>
 
 			<TabItem Header="About">
 				<StackPanel>
@@ -121,7 +118,9 @@
 		</TabControl>
 		
 		<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-			<Button Width="100" Height="30" Content="Save" Click="SaveButtonClicked" Style="{StaticResource BlueButton}" />
+			<TextBlock Margin="0,10,0,0" FontSize="16" Foreground="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor, 0.8'}">
+				press escape to close
+			</TextBlock>
 		</StackPanel>
 	</Grid>
 </Window>

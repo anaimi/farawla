@@ -21,6 +21,7 @@ namespace Farawla.Core
 	/// </summary>
 	public partial class SettingsWindow : Window
 	{
+		public Theme Theme { get; private set; }
 		public Settings Settings { get; private set; }
 		
 		#region Instance
@@ -41,6 +42,7 @@ namespace Farawla.Core
 		
 		public SettingsWindow()
 		{
+			Theme = Theme.Instance;
 			Settings = Settings.Instance;
 			
 			InitializeComponent();
@@ -49,7 +51,6 @@ namespace Farawla.Core
 			
 			Closing += (s, e) => {
 				Hide();
-				Controller.Current.HideOverlay();
 				e.Cancel = true;
 			};
 			

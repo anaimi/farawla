@@ -6,7 +6,8 @@
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\test.js"
+    "C:\\Users\\Ahmad\\Desktop\\test.js",
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes\\clouds\\theme.js"
   ],
   "ClosedTabs": [
     {
@@ -54,7 +55,7 @@
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#FFC26464"
+        "Color": "#FF1FE64A"
       }
     },
     {

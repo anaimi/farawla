@@ -93,7 +93,5 @@
 		<TabControl Name="Tab" Style="{StaticResource TabControlStyle}" FontSize="12" Margin="0" />
 		
 		<Sidebar:Bar x:Name="Sidebar" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="250" Margin="0,30,22,22" />
-		
-		<Canvas x:Name="Overlay" Visibility="Collapsed" Background="#90000000" Width="{Binding Source=Main, Path=Width}" Height="{Binding Source=Main, Path=Height}" />
 	</Grid>
 </Window>

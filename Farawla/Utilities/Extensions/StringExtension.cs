@@ -111,8 +111,13 @@ public static class StringExtension
 		{
 			return str.Substring(0, str.IndexOf(end));
 		}
+		
+		if (end.IsBlank())
+		{
+			return str.Substring(str.IndexOf(begin) + 1);
+		}
 
-		return str.Substring(str.IndexOf(begin), str.Length - str.IndexOf(end));
+		return str.Substring(str.IndexOf(begin) + 1, str.Length - str.IndexOf(end));
 	}
 	
 	public static Color ToColor(this string str)

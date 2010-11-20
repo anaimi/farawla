@@ -5,7 +5,7 @@
 
 	<!-- watermarked input -->
 	<Style x:Key="WatermarkedInput" TargetType="{x:Type TextBlock}">
-		<Setter Property="Foreground" Value="#888888" />
+		<Setter Property="Foreground" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='TextWidgetColor'}" />
 	</Style>
 
 	<!-- simple button -->

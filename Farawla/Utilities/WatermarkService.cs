@@ -275,6 +275,11 @@ namespace Farawla.Utilities
 			binding.Source = adornedElement;
 			binding.Converter = new BooleanToVisibilityConverter();
 			this.SetBinding(VisibilityProperty, binding);
+			
+			// bind opacity
+			Binding opacityBinder = new Binding("Opacity");
+			opacityBinder.Source = adornedElement;
+			SetBinding(OpacityProperty, opacityBinder);
 		}
 
 		#endregion

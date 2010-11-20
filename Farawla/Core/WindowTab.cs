@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
@@ -466,15 +468,15 @@ namespace Farawla.Core
 			switch (type)
 			{
 				case CompletionItemType.Object:
-					Image = Theme.Instance.GetObjectIcon();
+					Image = Theme.Instance.ObjectIcon;
 					break;
 				
 				case CompletionItemType.Function:
-					Image = Theme.Instance.GetFunctionIcon();
+					Image = Theme.Instance.FunctionIcon;
 					break;
 				
 				case CompletionItemType.Snippet:
-					Image = Theme.Instance.GetSnippetIcon();
+					Image = Theme.Instance.SnippetIcon;
 					break;
 			}
 			

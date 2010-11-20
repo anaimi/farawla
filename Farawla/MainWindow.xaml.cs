@@ -35,13 +35,13 @@ namespace Farawla
 			
 			if (distance > -20)
 			{
-				Sidebar.Visibility = Visibility.Visible;
+				//Sidebar.Visibility = Visibility.Visible;
 							
 				Sidebar.Opacity = 1;
 			}
 			else if (distance > -300)
 			{
-				Sidebar.Visibility = Visibility.Visible;
+				//Sidebar.Visibility = Visibility.Visible;
 				
 				var percentage = distance / 300 * -1;
 				Sidebar.Opacity = (1 - percentage);
@@ -50,7 +50,7 @@ namespace Farawla
 			{
 				Sidebar.Opacity = 0;
 				
-				Sidebar.Visibility = Visibility.Collapsed;
+				//Sidebar.Visibility = Visibility.Collapsed;
 			}
 		}
 

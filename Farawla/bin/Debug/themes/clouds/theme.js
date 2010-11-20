@@ -17,8 +17,8 @@
 	HighlightLineOfCaret: true,
 	LineOfCaretColor: "#22FFFF00",
 	
-	PrimaryWidgetColor: "#44606060",
-	SecondaryWidgetColor: "#99C0C0C0",
+	PrimaryWidgetColor: "#553769A0",
+	SecondaryWidgetColor: "#11000000",
 	TextWidgetColor: "#FFFFFFFF",
 	
 	CompletionWindowBackground: "#919AD429",
