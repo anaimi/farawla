@@ -24,6 +24,9 @@ namespace Farawla.Core.Sidebar
 		{
 			foreach (var button in Controller.Current.Widgets.Select(w => w.SidebarButton))
 			{
+				if (!button.ShowInSidebar)
+					continue;
+				
 				var control = AddWidget(button);
 
 				Container.Children.Add(control);

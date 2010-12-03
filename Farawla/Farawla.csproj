@@ -149,6 +149,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Features\Terminal\TerminalControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\Terminal\Widget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -242,6 +250,12 @@
       <DependentUpon>SnippetButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Snippets\Widget.xaml.cs">
+      <DependentUpon>Widget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Terminal\TerminalControl.xaml.cs">
+      <DependentUpon>TerminalControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Terminal\Widget.xaml.cs">
       <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\DelayedAction.cs" />

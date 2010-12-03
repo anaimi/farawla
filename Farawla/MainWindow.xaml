@@ -2,8 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Farawla="clr-namespace:Farawla"
-    xmlns:Core="clr-namespace:Farawla.Core"
     xmlns:Sidebar="clr-namespace:Farawla.Core.Sidebar"
+    xmlns:Terminal="clr-namespace:Farawla.Features.Terminal"
     SnapsToDevicePixels="True"
     Name="Main"
     Title="Farawla" Height="600" Width="600">
@@ -88,10 +88,10 @@
 			</Setter>
 		</Style>
 	</Window.Resources>
-	
-	<Grid>
+
+	<Grid x:Name="RootGrid">
 		<TabControl Name="Tab" Style="{StaticResource TabControlStyle}" FontSize="12" Margin="0" />
-		
+
 		<Sidebar:Bar x:Name="Sidebar" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="250" Margin="0,30,22,22" />
 	</Grid>
 </Window>

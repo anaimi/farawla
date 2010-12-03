@@ -69,4 +69,10 @@ public static class FrameworkElementExtension
 			return null;
 		}), null);
 	}
+
+	public static void BackgroundFocus(this FrameworkElement fe)
+	{
+		Action a = () => fe.Focus();
+		fe.Dispatcher.BeginInvoke(DispatcherPriority.Background, a);
+	}
 }

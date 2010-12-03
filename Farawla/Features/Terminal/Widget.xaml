@@ -1,0 +1,10 @@
+﻿<UserControl x:Class="Farawla.Features.Terminal.Widget"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Terminal="clr-namespace:Farawla.Features.Terminal"
+    HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="20,100,20,20"
+    >
+    <Grid>
+		<Terminal:TerminalControl x:Name="Terminal1" />
+    </Grid>
+</UserControl>

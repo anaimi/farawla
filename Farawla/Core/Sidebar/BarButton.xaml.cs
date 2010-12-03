@@ -25,7 +25,8 @@ namespace Farawla.Core.Sidebar
 		public UserControl Control { get; private set; }
 		
 		public double WidgetHeight { get; set; }
-		
+
+		public bool ShowInSidebar { get; set; }
 		public bool IsExpandable { get; set; }
 		public bool IsStretchable { get; set; }
 		public bool IsExpanded { get; private set; }
@@ -44,6 +45,7 @@ namespace Farawla.Core.Sidebar
 
 			// default is collapsed
 			IsExpanded = false;
+			ShowInSidebar = true;
 			
 			// defaults for control
 			if (isUserControl)
