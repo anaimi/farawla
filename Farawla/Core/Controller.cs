@@ -80,7 +80,14 @@ namespace Farawla.Core
 			// assign active window change event
 			_current.MainWindow.Tab.SelectionChanged += (s, e) => {
 				if (_current.OnActiveTabChanged != null)
+				{
+					if (_current.ActiveTab != null)
+					{
+						_current.ActiveTab.MadeActive();
+					}
+					
 					_current.OnActiveTabChanged();
+				}
 			};
 			
 			// never show zero tabs
@@ -96,7 +103,7 @@ namespace Farawla.Core
 		public void CreateNewTab(string path, int index)
 		{
 			// if already open, make active
-			if (CurrentTabs.Any(t => t.DocumentPath == path))
+			if (CurrentTabs.Any(t => t.DocumentPath == path && !t.IsNewDocument))
 			{
 				CurrentTabs.First(t => t.DocumentPath == path).MakeActive();
 				ActiveTab.Tab.Focus();
@@ -132,6 +139,7 @@ namespace Farawla.Core
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.S, () => ActiveTab.Save(false));
 			Keyboard.AddBinding(KeyCombination.Ctrl | KeyCombination.Shift, Key.S, () => ActiveTab.Save(true));
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.F4, CloseActiveTab);
+			Keyboard.AddBinding(KeyCombination.Ctrl, Key.N, () => CreateNewTab(""));
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.T, () => CreateNewTab(""));
 			Keyboard.AddBinding(KeyCombination.Ctrl | KeyCombination.Shift, Key.T, OpenLastClosedTab);
 			
@@ -221,6 +229,10 @@ namespace Farawla.Core
 			{
 				// open it
 				var tab = Settings.Instance.ClosedTabs.First();
+				
+				if (!File.Exists(tab.Path))
+					return;
+				
 				CreateNewTab(tab.Path, tab.Index);
 				
 				// make it active

@@ -81,11 +81,20 @@
 			</Style>
 		</Grid.Resources>
 
-		<TextBlock x:Name="NoOpenProject" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="bold" TextAlignment="Center" Foreground="#88FFFFFF">
+		<Grid x:Name="NoOpenProject" Visibility="Collapsed">
+			<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="bold" TextAlignment="Center" Foreground="#88FFFFFF">
 				<Run>Drop a folder</Run>
 				<LineBreak />
-				<Run>to open as project</Run>
-		</TextBlock>
+				<Run>to open as a project</Run>
+			</TextBlock>
+
+			<Button Style="{StaticResource SimpleButton}" Opacity="0.8" Width="240" Padding="5"  FontSize="14" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="OpenProjectsClicked">
+				open a recent project
+				<Button.ContextMenu>
+					<ContextMenu></ContextMenu>
+				</Button.ContextMenu>
+			</Button>
+		</Grid>
 
 		<Grid x:Name="ProjectBox">
 			<Grid.RowDefinitions>
@@ -105,7 +114,7 @@
 				<Button ToolTip="Open recent projects" Style="{StaticResource SimpleButton}" HorizontalAlignment="Left" Click="OpenProjectsClicked">
 					<Image Source="{Binding Converter={Core:ThemeImageConverter}, ConverterParameter='projects.png'}" />
 					<Button.ContextMenu>
-						<ContextMenu x:Name="OpenProjectsMenu"></ContextMenu>
+						<ContextMenu></ContextMenu>
 					</Button.ContextMenu>
 				</Button>
 				

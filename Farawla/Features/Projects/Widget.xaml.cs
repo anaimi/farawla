@@ -275,10 +275,15 @@ namespace Farawla.Features.Projects
 			{
 				Settings["PreviouslyOpenedProjects"] = path;
 			}
+
+			LastOpenProject = path;
 		}
 
 		private void OpenProjectsClicked(object sender, RoutedEventArgs e)
 		{
+			var button = sender as Button;
+			var menu = button.ContextMenu as ContextMenu;
+			
 			var projects = PreviouslyOpenedProjects.Where(p => Directory.Exists(p)).ToList();
 
 			if (projects.Count() == 0)
@@ -288,15 +293,15 @@ namespace Farawla.Features.Projects
 			}
 
 			projects.Reverse();
-			OpenProjectsMenu.Items.Clear();
+			menu.Items.Clear();
 			
 			foreach (var project in projects)
 			{
 				var path = project;
-				OpenProjectsMenu.Items.Add(CreateMenuItem(path, () => OpenProject(path))); // After a long session of debugging, it was discorvered that using "project" instead of "path" will result in Access Closure error.
+				menu.Items.Add(CreateMenuItem(path, () => OpenProject(path))); // After a long session of debugging, it was discorvered that using "project" instead of "path" will result in Access Closure error.
 			}
-			
-			OpenProjectsMenu.IsOpen = true;
+
+			menu.IsOpen = true;
 		}
 
 		private void RefreshProjectClicked(object sender, RoutedEventArgs e)

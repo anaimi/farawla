@@ -122,6 +122,11 @@ namespace Farawla.Core
 
 			DelayedAction.Invoke(250, () => Editor.Focus());
 		}
+		
+		public void MadeActive()
+		{
+			DelayedAction.Invoke(250, () => Editor.Focus());
+		}
 
 		public bool Save(bool saveAs)
 		{
@@ -634,7 +639,7 @@ namespace Farawla.Core
 				var start = GetPositionFromOffset(textView, VisualYPosition.LineTop, line.Offset);
 				var end = GetPositionFromOffset(textView, VisualYPosition.LineBottom, line.Offset);
 
-				ctx.DrawRoundedRectangle(lineOfCaret, new Pen(), new Rect(start.X, start.Y, textView.ActualWidth, end.Y - start.Y), 3, 3);
+				ctx.DrawRoundedRectangle(lineOfCaret, new Pen(), new Rect(start.X, start.Y - editor.TextArea.TextView.ScrollOffset.Y, textView.ActualWidth, end.Y - start.Y), 3, 3);
 			}
 			
 			// draw blocks

@@ -6,7 +6,7 @@
     xmlns:Terminal="clr-namespace:Farawla.Features.Terminal"
     SnapsToDevicePixels="True"
     Name="Main"
-    Title="Farawla" Height="600" Width="600">
+    Title="Farawla" Height="600" Width="600" WindowStyle="SingleBorderWindow">
 	<Window.Resources>
 		<Farawla:ContentToMarginConverter x:Key="ContentToMarginConverter" />
 		<Farawla:ContentToPathConverter x:Key="ContentToPathConverter" />

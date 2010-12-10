@@ -26,6 +26,7 @@ namespace Farawla.Features.Projects
 		private BackgroundWorker indexer;
 		private Widget projectManager;
 		private List<FileListItem> projectFiles;
+		private bool abortIndexing;
 		
 		public Jump(Widget projectManager)
 		{
@@ -148,19 +149,39 @@ namespace Farawla.Features.Projects
 		
 		private void OnProjectOpened(string path)
 		{
-			projectFiles.Clear();
-			indexer.RunWorkerAsync();
+			// if the indexing thread is busy, request abortion and try again after 200 ms
+			if (indexer.IsBusy)
+			{
+				abortIndexing = true;
+				DelayedAction.Invoke(200, () => OnProjectOpened(path));
+			}
+			
+			// not busy? continue
+			else
+			{
+				projectFiles.Clear();
+				indexer.RunWorkerAsync();
+			}
 		}
 
 		private void IndexDirectory(string dir)
 		{
+			if (abortIndexing)
+				return;
+			
 			foreach (var file in Directory.GetFiles(dir))
-			{
+			{	
+				if (abortIndexing)
+					return;
+				
 				projectFiles.Add(new FileListItem(projectManager.CurrentProjectPath, file));
 			}
 
 			foreach (var directory in Directory.GetDirectories(dir))
 			{
+				if (abortIndexing)
+					return;
+				
 				IndexDirectory(directory);
 			}
 		}
