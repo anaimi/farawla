@@ -1,0 +1,3 @@
+{
+	IncludeLanguageSyntax: ["XML"]
+}

@@ -1,0 +1,6 @@
+{
+	Name: "XML",
+	Associations: [
+		"xml"
+	]
+}

@@ -1,7 +1,7 @@
 /*
-	In SyntaxColors, you specify the name of the syntax. The name here is the same in "syntax.js" file inside a language file.
+	In SyntaxColors (last arrtibute in this file), you specify the name of the syntax.
+	The name here is the same in "syntax.js" file inside a language file.
 	Example, if you defined a "comment" span inside "syntax.js", then all comment spans will be colored as specified by you in this file.
-	
 	Also note, that spaces in a color's name means 'more specifically' ... for example, let's say you have the span "comment multi-line". The editor
 	will try to find the color "comment multi-line" from the SyntaxColors below. If not found, it will less restrictive by removing the last token,
 	making the new name "comment" and searching for that color. This way enables theme designers to generalize and specialize colors as needed.
@@ -35,6 +35,8 @@
 		"terminal": "#39946A",
 		"number": "#46A609",
 		"operator": "#CCCCCC",
-		"symbol": "#CCCCCC"
+		"symbol": "#CCCCCC",
+		"xml-tag": "#AF956F",
+		"xml-attribute": "#39946A"
 	}
 }

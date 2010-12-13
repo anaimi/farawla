@@ -33,27 +33,25 @@ namespace Farawla.Core.Language
 			Associations = new List<string>();
 		}
 		
-		public void Initialize(string directory)
+		public void LoadChildren()
 		{
-			Directory = directory;
-			
-			#region Initialize Syntax
-			
-			if (File.Exists(directory + "\\syntax.js"))
+			// load Syntax
+			if (File.Exists(Directory + "\\syntax.js"))
 			{
 				HasSyntax = true;
-				
-				var json = File.ReadAllText(directory + "\\syntax.js");
+
+				var json = File.ReadAllText(Directory + "\\syntax.js");
 				Syntax = JsonConvert.DeserializeObject<Syntax>(json);
 			}
 			else
 			{
 				Syntax = new Syntax();
 			}
-
-			Syntax.Initialize(this);
-			
-			#endregion
+		}
+		
+		public void InitializeChildren()
+		{
+			Syntax.Initialize(Name);
 		}
 		
 	}

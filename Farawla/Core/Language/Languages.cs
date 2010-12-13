@@ -13,39 +13,25 @@ namespace Farawla.Core.Language
 		public Languages()
 		{
 			Items = new List<LanguageMeta>();
-			
-			if (!VerifyLanguagesFolderExist())
-				return;
-			
-			foreach(var lang in Directory.GetDirectories("languages"))
-			{
-				var path = lang + "\\main.js";
-				
-				if (!File.Exists(path))
-				{
-					Notifier.Show(string.Format("Definition for language '{0}' was skipped because 'main.js' is missing. Either delete the directory or create a main.js with correct values.", lang));
-					continue;
-				}
-				
-				var json = File.ReadAllText(path);
-				
-				var obj = JsonConvert.DeserializeObject<LanguageMeta>(json);
-				obj.Initialize(lang);
-				
-				Items.Add(obj);
-			}
 		}
 		
-		public LanguageMeta GetLanguage(string extension)
+		public LanguageMeta GetLanguageByExtension(string extension)
 		{
 			foreach(var lang in Items)
 				if (lang.Associations.Any(a => a == extension))
 					return lang;
 			
-			var defaultLanguage = new LanguageMeta();
-			defaultLanguage.Initialize(string.Empty);
+			return GetDefaultLanguage();
+		}
+		
+		public LanguageMeta GetLanguageByName(string name)
+		{
+			var lang = Items.FirstOrDefault(l => l.Name.ToUpper() == name.ToUpper());
+			
+			if (lang == null)
+				return GetDefaultLanguage();
 
-			return defaultLanguage;
+			return lang;
 		}
 		
 		private bool VerifyLanguagesFolderExist()
@@ -63,6 +49,48 @@ namespace Farawla.Core.Language
 			}
 			
 			return true;
+		}
+		
+		public LanguageMeta GetDefaultLanguage()
+		{
+			var language = new LanguageMeta();
+			
+			language.LoadChildren();
+			language.InitializeChildren();
+
+			return language;
+		}
+
+		public void LoadLanguages()
+		{
+			if (!VerifyLanguagesFolderExist())
+				return;
+
+			// load POCO language meta
+			foreach (var lang in Directory.GetDirectories("languages"))
+			{
+				var path = lang + "\\main.js";
+
+				if (!File.Exists(path))
+				{
+					Notifier.Show(string.Format("Definition for language '{0}' was skipped because 'main.js' is missing. Either delete the directory or create a main.js with correct values.", lang));
+					continue;
+				}
+
+				var json = File.ReadAllText(path);
+				var obj = JsonConvert.DeserializeObject<LanguageMeta>(json);
+
+				obj.Directory = lang;
+				obj.LoadChildren();
+
+				Items.Add(obj);
+			}
+
+			// initialize languages' children
+			foreach (var lang in Items)
+			{
+				lang.InitializeChildren();
+			}
 		}
 	}
 }

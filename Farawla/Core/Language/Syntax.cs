@@ -11,35 +11,61 @@ namespace Farawla.Core.Language
 {
 	public class Syntax
 	{
+		public List<string> IncludeLanguageSyntax { get; set; }
 		public List<Rule> Rules { get; set; }
 		public List<Span> Spans { get; set; }
 
-		private LanguageMeta language;
 		private HighlightingDefinition highlighter;
 
 		public Syntax()
 		{
+			IncludeLanguageSyntax = new List<string>();
 			Rules = new List<Rule>();
 			Spans = new List<Span>();
 		}
 
-		public void Initialize(LanguageMeta language)
+		public void Initialize(string name)
 		{
-			this.language = language;
-			highlighter = new HighlightingDefinition(language.Name);
+			highlighter = new HighlightingDefinition(name);
+			
+			// merge included languages
+			foreach(var langName in IncludeLanguageSyntax)
+			{
+				var lang = Controller.Current.Languages.GetLanguageByName(langName);
+				
+				if (lang.IsDefault)
+					continue;
 
+				Merge(lang.Syntax);
+			}
+			
+			// add self rule set
+			PopulateRuleSet(highlighter.MainRuleSet);
+		}
+
+		private void Merge(Syntax syntax)
+		{
+			foreach(var rule in syntax.Rules)
+				Rules.Add(rule);
+			
+			foreach(var span in syntax.Spans)
+				Spans.Add(span);
+		}
+
+		public void PopulateRuleSet(HighlightingRuleSet ruleSet)
+		{
 			// rules
 			if (Rules != null)
 			{
 				foreach (var rule in Rules)
-					highlighter.MainRuleSet.Rules.Add(rule.GetRule());
+					ruleSet.Rules.Add(rule.GetRule());
 			}
 
 			// spans
 			if (Spans != null)
 			{
 				foreach (var span in Spans)
-					highlighter.MainRuleSet.Spans.Add(span.GetSpan());
+					ruleSet.Spans.Add(span.GetSpan());
 			}
 		}
 
@@ -58,7 +84,7 @@ namespace Farawla.Core.Language
 			var rule = new HighlightingRule();
 
 			rule.Color = GetColor();
-			rule.Regex = new Regex(Regex);
+			rule.Regex = GetRegexFromString(Regex);
 
 			return rule;
 		}
@@ -70,25 +96,42 @@ namespace Farawla.Core.Language
 		public string End { get; set; }
 		public string Escape { get; set; }
 
+		private HighlightingRuleSet ruleSet;
+		public Syntax Syntax { get; set; }
+
 		public HighlightingSpan GetSpan()
 		{
 			var span = new HighlightingSpan();
 
 			span.SpanColor = span.StartColor = span.EndColor = GetColor();
-			span.StartExpression = new Regex(Start);
-			span.EndExpression = new Regex(End);
+			span.StartExpression = GetRegexFromString(Start);
+			span.EndExpression = GetRegexFromString(End);
+			span.RuleSet = GetRuleSetFromSyntax();
+			
 			//TODO: use escape character
 
 			return span;
+		}
+		
+		private HighlightingRuleSet GetRuleSetFromSyntax()
+		{
+			if (Syntax == null)
+				return null;
+
+			if (ruleSet == null)
+			{
+				ruleSet = new HighlightingRuleSet();
+				Syntax.PopulateRuleSet(ruleSet);
+			}
+
+			return ruleSet;
+
 		}
 	}
 
 	public class GenericRule
 	{
 		public string Name { get; set; }
-		public string Color { get; set; }
-		public string Weight { get; set; }
-		public string Style { get; set; }
 
 		protected FontWeight GetFontWeight()
 		{
@@ -114,6 +157,11 @@ namespace Farawla.Core.Language
 			color.FontStyle = GetFontStyle();
 			
 			return color;
+		}
+		
+		protected Regex GetRegexFromString(string pattern)
+		{
+			return new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
 		}
 
 		public override string ToString()

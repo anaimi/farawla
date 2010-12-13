@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
@@ -20,7 +18,6 @@ using System.Windows.Input;
 using DrawingContext=System.Windows.Media.DrawingContext;
 using FontFamily=System.Windows.Media.FontFamily;
 using ImageSource=System.Windows.Media.ImageSource;
-using System.Windows.Markup;
 using Farawla.Utilities;
 
 namespace Farawla.Core
@@ -56,7 +53,7 @@ namespace Farawla.Core
 			matchingTokensBackground = Theme.Instance.MatchingTokensBackground.ToColor();
 			
 			// get language
-			Language = Controller.Current.Languages.GetLanguage(path.Substring(path.LastIndexOf('.') + 1));
+			Language = Controller.Current.Languages.GetLanguageByExtension(path.Substring(path.LastIndexOf('.') + 1));
 
 			// set name and path
 			if (path.IsBlank())

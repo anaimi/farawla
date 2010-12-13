@@ -6,7 +6,9 @@
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js"
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\404.html",
+    "C:\\Users\\Ahmad\\Desktop\\test.xml"
   ],
   "ClosedTabs": [],
   "Widgets": [

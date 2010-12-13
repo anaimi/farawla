@@ -63,6 +63,9 @@ namespace Farawla.Core
 			_current.Keyboard = new KeyboardObserver();
 			_current.Languages = new Languages();
 			
+			// load languages
+			_current.Languages.LoadLanguages();
+			
 			// maximize window if it was maximized
 			if (Settings.Instance.IsWindowMaximized)
 				_current.MainWindow.WindowState = WindowState.Maximized;
