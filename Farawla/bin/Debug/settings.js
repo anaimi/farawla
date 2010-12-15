@@ -6,10 +6,9 @@
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\404.html",
-    "C:\\Users\\Ahmad\\Desktop\\test.xml",
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\stylesheets\\main.css"
+    "E:\\Backup\\WWW\\ourdoodles_php\\app\\controllers\\ErrorController.php",
+    "E:\\Backup\\WWW\\ourdoodles_php\\app\\controllers\\SignupController.php",
+    "E:\\Backup\\WWW\\ourdoodles_php\\app\\controllers\\ViewController.php"
   ],
   "ClosedTabs": [],
   "Widgets": [
@@ -22,8 +21,8 @@
     {
       "Name": "Projects",
       "Values": {
-        "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
-        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\CodeBox,C:\\Users\\Ahmad\\Desktop\\clouds,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
+        "LastOpenProject": "E:\\Backup\\WWW\\ourdoodles_php",
+        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\CodeBox,C:\\Users\\Ahmad\\Desktop\\clouds,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog,E:\\Backup\\WWW\\ourdoodles_php",
         "JavaScript": "Enable",
         "JavaScriptFrameworks": ",Core",
         "Farawla.Core.Language.LanguageMetaFrameworks": ",Core"

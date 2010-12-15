@@ -1,0 +1,6 @@
+{
+	Name: "PHP",
+	Associations: [
+		"php"
+	]
+}

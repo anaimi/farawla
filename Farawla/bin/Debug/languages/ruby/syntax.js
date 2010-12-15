@@ -7,7 +7,7 @@
 		},
 		{
 			Name: "comment single-line",
-			Start: "#",
+			Start: "\\#",
 			End: ".*"
 		},
 		{

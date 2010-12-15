@@ -208,10 +208,17 @@ namespace Farawla.Core
 			// add path to closed tabs, keep last ten tabs
 			if (!IsNewDocument)
 			{
-				if (Settings.Instance.ClosedTabs.Count > 0 && Settings.Instance.ClosedTabs[0].Path != DocumentPath)
+				if (Settings.Instance.ClosedTabs.Count > 0)
 				{
-					Settings.Instance.ClosedTabs.Insert(0, new ClosedTabs(DocumentPath, Index));
-					Settings.Instance.ClosedTabs = Settings.Instance.ClosedTabs.Take(10).ToList();
+					if (Settings.Instance.ClosedTabs[0].Path != DocumentPath)
+					{
+						Settings.Instance.ClosedTabs.Insert(0, new ClosedTabs(DocumentPath, Index));
+						Settings.Instance.ClosedTabs = Settings.Instance.ClosedTabs.Take(10).ToList();
+					}
+				}
+				else
+				{
+					Settings.Instance.ClosedTabs.Add(new ClosedTabs(DocumentPath, Index));
 				}
 			}
 
