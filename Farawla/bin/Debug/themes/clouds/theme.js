@@ -37,6 +37,9 @@
 		"operator": "#CCCCCC",
 		"symbol": "#CCCCCC",
 		"xml-tag": "#AF956F",
-		"xml-attribute": "#39946A"
+		"xml-attribute": "#39946A",
+		"css-block": "#39946A",
+		"css-property": "#AF956F",
+		"css-value": "#5D90CD"
 	}
 }

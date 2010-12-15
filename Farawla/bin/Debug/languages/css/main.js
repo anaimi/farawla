@@ -1,0 +1,6 @@
+{
+	Name: "CSS",
+	Associations: [
+		"css"
+	]
+}

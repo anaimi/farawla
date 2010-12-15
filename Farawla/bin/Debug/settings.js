@@ -8,14 +8,15 @@
   "OpenTabs": [
     "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
     "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\404.html",
-    "C:\\Users\\Ahmad\\Desktop\\test.xml"
+    "C:\\Users\\Ahmad\\Desktop\\test.xml",
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\stylesheets\\main.css"
   ],
   "ClosedTabs": [],
   "Widgets": [
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#FF1FE64A"
+        "Color": "#FFAF956F"
       }
     },
     {
