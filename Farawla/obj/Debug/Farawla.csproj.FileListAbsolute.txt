@@ -155,3 +155,6 @@ C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Terminal\Term
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Terminal\TerminalControl.g.cs
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Terminal\Widget.g.cs
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Terminal\Widget.baml
+C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Resources\Theme\MainTabControl.baml
+C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Core\TabContext\ExtendedTabControl.g.cs
+C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Core\TabContext\ExtendedTabControl.baml

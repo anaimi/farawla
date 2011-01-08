@@ -4,13 +4,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Farawla.Core;
+using Farawla.Core.TabContext;
 
 namespace Farawla.Features.Completion
 {
 	public class AutoCompleteState
 	{
-		public WindowTab Tab { get; set; }
+		public Tab Tab { get; set; }
 		public AutoComplete LanguageCompletion { get; set; }
 
 		public List<IdentifierMatch> GlobalIdentifiers { get; set; }
@@ -20,7 +20,7 @@ namespace Farawla.Features.Completion
 
 		private BackgroundWorker completionWorker;
 
-		public AutoCompleteState(WindowTab tab, AutoComplete completion)
+		public AutoCompleteState(Tab tab, AutoComplete completion)
 		{
 			Tab = tab;
 			LanguageCompletion = completion;

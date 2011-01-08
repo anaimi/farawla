@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using Farawla.Core.Language;
 using System.Linq;
 using System.IO;
+using Farawla.Core.TabContext;
 using Farawla.Features;
 using System.Windows.Input;
 using Microsoft.Win32;
@@ -29,16 +30,16 @@ namespace Farawla.Core
 
 		public List<IWidget> Widgets { get; private set; }
 		public KeyboardObserver Keyboard { get; private set; }
-		public List<WindowTab> CurrentTabs { get; private set; }
+		public List<Tab> CurrentTabs { get; private set; }
 		public Languages Languages { get; private set; }
 		public MainWindow MainWindow { get; private set; }
 		
-		public WindowTab ActiveTab
+		public Tab ActiveTab
 		{
 			get
 			{
 				foreach(var tab in CurrentTabs)
-					if (tab.Tab == MainWindow.Tab.SelectedItem as TabItem)
+					if (tab.TabItem == MainWindow.Tab.SelectedItem as TabItem)
 						return tab;
 
 				return CurrentTabs.Last();
@@ -49,7 +50,7 @@ namespace Farawla.Core
 		public event Action OnExit;
 		public event Action OnResize;
 		public event Action OnActiveTabChanged;
-		public event Action<WindowTab> OnTabCreated;
+		public event Action<Tab> OnTabCreated;
 		public event Action<string> OnProjectOpened;
 		public event Action<string[]> OnFileDropped;
 		
@@ -59,7 +60,7 @@ namespace Farawla.Core
 
 			_current.MainWindow = instance;
 			_current.Widgets = new List<IWidget>();
-			_current.CurrentTabs = new List<WindowTab>();
+			_current.CurrentTabs = new List<Tab>();
 			_current.Keyboard = new KeyboardObserver();
 			_current.Languages = new Languages();
 			
@@ -109,7 +110,7 @@ namespace Farawla.Core
 			if (CurrentTabs.Any(t => t.DocumentPath == path && !t.IsNewDocument))
 			{
 				CurrentTabs.First(t => t.DocumentPath == path).MakeActive();
-				ActiveTab.Tab.Focus();
+				ActiveTab.TabItem.Focus();
 				return;
 			}
 			
@@ -120,9 +121,9 @@ namespace Farawla.Core
 				index = MainWindow.Tab.Items.Count;
 
 			// create and add new window
-			var tab = new WindowTab(path);
+			var tab = new Tab(path);
 			CurrentTabs.Add(tab);
-			MainWindow.Tab.Items.Insert(index, tab.Tab);
+			MainWindow.Tab.Items.Insert(index, tab.TabItem);
 
 			// inform observers
 			if (OnTabCreated != null)

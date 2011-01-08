@@ -1,0 +1,53 @@
+﻿<TabControl x:Class="Farawla.Core.TabContext.ExtendedTabControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:TabContext="clr-namespace:Farawla.Core.TabContext"
+    Style="{StaticResource TabControlControl}"
+	Margin="0" FontSize="12">
+    
+	<TabControl.Resources>
+		<TabContext:ContentToMarginConverter x:Key="ContentToMarginConverter" />
+		<TabContext:ContentToPathConverter x:Key="ContentToPathConverter" />
+
+		<!-- TabItem style -->
+		<Style x:Key="{x:Type TabItem}" TargetType="{x:Type TabItem}">
+			<Setter Property="SnapsToDevicePixels" Value="True"/>
+			<Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="TabItem">
+						<Grid x:Name="grd">
+							<Path x:Name="TabPath" Margin="{Binding ElementName=TabItemContent, Converter={StaticResource ContentToMarginConverter}}" Fill="{StaticResource TabNotSelectedColor}">
+								<Path.Data>
+									<PathGeometry>
+										<PathFigure IsClosed="False" StartPoint="1,0" Segments="{Binding ElementName=TabItemContent, Converter={StaticResource ContentToPathConverter}}" />
+									</PathGeometry>
+								</Path.Data>
+								<Path.LayoutTransform>
+									<ScaleTransform ScaleY="-1"/>
+								</Path.LayoutTransform>
+							</Path>
+							
+							<ContentPresenter x:Name="TabItemContent" ContentSource="Header" Margin="5,2,5,2" VerticalAlignment="Center" TextElement.Foreground="#FF000000" />
+						</Grid>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsMouseOver" Value="True" SourceName="grd">
+								<Setter Property="Fill" TargetName="TabPath" Value="{StaticResource TabHoverColor}" />
+							</Trigger>
+							<Trigger Property="Selector.IsSelected" Value="True">
+								<Setter TargetName="TabItemContent" Property="TextElement.Foreground" >
+									<Setter.Value>
+										<SolidColorBrush Color="#FF000000" />
+									</Setter.Value>
+								</Setter>
+								<Setter Property="Fill" TargetName="TabPath" Value="{StaticResource TabSelectedColor}" />
+								<Setter Property="Panel.ZIndex" Value="2"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</TabControl.Resources>
+	
+</TabControl>

@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows;
 using Farawla.Core;
 using Farawla.Core.Sidebar;
+using Farawla.Core.TabContext;
 using Newtonsoft.Json;
 using System.Windows.Media;
 using Farawla.Core.Language;
@@ -40,7 +41,7 @@ namespace Farawla.Features.Completion
 			Controller.Current.OnStart += OnActiveTabChanged;
 		}
 
-		private void OnNewTab(WindowTab tab)
+		private void OnNewTab(Tab tab)
 		{
 			if (tab.Language.IsDefault)
 				return;
@@ -97,7 +98,7 @@ namespace Farawla.Features.Completion
 			ShowCompletionSettings(tab, language);
 		}
 
-		private void TextEntering(WindowTab tab, TextCompositionEventArgs e)
+		private void TextEntering(Tab tab, TextCompositionEventArgs e)
 		{
 			if (tab.AutoCompleteState == null)
 				return;
@@ -113,7 +114,7 @@ namespace Farawla.Features.Completion
 			}
 		}
 
-		private void TextEntered(WindowTab tab, TextCompositionEventArgs e)
+		private void TextEntered(Tab tab, TextCompositionEventArgs e)
 		{
 			if (tab.AutoCompleteState == null)
 				return;
@@ -136,7 +137,7 @@ namespace Farawla.Features.Completion
 			NoCompletionSettings.Visibility = Visibility.Visible;
 		}
 		
-		private void ShowCompletionSettings(WindowTab tab, AutoComplete language)
+		private void ShowCompletionSettings(Tab tab, AutoComplete language)
 		{
 			var isDisable = Settings[tab.Language.Name] == "Disable";
 			var frameworks = GetEnabledFramrworksFromSettings(tab.Language);
@@ -178,7 +179,7 @@ namespace Farawla.Features.Completion
 			}
 		}
 		
-		private AutoComplete GetLanguageCompletion(WindowTab tab)
+		private AutoComplete GetLanguageCompletion(Tab tab)
 		{
 			if (tab.Language.IsDefault || !LanguageCompletions.ContainsKey(tab.Language.Name))
 			{
@@ -225,7 +226,7 @@ namespace Farawla.Features.Completion
 			}
 		}
 		
-		private void EnableCompletion(WindowTab tab, AutoComplete languageCompletion)
+		private void EnableCompletion(Tab tab, AutoComplete languageCompletion)
 		{
 			// get window completion
 			tab.AutoCompleteState = new AutoCompleteState(tab, languageCompletion);
@@ -243,7 +244,7 @@ namespace Farawla.Features.Completion
 			tab.AutoCompleteState.TextChanged();
 		}
 
-		private void DisableCompletion(WindowTab tab)
+		private void DisableCompletion(Tab tab)
 		{
 			// remove it
 			tab.AutoCompleteState = null;

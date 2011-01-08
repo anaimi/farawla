@@ -8,6 +8,7 @@ using System.Diagnostics;
 using Farawla.Core.Language;
 using System.IO;
 using System.Windows;
+using Farawla.Core.TabContext;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -83,7 +84,7 @@ namespace Farawla.Features.Snippets
 			}
 		}
 
-		private void OnTextEntered(WindowTab tab, KeyEventArgs e)
+		private void OnTextEntered(Tab tab, KeyEventArgs e)
 		{
 			if (!Snippets.ContainsKey(tab.Language.Name) || e.Key != Key.Tab)
 				return;

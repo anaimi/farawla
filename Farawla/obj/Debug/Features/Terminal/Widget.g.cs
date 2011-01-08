@@ -9,9 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Farawla.Core;
 using Farawla.Features.Terminal;
-using ICSharpCode.AvalonEdit.CodeCompletion;
 using System;
 using System.Diagnostics;
 using System.Windows;

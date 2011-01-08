@@ -10,6 +10,7 @@
 				<ResourceDictionary Source="Resources/Theme/CheckBox.xaml" />
 				<ResourceDictionary Source="Resources/Theme/ComboBox.xaml" />
 				<ResourceDictionary Source="Resources/Theme/CompletionWindow.xaml" />
+				<ResourceDictionary Source="Resources/Theme/MainTabControl.xaml" />
 				<ResourceDictionary Source="Resources/Theme/Misc.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>

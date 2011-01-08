@@ -5,6 +5,7 @@ using Farawla.Core.Sidebar;
 using Farawla.Core;
 using System.Windows.Input;
 using System.Windows.Media;
+using Farawla.Core.TabContext;
 
 namespace Farawla.Features.Search
 {
@@ -18,7 +19,7 @@ namespace Farawla.Features.Search
 		
 		public BarButton SidebarButton { get; set; }
 
-		private WindowTab lastReachedTab;
+		private Tab lastReachedTab;
 		private int lastReachedOffset;
 		private Color foundTextBackground;
 		
@@ -119,7 +120,7 @@ namespace Farawla.Features.Search
 			}
 		}
 
-		private void DoSearch(SearchAction action, WindowTab tab, Regex regex)
+		private void DoSearch(SearchAction action, Tab tab, Regex regex)
 		{
 			// clear old blocks
 			tab.BlockHighlighter.Clear("Search");
@@ -187,7 +188,7 @@ namespace Farawla.Features.Search
 			}
 		}
 
-		private void DoReplace(WindowTab tab, Regex regex, string replacement)
+		private void DoReplace(Tab tab, Regex regex, string replacement)
 		{
 			var offset = 0;
 			
@@ -222,7 +223,7 @@ namespace Farawla.Features.Search
 					.Replace("\\n", "\n");
 		}
 		
-		private void NoResultsFound(SearchAction action, WindowTab tab, Regex regex)
+		private void NoResultsFound(SearchAction action, Tab tab, Regex regex)
 		{
 			if (SearchAreaCurrentDocument.IsSelected)
 			{

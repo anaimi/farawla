@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Farawla.Core;
+using Farawla.Core.TabContext;
 
 namespace Farawla.Features.Completion
 {

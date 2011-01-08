@@ -101,6 +101,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Core\TabContext\ExtendedTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Features\ColorPicker\AlphaSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -165,6 +169,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\Theme\MainTabControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Theme\Misc.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -194,6 +202,11 @@
     <Compile Include="Core\Bootstrapper.cs" />
     <Compile Include="Core\Controller.cs" />
     <Compile Include="Core\KeyboardObserver.cs" />
+    <Compile Include="Core\TabContext\BlockHighlighter.cs" />
+    <Compile Include="Core\TabContext\CompletionWindowItem.cs" />
+    <Compile Include="Core\TabContext\ExtendedTabControl.xaml.cs">
+      <DependentUpon>ExtendedTabControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Features\Completion\AutoComplete.cs" />
     <Compile Include="Core\Language\Syntax.cs" />
     <Compile Include="Core\Language\Languages.cs" />
@@ -205,7 +218,7 @@
     <Compile Include="Core\Sidebar\BarButton.xaml.cs">
       <DependentUpon>BarButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Core\WindowTab.cs" />
+    <Compile Include="Core\TabContext\Tab.cs" />
     <Compile Include="Features\ColorPicker\AlphaSlider.xaml.cs">
       <DependentUpon>AlphaSlider.xaml</DependentUpon>
     </Compile>
@@ -232,7 +245,7 @@
     <Compile Include="Features\Completion\Widget.xaml.cs">
       <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\Completion\WindowTab.cs" />
+    <Compile Include="Features\Completion\Tab.cs" />
     <Compile Include="Features\Projects\FileOperationAPIWrapper.cs" />
     <Compile Include="Core\Notifier\ModalInputBox.xaml.cs">
       <DependentUpon>ModalInputBox.xaml</DependentUpon>
