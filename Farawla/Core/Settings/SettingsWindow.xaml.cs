@@ -58,6 +58,8 @@ namespace Farawla.Core
 				if (e.Key == Key.Escape)
 					Close();
 			};
+
+			CloseDialogText.MouseDown += (s, e) => Close();
 		}
 		
 		private void PopulateThemesList()

@@ -16,7 +16,7 @@
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="TabItem">
-						<Grid x:Name="grd">
+						<Grid x:Name="Container">
 							<Path x:Name="TabPath" Margin="{Binding ElementName=TabItemContent, Converter={StaticResource ContentToMarginConverter}}" Fill="{StaticResource TabNotSelectedColor}">
 								<Path.Data>
 									<PathGeometry>
@@ -27,11 +27,12 @@
 									<ScaleTransform ScaleY="-1"/>
 								</Path.LayoutTransform>
 							</Path>
-							
+
 							<ContentPresenter x:Name="TabItemContent" ContentSource="Header" Margin="5,2,5,2" VerticalAlignment="Center" TextElement.Foreground="#FF000000" />
 						</Grid>
+						
 						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver" Value="True" SourceName="grd">
+							<Trigger Property="IsMouseOver" Value="True" SourceName="Container">
 								<Setter Property="Fill" TargetName="TabPath" Value="{StaticResource TabHoverColor}" />
 							</Trigger>
 							<Trigger Property="Selector.IsSelected" Value="True">

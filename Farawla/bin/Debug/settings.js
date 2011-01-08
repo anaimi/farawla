@@ -5,7 +5,10 @@
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
-  "OpenTabs": [],
+  "OpenTabs": [
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\app\\views\\layouts\\admin.html.erb"
+  ],
   "ClosedTabs": [
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
