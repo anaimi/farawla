@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using Farawla.Features;
 using System;
+using System.Windows.Forms;
 
 namespace Farawla.Core
 {
@@ -15,6 +16,10 @@ namespace Farawla.Core
 		public static string ExecDir
 		{
 			get { return Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\"; }
+		}
+		public static string ExecPath
+		{
+			get { return System.Reflection.Assembly.GetExecutingAssembly().Location; }
 		}
 
 		public const string DEFAULT_THEME = "clouds";
@@ -28,7 +33,7 @@ namespace Farawla.Core
 			{
 				if (_instance == null)
 				{
-					if (!File.Exists(FILE_NAME))
+					if (!File.Exists(ExecDir + FILE_NAME))
 					{
 						Notifier.Show("Settings file does not exists... I'll create one for you");
 						
@@ -36,7 +41,7 @@ namespace Farawla.Core
 					}
 					else
 					{
-						_instance = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(FILE_NAME));
+						_instance = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(ExecDir + FILE_NAME));
 						
 						if (_instance == null)
 							_instance = new Settings();

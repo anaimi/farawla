@@ -36,13 +36,13 @@ namespace Farawla.Core.Language
 		
 		private bool VerifyLanguagesFolderExist()
 		{
-			if (!Directory.Exists("languages"))
+			if (!Directory.Exists(Settings.ExecDir + "languages"))
 			{
 				Notifier.Show("The folder 'languages' was not found in the same directory of the executable. You should create it and load it with a folder for each language you want Farawla to support");
 				return false;
 			}
 
-			if (Directory.GetDirectories("languages").Length == 0)
+			if (Directory.GetDirectories(Settings.ExecDir + "languages").Length == 0)
 			{
 				Notifier.Show("The folder 'languages' is empty. You should load it with folders of each language you want Farawla to support");
 				return false;
@@ -67,7 +67,7 @@ namespace Farawla.Core.Language
 				return;
 
 			// load POCO language meta
-			foreach (var lang in Directory.GetDirectories("languages"))
+			foreach (var lang in Directory.GetDirectories(Settings.ExecDir + "languages"))
 			{
 				var path = lang + "\\main.js";
 

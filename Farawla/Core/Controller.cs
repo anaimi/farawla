@@ -159,6 +159,12 @@ namespace Farawla.Core
 			
 			if (OnStart != null)
 				OnStart();
+			
+			// check command-line args
+			if (App.Current.Properties["Argument0"] != null)
+			{
+				CreateNewTab(App.Current.Properties["Argument0"].ToString());
+			}
 		}
 
 		public void Exit()
