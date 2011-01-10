@@ -108,7 +108,7 @@ namespace Farawla.Features.Completion
 				LanguageCompletion.IgnoreExpressions = new List<Regex>();
 
 				foreach (var section in LanguageCompletion.IgnoreSections)
-					LanguageCompletion.IgnoreExpressions.Add(new Regex(section, RegexOptions.Compiled));
+					LanguageCompletion.IgnoreExpressions.Add(new Regex(section, RegexOptions.Compiled | RegexOptions.CultureInvariant));
 			}
 
 			foreach (var section in LanguageCompletion.IgnoreExpressions)

@@ -25,8 +25,9 @@ namespace Farawla.Core.Language
 		}
 		
 		public bool HasSyntax { get; private set; }
+		public bool HaveInitializedChildren { get; private set; }
 		public Syntax Syntax { get; private set; }
-
+		
 		public LanguageMeta()
 		{
 			Name = DEFAULT_NAME;
@@ -52,6 +53,8 @@ namespace Farawla.Core.Language
 		public void InitializeChildren()
 		{
 			Syntax.Initialize(Name);
+
+			HaveInitializedChildren = true;
 		}
 		
 	}

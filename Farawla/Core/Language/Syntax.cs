@@ -95,6 +95,7 @@ namespace Farawla.Core.Language
 		public string Start { get; set; }
 		public string End { get; set; }
 		public string Escape { get; set; }
+		public string Reference { get; set; }
 
 		private HighlightingRuleSet ruleSet;
 		public Syntax Syntax { get; set; }
@@ -103,10 +104,15 @@ namespace Farawla.Core.Language
 		{
 			var span = new HighlightingSpan();
 
-			span.SpanColor = span.StartColor = span.EndColor = GetColor();
+			span.SpanColor = GetColor();
 			span.StartExpression = GetRegexFromString(Start);
 			span.EndExpression = GetRegexFromString(End);
 			span.RuleSet = GetRuleSetFromSyntax();
+			
+			if (Reference.IsBlank())
+			{
+				span.StartColor = span.EndColor = span.SpanColor;
+			}
 			
 			//TODO: use escape character
 
@@ -115,13 +121,33 @@ namespace Farawla.Core.Language
 		
 		private HighlightingRuleSet GetRuleSetFromSyntax()
 		{
-			if (Syntax == null)
+			if (Syntax == null && Reference.IsBlank())
 				return null;
 
 			if (ruleSet == null)
 			{
-				ruleSet = new HighlightingRuleSet();
-				Syntax.PopulateRuleSet(ruleSet);
+				if (Syntax != null)
+				{
+					ruleSet = new HighlightingRuleSet();
+					Syntax.PopulateRuleSet(ruleSet);
+				}
+				else
+				{
+					var lang = Controller.Current.Languages.GetLanguageByName(Reference);
+					
+					if (!lang.HasSyntax)
+					{
+						Reference = null;
+						return null;
+					}
+					
+					if (!lang.HaveInitializedChildren)
+					{
+						lang.InitializeChildren();
+					}
+
+					ruleSet = lang.Syntax.GetHighlighter().MainRuleSet;
+				}
 			}
 
 			return ruleSet;
@@ -161,7 +187,7 @@ namespace Farawla.Core.Language
 		
 		protected Regex GetRegexFromString(string pattern)
 		{
-			return new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
+			return new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace | RegexOptions.CultureInvariant);
 		}
 
 		public override string ToString()

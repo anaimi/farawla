@@ -6,9 +6,18 @@
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js"
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\404.html",
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages\\html\\syntax.js"
   ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\test.js",
+      "Index": 1
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\notes.txt",
       "Index": 1

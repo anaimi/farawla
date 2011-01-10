@@ -17,7 +17,7 @@ namespace Farawla.Features.Completion
 			get
 			{
 				if (beginRegex == null)
-					beginRegex = new Regex(Begin, RegexOptions.Compiled);
+					beginRegex = new Regex(Begin, RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
 				return beginRegex;
 			}
@@ -29,7 +29,7 @@ namespace Farawla.Features.Completion
 			get
 			{
 				if (endRegex == null)
-					endRegex = new Regex(End, RegexOptions.Compiled);
+					endRegex = new Regex(End, RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
 				return endRegex;
 			}
@@ -41,7 +41,7 @@ namespace Farawla.Features.Completion
 			get
 			{
 				if (scopeMatch == null)
-					scopeMatch = new Regex("(" + Begin + ")|(" + End + ")", RegexOptions.Compiled);
+					scopeMatch = new Regex("(" + Begin + ")|(" + End + ")", RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
 				return scopeMatch;
 			}

@@ -98,8 +98,19 @@ namespace Farawla.Core.TabContext
 			// tab
 			TabItem = new TabItem();
 			TabItem.Tag = this;
-			TabItem.Header = Name;
 			TabItem.Content = Editor;
+			
+			// tab header & tooltip
+			if (path.IsBlank())
+			{
+				TabItem.Header = new TextBlock() { Text = Name };
+			}
+			else
+			{
+				TabItem.Header = new TextBlock() { Text = Name, ToolTip = path };
+			}
+			
+			// tab header double click
 			TabItem.MouseDoubleClick += (s, e) => {
 				if (!(e.OriginalSource is TextView))
 					Close();
