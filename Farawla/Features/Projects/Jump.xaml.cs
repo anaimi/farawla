@@ -80,10 +80,13 @@ namespace Farawla.Features.Projects
 			
 			if (e.Key == Key.Enter)
 			{
-				var path = (string)(Files.SelectedItem as ListBoxItem).Tag;
-				
-				Controller.Current.CreateNewTab(projectManager.CurrentProjectPath + "\\" + path);
-				DelayedAction.Invoke(200, Controller.Current.CurrentTabs.Last().MakeActive);
+				if (Files.SelectedItem != null)
+				{
+					var path = (string)(Files.SelectedItem as ListBoxItem).Tag;
+
+					Controller.Current.CreateNewTab(projectManager.CurrentProjectPath + "\\" + path);
+					DelayedAction.Invoke(200, Controller.Current.CurrentTabs.Last().MakeActive);
+				}
 				
 				Hide();
 				return;

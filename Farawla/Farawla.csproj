@@ -66,6 +66,9 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -305,6 +308,7 @@
     <Compile Include="Core\Settings\Settings.cs" />
     <Compile Include="Utilities\Extensions\FrameworkElementExtension.cs" />
     <Compile Include="Utilities\FileTypeAssociation.cs" />
+    <Compile Include="Utilities\NamedPipeHelper.cs" />
     <Compile Include="Utilities\Resources.cs" />
     <Compile Include="Utilities\WatermarkService.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

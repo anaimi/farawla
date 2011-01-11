@@ -61,6 +61,5 @@ namespace Farawla
 			GlassHelper.ExtendGlassFrameComplete(this);
 			GlassHelper.SetWindowThemeAttribute(this, false, false);
 		}
-		
 	}
 }
