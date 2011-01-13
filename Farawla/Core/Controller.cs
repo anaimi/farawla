@@ -9,6 +9,7 @@ using Farawla.Core.TabContext;
 using Farawla.Features;
 using System.Windows.Input;
 using Microsoft.Win32;
+using System.ComponentModel;
 
 namespace Farawla.Core
 {
@@ -164,6 +165,19 @@ namespace Farawla.Core
 			if (App.Current.Properties["Argument0"] != null)
 			{
 				CreateNewTab(App.Current.Properties["Argument0"].ToString());
+			}
+		}
+		
+		public void Closing(CancelEventArgs args)
+		{
+			// ask to save unsaved documents
+			foreach (var tab in CurrentTabs)
+			{
+				if (!tab.PromptToSave())
+				{
+					args.Cancel = true;
+					return;
+				}
 			}
 		}
 

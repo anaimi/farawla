@@ -266,6 +266,9 @@ namespace Standard
 
         static void _OnAttributedWindowClosing(object sender, CancelEventArgs e)
         {
+			if (e.Cancel)
+				return;
+			
             var window = sender as Window;
             Assert.IsNotNull(window);
 

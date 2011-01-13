@@ -19,7 +19,8 @@ namespace Farawla
 			Bootstrapper.Initialize(this);
 
 			Loaded += (s, e) => Controller.Current.Start();
-			Closed += (e, s) => Controller.Current.Exit();
+			Closing += (s, e) => Controller.Current.Closing(e);
+			Closed += (s, e) => Controller.Current.Exit();
 			SizeChanged += (s, e) => Controller.Current.Resize();
 			
 			MouseMove += ChangeSidebarVisibility;
