@@ -58,8 +58,13 @@ namespace Farawla.Utilities
 			
 			if (key == null)
 				return string.Empty;
+
+			var value = key.GetValue("");
 			
-			return key.GetValue("").ToString();
+			if (value == null)
+				return string.Empty;
+			
+			return value.ToString();
 		}
 
 		[DllImport("Kernel32.dll")]

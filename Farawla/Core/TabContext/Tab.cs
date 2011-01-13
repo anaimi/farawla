@@ -19,6 +19,7 @@ using DrawingContext=System.Windows.Media.DrawingContext;
 using FontFamily=System.Windows.Media.FontFamily;
 using ImageSource=System.Windows.Media.ImageSource;
 using Farawla.Utilities;
+using Farawla.Features;
 
 namespace Farawla.Core.TabContext
 {
@@ -49,26 +50,31 @@ namespace Farawla.Core.TabContext
 
 		public Tab(string path)
 		{
-			// arrange
-			matchingTokensBackground = Theme.Instance.MatchingTokensBackground.ToColor();
-			
-			// get language
-			Language = Controller.Current.Languages.GetLanguageByExtension(path.Substring(path.LastIndexOf('.') + 1));
-
 			// set name and path
 			if (path.IsBlank())
 			{
 				IsSaved = false;
 				Name = "new";
 				DocumentPath = string.Empty;
+				Language = Controller.Current.Languages.GetDefaultLanguage();
 			}
 			else
 			{
+				if (!File.Exists(path))
+				{
+					// Notifier.Show("Attempted to open a file that doesn't exist");
+					return;
+				}
+				
 				IsSaved = true;
 				Name = Path.GetFileName(path);
 				DocumentPath = path;
+				Language = Controller.Current.Languages.GetLanguageByExtension(path.Substring(path.LastIndexOf('.') + 1));
 			}
 
+			// arrange
+			matchingTokensBackground = Theme.Instance.MatchingTokensBackground.ToColor();
+			
 			// editor
 			Editor = new TextEditor();
 			Editor.FontSize = 13;
@@ -80,7 +86,7 @@ namespace Farawla.Core.TabContext
 			Editor.Background = new SolidColorBrush(Theme.Instance.Background.ToColor());
 			Editor.Foreground = new SolidColorBrush(Theme.Instance.Foreground.ToColor());
 			Editor.FontFamily = new FontFamily(Theme.Instance.FontFamily);
-			Editor.TextArea.TextEntered += TextEntered;
+			Editor.TextChanged += TextChanged;
 			Editor.TextArea.SelectionChanged += SelectionChanged;
 			Editor.TextArea.Caret.PositionChanged += CaretOffsetChanged;
 			Editor.TextArea.GotFocus += EditorGotFocus;
@@ -246,11 +252,11 @@ namespace Farawla.Core.TabContext
 			Controller.Current.TabCountUpdated();
 		}
 
-		private void TextEntered(object sender, TextCompositionEventArgs args)
+		private void TextChanged(object sender, EventArgs e)
 		{
 			if (!Editor.IsLoaded)
 				return;
-
+			
 			TextChanged();
 		}
 		

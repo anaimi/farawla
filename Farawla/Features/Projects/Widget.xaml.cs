@@ -366,7 +366,10 @@ namespace Farawla.Features.Projects
 				if (!canceled)
 				{
 					File.Create(path + "\\" + name);
+					
 					RefreshProjectClicked(null, null);
+					
+					DelayedAction.Invoke(250, () => Controller.Current.CreateNewTab(path + "\\" + name));
 				}
 			});
 		}

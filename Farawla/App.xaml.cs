@@ -37,32 +37,41 @@ namespace Farawla
 			{
 				mutex.ReleaseMutex();
 
-				var server = new PipeServer(pipeConf);
-				
-				// listen for other instances
-				server.Start((action, data) => {
-					if (action == "open")
+				try
+				{
+					var server = new PipeServer(pipeConf);
+
+					// listen for other instances
+					server.Start((action, data) =>
 					{
-						// open document
-						Controller.Current.CreateNewTab(data);
-						
-						// activate window
-						if (Settings.Instance.IsWindowMaximized)
-							Controller.Current.MainWindow.WindowState = WindowState.Maximized;
-						else
-							Controller.Current.MainWindow.WindowState = WindowState.Normal;
-						
-						Controller.Current.MainWindow.Activate();
-					}
-				});
+						if (action == "open")
+						{
+							// open document
+							Controller.Current.CreateNewTab(data);
+
+							// activate window
+							if (Settings.Instance.IsWindowMaximized)
+								Controller.Current.MainWindow.WindowState = WindowState.Maximized;
+							else
+								Controller.Current.MainWindow.WindowState = WindowState.Normal;
+
+							Controller.Current.MainWindow.Activate();
+						}
+					});
+				}
+				catch {  }
 			}
 			else
 			{
 				// if arg found, send to original instance
 				if (!arg.IsBlank())
 				{
-					var client = new PipeClient(pipeConf);
-					client.Send("open", arg);
+					try
+					{
+						var client = new PipeClient(pipeConf);
+						client.Send("open", arg);
+					}
+					catch {  }
 				}
 				
 				Current.Shutdown();
