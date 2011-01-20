@@ -89,6 +89,7 @@ namespace Farawla.Features.Search
 			Controller.Current.MainWindow.Sidebar.Opacity = 1;
 			
 			SidebarButton.ExpandWidget(() => {
+				Query.SelectAll();
 				Query.Focus();
 			});
 		}

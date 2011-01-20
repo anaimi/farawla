@@ -114,6 +114,19 @@ namespace Farawla.Core.Language
 				span.StartColor = span.EndColor = span.SpanColor;
 			}
 			
+			if (!Escape.IsBlank())
+			{
+				if (Escape == "\\")
+					Escape = "\\\\";
+				
+				if (span.RuleSet == null)
+					span.RuleSet = new HighlightingRuleSet();
+				
+				span.RuleSet.Spans.Add(new HighlightingSpan {
+					StartExpression = GetRegexFromString(Escape),
+					EndExpression = GetRegexFromString(".")
+				});
+			}
 			//TODO: use escape character
 
 			return span;

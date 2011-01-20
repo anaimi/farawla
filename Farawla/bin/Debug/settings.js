@@ -6,47 +6,47 @@
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js"
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb\\config\\environment.rb"
   ],
   "ClosedTabs": [
     {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\test.txt",
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\settings.js",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages\\ruby\\syntax.js",
       "Index": 1
     },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\config\\environment.rb",
       "Index": 1
     },
     {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\Rakefile",
-      "Index": 1
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\stylesheets\\main.css",
+      "Index": 0
     },
     {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\updater.cmd",
-      "Index": 2
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb\\config\\environment.rb",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb\\config\\boot.rb",
-      "Index": 2
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb\\config\\environments\\development.rb",
-      "Index": 2
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
+      "Index": 0
     },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\notes.txt",
-      "Index": 1
+      "Index": 0
     },
     {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\settings.js",
-      "Index": 1
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\stylesheets\\main.css",
+      "Index": 0
     },
     {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\font.js",
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\.git\\logs\\refs\\heads\\master",
       "Index": 1
     }
   ],
@@ -54,8 +54,10 @@
     {
       "Name": "Projects",
       "Values": {
-        "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
-        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\v8,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog"
+        "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb",
+        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\v8,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog,C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb",
+        "JavaScriptFrameworks": ",Core",
+        "JavaScript": "Disable"
       }
     },
     {

@@ -14,13 +14,45 @@
 			Name: "string single-quote",
 			Start: "'",
 			End: "'|$",
-			Escape: "\\"
+			Escape: "\\",
+			Syntax: {
+				Spans: [
+					{
+						Name: "object",
+						Start: "\\#\\{",
+						End: "\\}"
+					}
+				]
+			}
 		},
 		{
 			Name: "string double-quote",
 			Start: "\"",
 			End: "\"|$",
-			Escape: "\\"
+			Escape: "\\",
+			Syntax: {
+				Spans: [
+					{
+						Name: "object",
+						Start: "\\#\\{",
+						End: "\\}"
+					}
+				]
+			}
+		},
+		{
+			Name: "string percentage",
+			Start: "%{",
+			End: "}",
+			Syntax: {
+				Spans: [
+					{
+						Name: "object",
+						Start: "\\#\\{",
+						End: "\\}"
+					}
+				]
+			}
 		}
 	],
 	

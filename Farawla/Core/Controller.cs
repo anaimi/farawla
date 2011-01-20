@@ -115,6 +115,13 @@ namespace Farawla.Core
 				return;
 			}
 			
+			// remove empty & unsaved "new" tab if found
+			if (CurrentTabs.Count == 1 && CurrentTabs[0].IsNewDocument && CurrentTabs[0].Editor.Text == "" && !path.IsBlank())
+			{
+				MainWindow.Tab.Items.Remove(CurrentTabs[0].TabItem);
+				CurrentTabs.Remove(CurrentTabs[0]);
+			}
+			
 			// validate index
 			if (index < 0)
 				index = 0;

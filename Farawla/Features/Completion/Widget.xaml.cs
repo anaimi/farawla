@@ -49,7 +49,7 @@ namespace Farawla.Features.Completion
 			// get language completion from cache
 			if (!LanguageCompletions.ContainsKey(tab.Language.Name))
 			{
-				var languagePath = Core.Settings.ExecDir + "\\" + tab.Language.Directory + "\\";
+				var languagePath = tab.Language.Directory + "\\";
 				
 				if (File.Exists(languagePath + "autocomplete.js"))
 				{
