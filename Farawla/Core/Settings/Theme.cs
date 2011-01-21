@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using System.Drawing;
 using System.Windows.Media.Imaging;
 using System.Windows;
+using Brush=System.Drawing.Brush;
 
 namespace Farawla.Core
 {
@@ -33,6 +34,12 @@ namespace Farawla.Core
 		public const string DEFAULT_EDITOR_FOREGROUND = "#FF000000";
 		public const string DEFAULT_EDITOR_FONT_FAMILY = "Courier New";
 
+		public const string DEFAULT_WINDOW_TAB_SELECTED_COLOR = "#FF00FF00";
+		public const string DEFAULT_WINDOW_TAB_HOVER_COLOR = "#FFFF0000";
+		public const string DEFAULT_WINDOW_TAB_INACTIVE_COLOR = "#FF0000FF";
+		public const string DEFAULT_WINDOW_TAB_SELECTED_CAPTION_COLOR = "#FFFFFFFF";
+		public const string DEFAULT_WINDOW_TAB_INACTIVE_CAPTION_COLOR = "#FFAAAAAA";
+		public const string DEFAULT_WINDOW_TAB_TOOLBAR_COLOR = "#FF00FF00";
 		
 		public const string DIRECTORY_NAME = "themes";
 		
@@ -84,6 +91,13 @@ namespace Farawla.Core
 		public string Background { get; set; }
 		public string Foreground { get; set; }
 		public string FontFamily { get; set; }
+
+		public string WindowTabSelectedColor { get; set; }
+		public string WindowTabHoverColor { get; set; }
+		public string WindowTabInactiveColor { get; set; }
+		public string WindowTabSelectedCaptionColor { get; set; }
+		public string WindowTabInactiveCaptionColor { get; set; }
+		public string WindowTabToolbarColor { get; set; }
 		
 		public Dictionary<string, string> SyntaxColors { get; set; }
 		
@@ -111,6 +125,13 @@ namespace Farawla.Core
 			Background = DEFAULT_EDITOR_BACKGROUND;
 			Foreground = DEFAULT_EDITOR_FOREGROUND;
 			FontFamily = DEFAULT_EDITOR_FONT_FAMILY;
+
+			WindowTabSelectedColor = DEFAULT_WINDOW_TAB_SELECTED_COLOR;
+			WindowTabHoverColor = DEFAULT_WINDOW_TAB_HOVER_COLOR;
+			WindowTabInactiveColor = DEFAULT_WINDOW_TAB_INACTIVE_COLOR;
+			WindowTabSelectedCaptionColor = DEFAULT_WINDOW_TAB_SELECTED_CAPTION_COLOR;
+			WindowTabInactiveCaptionColor = DEFAULT_WINDOW_TAB_INACTIVE_CAPTION_COLOR;
+			WindowTabToolbarColor = DEFAULT_WINDOW_TAB_TOOLBAR_COLOR;
 			
 			// colors
 			SyntaxColors = new Dictionary<string, string>();
@@ -175,30 +196,44 @@ namespace Farawla.Core
 		{
 			var opacity = 1.0;
 			var colorName = parameter as string;
+			System.Windows.Media.Brush color;
 			
 			if (colorName == null)
 				return DefaultColor;
 			
+			// get opacity if specified
 			if (colorName.Contains(','))
 			{
 				opacity = colorName.Extract(",", "").ToDouble();
 				colorName = colorName.Extract("", ",");
 			}
 			
+			// get color by name from instance
 			var colorInfo = Theme.Instance.GetType().GetProperty(colorName);
 			var colorStr = colorInfo.GetValue(Theme.Instance, new object[0]) as string;
 			
 			if (colorStr == null)
 				return DefaultColor;
-
-			var colorObj = colorStr.ToColor();
 			
+			// gradient?
+			if (colorStr.Contains(","))
+			{
+				var parts = colorStr.Split(',');
+				color = new LinearGradientBrush(parts[0].ToColor(), parts[1].ToColor(), 90);
+			}
+			else
+			{
+				color = new SolidColorBrush(colorStr.ToColor());
+			}
+			
+			
+			// apply opacity
 			if (opacity < 1)
 			{
-				colorObj.A = (byte) (opacity * 255);
+				color.Opacity = opacity;
 			}
 
-			return new SolidColorBrush(colorObj);
+			return color;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

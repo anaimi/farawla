@@ -8,6 +8,13 @@
 */
 
 {
+	WindowTabSelectedColor: "#FFFFFFFF,#FFF4F8FE",
+	WindowTabHoverColor: "#FFB0B0B0,#FFA0A0A0",
+	WindowTabInactiveColor: "#FFA0A0A0,#FF909090",
+	WindowTabSelectedCaptionColor: "#FF000000",
+	WindowTabInactiveCaptionColor: "#FF000000",
+	WindowTabToolbarColor: "#FFF4F8FE",
+	
 	MatchingTokensBackground: "#FFFFFF00", /* when highlighting an alpha-num sequence of characters, the editor will change the background of matching text to this color -- also, used to highlight results when searching before hitting enter */
 	MatchingBracketsBackground: "#FFE2F7F9", /* when caret is next to a bracket, it will highlgiht the backgrounds of the pair. A bracket is one of: (,),{,},[,] */
 	

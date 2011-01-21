@@ -5,7 +5,9 @@
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
-  "OpenTabs": [],
+  "OpenTabs": [
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes\\clouds\\theme.js"
+  ],
   "ClosedTabs": [
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb\\config\\environment.rb",
