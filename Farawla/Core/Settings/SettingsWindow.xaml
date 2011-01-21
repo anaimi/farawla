@@ -131,7 +131,7 @@
 		</TabControl>
 		
 		<StackPanel Grid.Row="1" x:Name="CloseDialogText" Orientation="Horizontal" HorizontalAlignment="Center" Cursor="Hand" Background="#01000000" ToolTip="or click here to close">
-			<TextBlock Text="press escape to close" Margin="0,10,0,0" FontSize="16" Foreground="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor, 0.8'}" />
+			<TextBlock Text="press escape to close" Margin="0,10,0,0" FontSize="16" Foreground="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}" />
 		</StackPanel>
 	</Grid>
 </Window>

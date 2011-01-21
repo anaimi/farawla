@@ -96,6 +96,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Features\Stats\StatsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Core\Sidebar\Bar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,6 +209,9 @@
     <Compile Include="Core\Bootstrapper.cs" />
     <Compile Include="Core\Controller.cs" />
     <Compile Include="Core\KeyboardObserver.cs" />
+    <Compile Include="Features\Stats\StatsWindow.cs">
+      <DependentUpon>StatsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Core\TabContext\BlockHighlighter.cs" />
     <Compile Include="Core\TabContext\CompletionWindowItem.cs" />
     <Compile Include="Core\TabContext\ExtendedTabControl.xaml.cs">

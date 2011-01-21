@@ -4,7 +4,7 @@
     xmlns:Core="clr-namespace:Farawla.Core"
     Height="125" Width="400" 
     Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}"
-    Title="Title" ResizeMode="NoResize" WindowStyle="None" SnapsToDevicePixels="True" WindowStartupLocation="CenterScreen" AllowsTransparency="True"
+    Title="Farawla Input" ResizeMode="NoResize" WindowStyle="None" SnapsToDevicePixels="True" WindowStartupLocation="CenterScreen" AllowsTransparency="True"
     >
     <Grid Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}">
 		<Grid.RowDefinitions>

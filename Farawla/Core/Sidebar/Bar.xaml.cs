@@ -71,7 +71,7 @@ namespace Farawla.Core.Sidebar
 		public void UpdateWidgetSize()
 		{
 			var workspace = OuterBorder.ActualHeight - OuterBorder.Padding.Top - OuterBorder.Padding.Bottom;
-			var buttons = Controller.Current.Widgets.Select(w => w.SidebarButton);
+			var buttons = Controller.Current.Widgets.Where(b => b.SidebarButton.ShowInSidebar).Select(w => w.SidebarButton);
 
 			// reduce workspace, by enumerating the MaxHeights of non-Stretchable widgets
 			foreach (var button in buttons.Where(b => !b.IsStretchable && b.IsExpandable && b.IsExpanded))

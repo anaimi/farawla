@@ -158,3 +158,5 @@ C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Terminal\Widg
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Resources\Theme\MainTabControl.baml
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Core\TabContext\ExtendedTabControl.g.cs
 C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Core\TabContext\ExtendedTabControl.baml
+C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Stats\StatsWindow.g.cs
+C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\obj\Debug\Features\Stats\StatsWindow.baml

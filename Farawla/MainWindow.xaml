@@ -11,5 +11,7 @@
 		<TabContext:ExtendedTabControl x:Name="Tab" />
 
 		<Sidebar:Bar x:Name="Sidebar" />
+		
+		<Rectangle x:Name="StatsWindowPointer" Fill="#01000000" HorizontalAlignment="Right" VerticalAlignment="Top" />
 	</Grid>
 </Window>
