@@ -8,18 +8,13 @@ using System.Windows.Media;
 using Farawla.Core.Language;
 using System.Windows.Controls;
 using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Rendering;
 using Microsoft.Win32;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using System.Windows.Input;
-using DrawingContext=System.Windows.Media.DrawingContext;
 using FontFamily=System.Windows.Media.FontFamily;
-using ImageSource=System.Windows.Media.ImageSource;
 using Farawla.Utilities;
-using Farawla.Features;
 
 namespace Farawla.Core.TabContext
 {

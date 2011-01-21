@@ -2,24 +2,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Core="clr-namespace:Farawla.Core">
 
-	<RadialGradientBrush x:Key="TabHoverColor" GradientOrigin="1,1">
-		<GradientStop Color="#FFB0B0B0" Offset="0"/>
-		<GradientStop Color="#FFA0A0A0" Offset="1"/>
-	</RadialGradientBrush>
-	
-	<RadialGradientBrush x:Key="TabNotSelectedColor" GradientOrigin="1,1">
-		<GradientStop Color="#FFA0A0A0" Offset="0"/>
-		<GradientStop Color="#FF909090" Offset="1"/>
-	</RadialGradientBrush>
-	
-	<LinearGradientBrush x:Key="TabSelectedColor" StartPoint="0,0" EndPoint="0,1" >
-		<GradientStop Color="#FFF4F8FE" Offset="0"/>
-		<GradientStop Color="#FFFFFFFF" Offset="1"/>
-	</LinearGradientBrush>
-
 	<LinearGradientBrush x:Key="ToolbarColor" StartPoint="0,0" EndPoint="0,1" >
-		<GradientStop Color="#FFDAE8F9" Offset="1"/>
-		<GradientStop Color="#FFF4F8FE" Offset="0.9"/>
+		<GradientStop Color="#FFDAE8F9" Offset="1" />
+		<GradientStop Color="#FFF4F8FE" Offset="0.9" />
 	</LinearGradientBrush>
 
 	<!-- TabControl style -->
@@ -28,6 +13,7 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="TabControl">
 					<Grid>
+						
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/>
 							<RowDefinition Height="Auto"/>

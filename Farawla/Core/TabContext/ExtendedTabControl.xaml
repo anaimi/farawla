@@ -6,8 +6,20 @@
 	Margin="0" FontSize="12">
     
 	<TabControl.Resources>
-		<TabContext:ContentToMarginConverter x:Key="ContentToMarginConverter" />
-		<TabContext:ContentToPathConverter x:Key="ContentToPathConverter" />
+		<LinearGradientBrush x:Key="TabHoverColor" StartPoint="0,0" EndPoint="0,1">
+			<GradientStop Color="#FFB0B0B0" Offset="0"/>
+			<GradientStop Color="#FFA0A0A0" Offset="1"/>
+		</LinearGradientBrush>
+
+		<LinearGradientBrush x:Key="TabNotSelectedColor" StartPoint="0,0" EndPoint="0,1">
+			<GradientStop Color="#FFA0A0A0" Offset="0"/>
+			<GradientStop Color="#FF909090" Offset="1"/>
+		</LinearGradientBrush>
+
+		<LinearGradientBrush x:Key="TabSelectedColor" StartPoint="0,1" EndPoint="0,0" >
+			<GradientStop Color="#FFF4F8FE" Offset="0"/>
+			<GradientStop Color="#FFFFFFFF" Offset="1"/>
+		</LinearGradientBrush>
 
 		<!-- TabItem style -->
 		<Style x:Key="{x:Type TabItem}" TargetType="{x:Type TabItem}">
@@ -16,34 +28,38 @@
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="TabItem">
-						<Grid x:Name="Container">
-							<Path x:Name="TabPath" Margin="{Binding ElementName=TabItemContent, Converter={StaticResource ContentToMarginConverter}}" Fill="{StaticResource TabNotSelectedColor}">
-								<Path.Data>
-									<PathGeometry>
-										<PathFigure IsClosed="False" StartPoint="1,0" Segments="{Binding ElementName=TabItemContent, Converter={StaticResource ContentToPathConverter}}" />
-									</PathGeometry>
-								</Path.Data>
-								<Path.LayoutTransform>
-									<ScaleTransform ScaleY="-1"/>
-								</Path.LayoutTransform>
-							</Path>
+						<Grid x:Name="Container" Margin="0,0,-15,0">
+							
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
 
-							<ContentPresenter x:Name="TabItemContent" ContentSource="Header" Margin="5,2,5,2" VerticalAlignment="Center" TextElement.Foreground="#FF000000" />
+							<Path x:Name="Left" Grid.Column="0" Fill="{StaticResource TabNotSelectedColor}" Data="M0,20 L20,0 L20,20" Width="20" Height="20" />
+							<Rectangle x:Name="Middle" Grid.Column="1" Fill="{StaticResource TabNotSelectedColor}" Height="20" />
+							<Path x:Name="Right" Grid.Column="2" Fill="{StaticResource TabNotSelectedColor}" Data="M0,0 L20,20 L0,20" Width="20" Height="20" />
+
+							<ContentPresenter Grid.Column="1" HorizontalAlignment="Center" x:Name="Content" ContentSource="Header" Margin="5,2,5,2" VerticalAlignment="Center" TextBlock.Foreground="#CCCCCC" />
 						</Grid>
-						
+
 						<ControlTemplate.Triggers>
+
 							<Trigger Property="IsMouseOver" Value="True" SourceName="Container">
-								<Setter Property="Fill" TargetName="TabPath" Value="{StaticResource TabHoverColor}" />
+								<Setter TargetName="Left" Property="Fill" Value="{StaticResource TabHoverColor}" />
+								<Setter TargetName="Middle" Property="Fill" Value="{StaticResource TabHoverColor}" />
+								<Setter TargetName="Right" Property="Fill" Value="{StaticResource TabHoverColor}" />
 							</Trigger>
+
 							<Trigger Property="Selector.IsSelected" Value="True">
-								<Setter TargetName="TabItemContent" Property="TextElement.Foreground" >
-									<Setter.Value>
-										<SolidColorBrush Color="#FF000000" />
-									</Setter.Value>
-								</Setter>
-								<Setter Property="Fill" TargetName="TabPath" Value="{StaticResource TabSelectedColor}" />
+								<Setter TargetName="Left" Property="Fill" Value="{StaticResource TabSelectedColor}" />
+								<Setter TargetName="Middle" Property="Fill" Value="{StaticResource TabSelectedColor}" />
+								<Setter TargetName="Right" Property="Fill" Value="{StaticResource TabSelectedColor}" />
+
+								<Setter TargetName="Content" Property="TextBlock.Foreground" Value="Black" />
 								<Setter Property="Panel.ZIndex" Value="2"/>
 							</Trigger>
+
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
 				</Setter.Value>

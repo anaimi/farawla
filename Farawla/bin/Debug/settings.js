@@ -5,10 +5,28 @@
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
-  "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb\\config\\environment.rb"
-  ],
+  "OpenTabs": [],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb\\config\\environment.rb",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb\\public\\stylesheets\\admin\\main.css",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb\\README",
+      "Index": 2
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\settings.js",
+      "Index": 3
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb\\public\\stylesheets\\sass\\admin\\main.sass",
+      "Index": 5
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\settings.js",
       "Index": 1
@@ -28,26 +46,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\stylesheets\\main.css",
       "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
-      "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\notes.txt",
-      "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\stylesheets\\main.css",
-      "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
-      "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\.git\\logs\\refs\\heads\\master",
-      "Index": 1
     }
   ],
   "Widgets": [

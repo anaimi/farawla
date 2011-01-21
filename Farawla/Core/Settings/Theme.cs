@@ -32,6 +32,7 @@ namespace Farawla.Core
 		public const string DEFAULT_EDITOR_BACKGROUND = "#FFFFFFFF";
 		public const string DEFAULT_EDITOR_FOREGROUND = "#FF000000";
 		public const string DEFAULT_EDITOR_FONT_FAMILY = "Courier New";
+
 		
 		public const string DIRECTORY_NAME = "themes";
 		
