@@ -14,6 +14,7 @@
 	WindowTabSelectedCaptionColor: "#FF000000",
 	WindowTabInactiveCaptionColor: "#FF000000",
 	WindowTabToolbarColor: "#FFF4F8FE",
+	SettingsTabCaptionColor: "#FFE1A90E",
 	
 	MatchingTokensBackground: "#FFFFFF00", /* when highlighting an alpha-num sequence of characters, the editor will change the background of matching text to this color -- also, used to highlight results when searching before hitting enter */
 	MatchingBracketsBackground: "#FFE2F7F9", /* when caret is next to a bracket, it will highlgiht the backgrounds of the pair. A bracket is one of: (,),{,},[,] */

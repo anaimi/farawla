@@ -51,17 +51,19 @@ namespace Farawla.Core
 			
 			InitializeComponent();
 			
-			// apply closing events
+			// cancel all closing events
 			Closing += (s, e) => {
 				Hide();
 				e.Cancel = true;
 			};
 			
+			// close on escape
 			KeyDown += (s, e) => {
 				if (e.Key == Key.Escape)
 					Close();
 			};
-
+			
+			// close on click
 			CloseDialogText.MouseDown += (s, e) => Close();
 
 			// populate themes
@@ -77,6 +79,11 @@ namespace Farawla.Core
 			
 			// never highlight a list item in file association list
 			FileAssociationList.SelectionChanged += (s, e) => { FileAssociationList.SelectedIndex = -1; };
+		}
+		
+		public new void ShowDialog()
+		{
+			base.ShowDialog();
 		}
 		
 		#region File Association tab
