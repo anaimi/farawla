@@ -88,6 +88,9 @@ namespace Farawla.Core.Sidebar
 			var count = stretchables.Count();
 
 			workspace = (workspace / count) - ((BUTTON_HEIGHT + 10) * count);
+			
+			if (workspace < 0)
+				workspace = 0;
 
 			foreach (var button in buttons.Where(b => b.IsStretchable))
 			{

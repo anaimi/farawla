@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 using DrawingContext = System.Windows.Media.DrawingContext;
 
@@ -18,6 +19,9 @@ namespace Farawla.Core.TabContext
 		private SolidColorBrush tabsColor;
 		private SolidColorBrush spacesColor;
 		private SolidColorBrush lineOfCaret;
+
+		private DocumentLine viewportFirstLine;
+		private DocumentLine viewportLastLine;
 
 		public BlockHighlighter(TextEditor editor)
 		{
@@ -63,6 +67,10 @@ namespace Farawla.Core.TabContext
 		public void Draw(TextView textView, DrawingContext ctx)
 		{
 			textView.EnsureVisualLines();
+			
+			// update first and last line
+			viewportFirstLine = editor.TextArea.TextView.GetDocumentLineByVisualTop(editor.TextArea.TextView.ScrollOffset.Y);
+			viewportLastLine = editor.TextArea.TextView.GetDocumentLineByVisualTop(editor.TextArea.TextView.ScrollOffset.Y + editor.ActualHeight);
 
 			//TODO: probably should only draw lines inside the view area (i.e. inside the fold)
 
@@ -71,7 +79,10 @@ namespace Farawla.Core.TabContext
 			{
 				foreach (Match match in Regex.Matches(editor.Text, "\t"))
 				{
-					var point = GetPositionFromOffset(textView, VisualYPosition.LineMiddle, match.Index);
+					if (!IsOffsetInsideViewport(match.Index, match.Index + 1))
+						continue;
+					
+					var point = GetPositionFromOffset(VisualYPosition.LineMiddle, match.Index);
 
 					var x1 = point.X - editor.TextArea.TextView.ScrollOffset.X + 3;
 					var y1 = point.Y - editor.TextArea.TextView.ScrollOffset.Y;
@@ -97,7 +108,10 @@ namespace Farawla.Core.TabContext
 			{
 				foreach (Match match in Regex.Matches(editor.Text, " "))
 				{
-					var point = GetPositionFromOffset(textView, VisualYPosition.LineMiddle, match.Index);
+					if (!IsOffsetInsideViewport(match.Index, match.Index + 1))
+						continue;
+					
+					var point = GetPositionFromOffset(VisualYPosition.LineMiddle, match.Index);
 
 					var x1 = point.X - editor.TextArea.TextView.ScrollOffset.X + 2;
 					var y1 = point.Y - editor.TextArea.TextView.ScrollOffset.Y;
@@ -122,8 +136,8 @@ namespace Farawla.Core.TabContext
 			if (Theme.Instance.HighlightLineOfCaret && editor.TextArea.IsFocused)
 			{
 				var line = editor.Document.GetLineByOffset(editor.CaretOffset);
-				var start = GetPositionFromOffset(textView, VisualYPosition.LineTop, line.Offset);
-				var end = GetPositionFromOffset(textView, VisualYPosition.LineBottom, line.Offset);
+				var start = GetPositionFromOffset(VisualYPosition.LineTop, line.Offset);
+				var end = GetPositionFromOffset(VisualYPosition.LineBottom, line.Offset);
 
 				ctx.DrawRoundedRectangle(lineOfCaret, new Pen(), new Rect(start.X, start.Y - editor.TextArea.TextView.ScrollOffset.Y, textView.ActualWidth, end.Y - start.Y), 3, 3);
 			}
@@ -131,26 +145,40 @@ namespace Farawla.Core.TabContext
 			// draw blocks
 			foreach (var block in blocks)
 			{
-				var startPosition = GetPositionFromOffset(textView, VisualYPosition.LineTop, block.Offset);
-				var endPosition = GetPositionFromOffset(textView, VisualYPosition.LineBottom, block.Offset + block.Length);
+				if (!IsOffsetInsideViewport(block.Offset, block.Offset + block.Length))
+					continue;
+				
+				var startPosition = GetPositionFromOffset(VisualYPosition.LineTop, block.Offset);
+				var endPosition = GetPositionFromOffset(VisualYPosition.LineBottom, block.Offset + block.Length);
 
 				var x = startPosition.X - editor.TextArea.TextView.ScrollOffset.X;
 				var y = startPosition.Y - editor.TextArea.TextView.ScrollOffset.Y;
 
 				var width = endPosition.X - startPosition.X;
 				var height = endPosition.Y - startPosition.Y;
-
+				
 				if (width <= 0 || height <= 0)
 					continue;
-
+				
 				ctx.DrawRoundedRectangle(new SolidColorBrush(block.Color), new Pen(), new Rect(x, y, width, height), 3, 3);
 			}
 		}
-
-		private Point GetPositionFromOffset(TextView textView, VisualYPosition position, int offset)
+		
+		private bool IsOffsetInsideViewport(int offsetFrom, int offsetTo)
 		{
-			var startLocation = textView.Document.GetLocation(offset);
-			var point = textView.GetVisualPosition(new TextViewPosition(startLocation), position);
+			if (offsetFrom < viewportFirstLine.Offset && offsetTo < viewportFirstLine.Offset)
+				return false;
+			
+			if (offsetFrom > viewportLastLine.Offset && offsetTo > viewportLastLine.Offset)
+				return false;
+			
+			return true;
+		}
+
+		private Point GetPositionFromOffset(VisualYPosition position, int offset)
+		{
+			var startLocation = editor.TextArea.TextView.Document.GetLocation(offset);
+			var point = editor.TextArea.TextView.GetVisualPosition(new TextViewPosition(startLocation), position);
 
 			return new Point(Math.Round(point.X), Math.Round(point.Y));
 		}

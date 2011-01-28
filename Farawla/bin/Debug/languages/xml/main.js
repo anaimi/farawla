@@ -1,6 +1,6 @@
 {
 	Name: "XML",
 	Associations: [
-		"xml", "xsl", "xsd"
+		"xml", "config", "xsl", "xsd"
 	]
 }
