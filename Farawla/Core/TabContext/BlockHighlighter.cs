@@ -72,8 +72,6 @@ namespace Farawla.Core.TabContext
 			viewportFirstLine = editor.TextArea.TextView.GetDocumentLineByVisualTop(editor.TextArea.TextView.ScrollOffset.Y);
 			viewportLastLine = editor.TextArea.TextView.GetDocumentLineByVisualTop(editor.TextArea.TextView.ScrollOffset.Y + editor.ActualHeight);
 
-			//TODO: probably should only draw lines inside the view area (i.e. inside the fold)
-
 			// draw tabs
 			if (Settings.Instance.ShowTabsInEditor)
 			{

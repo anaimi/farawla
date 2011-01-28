@@ -104,25 +104,39 @@ namespace Farawla.Features.Stats
 			var charCount = tab.Editor.Text.Length;
 			Chars.Text = charCount.Pluralize("character", "characters");
 
-			// last modified
+			// date created
 			if (tab.IsNewDocument)
 			{
-				LastModified.Text = "never";
+				DateCreated.Text = "never";
 			}
 			else
 			{
-				LastModified.Text = File.GetLastWriteTime(tab.DocumentPath).ToString("MMMM dd, yyyy");
+				DateCreated.Text = File.GetCreationTime(tab.DocumentPath).ToString("MMM dd, yyyy @ hh:mm tt");
 			}
 
-			//// file size
-			//if (tab.IsNewDocument)
-			//{
-			//    FileSize.Text = "not saved";
-			//}
-			//else
-			//{
-			//    FileSize.Text = File.
-			//}
+			
+			if (tab.IsNewDocument)
+			{
+				// last modified
+				LastModified.Text = "never";
+				
+				// encoding
+				Encoding.Text = "not set";
+				
+				// file size
+				FileSize.Text = "unknown";
+			}
+			else
+			{
+				// last modified
+				LastModified.Text = File.GetLastWriteTime(tab.DocumentPath).ToString("MMM dd, yyyy @ hh:mm tt");
+
+				// encoding
+				Encoding.Text = tab.Editor.Encoding.EncodingName;
+
+				// file size
+				FileSize.Text = tab.Editor.Encoding.GetByteCount(tab.Editor.Text).ToPrettyBytes();
+			}
 		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿public static class IntegerExtension
+﻿using System;
+
+public static class IntegerExtension
 {
 	public static string Pluralize(this int number, string single, string plural)
 	{
@@ -28,5 +30,22 @@
 			return false;
 
 		return true;
+	}
+
+	public static string ToPrettyBytes(this int bytes)
+	{
+		const int scale = 1024;
+		string[] orders = new[] { "GB", "MB", "KB", "Bytes" };
+		long max = (long)Math.Pow(scale, orders.Length - 1);
+		
+		foreach (string order in orders)
+		{
+			if (bytes > max)
+				return string.Format("{0:##.##} {1}", decimal.Divide(bytes, max), order);
+
+			max /= scale;
+		}
+		
+		return "0 Bytes";
 	}
 }

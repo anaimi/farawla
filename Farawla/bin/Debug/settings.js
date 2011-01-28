@@ -6,9 +6,21 @@
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\test.html"
+    "C:\\Users\\Ahmad\\Desktop\\farawla.html"
   ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\web.config",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\updater.cmd",
+      "Index": 2
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\test.html",
+      "Index": 0
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\web.config",
       "Index": 0
@@ -36,18 +48,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\settings.js",
       "Index": 3
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb\\public\\stylesheets\\sass\\admin\\main.sass",
-      "Index": 5
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\settings.js",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages\\ruby\\syntax.js",
-      "Index": 1
     }
   ],
   "Widgets": [

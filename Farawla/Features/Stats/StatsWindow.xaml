@@ -2,12 +2,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Core="clr-namespace:Farawla.Core"
-    Height="150" Width="400" 
+    Height="200" Width="400" 
     Background="Transparent" Title="Farawla Notify" ResizeMode="NoResize" WindowStyle="None" SnapsToDevicePixels="True" ShowInTaskbar="False"
     WindowStartupLocation="Manual" AllowsTransparency="True">
 	<Border Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor,0.5'}" CornerRadius="4">
 		<Grid>
 			<Grid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition />
 				<RowDefinition />
 				<RowDefinition />
 				<RowDefinition />
@@ -23,7 +25,7 @@
 			<Grid.Resources>
 				<Style TargetType="{x:Type TextBlock}">
 					<Setter Property="Foreground" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='TextWidgetColor'}" />
-					<Setter Property="FontSize" Value="16" />
+					<Setter Property="FontSize" Value="14" />
 					<Setter Property="Padding" Value="5" />
 					<Setter Property="FontWeight" Value="Bold" />
 				</Style>
@@ -46,13 +48,21 @@
 			<TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource Label}" Text="Words" />
 			<TextBlock x:Name="Words" Grid.Column="1" Grid.Row="2" Text="100" />
 
-			<!-- last modified -->
-			<TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource Label}" Text="Last Modified" />
-			<TextBlock x:Name="LastModified" Grid.Column="1" Grid.Row="3" Text="100" />
+			<!-- date created -->
+			<TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource Label}" Text="Date Created" />
+			<TextBlock x:Name="DateCreated" Grid.Column="1" Grid.Row="3" Text="100" />
 
+			<!-- last modified -->
+			<TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource Label}" Text="Last Modified" />
+			<TextBlock x:Name="LastModified" Grid.Column="1" Grid.Row="4" Text="100" />
+			
+			<!-- encoding -->
+			<TextBlock Grid.Column="0" Grid.Row="5" Style="{StaticResource Label}" Text="Encoding" />
+			<TextBlock x:Name="Encoding" Grid.Column="1" Grid.Row="5" Text="100" />
+			
 			<!-- file size -->
-			<TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource Label}" Text="File Size" />
-			<TextBlock x:Name="FileSize" Grid.Column="1" Grid.Row="4" Text="100" />
+			<TextBlock Grid.Column="0" Grid.Row="6" Style="{StaticResource Label}" Text="File Size" />
+			<TextBlock x:Name="FileSize" Grid.Column="1" Grid.Row="6" Text="100" />
 		</Grid>
 	</Border>
 </Window>
