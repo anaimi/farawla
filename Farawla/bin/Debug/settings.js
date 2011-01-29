@@ -5,9 +5,7 @@
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
-  "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\farawla.html"
-  ],
+  "OpenTabs": [],
   "ClosedTabs": [
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\web.config",
