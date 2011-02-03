@@ -4,8 +4,8 @@
     xmlns:Sidebar="clr-namespace:Farawla.Core.Sidebar"
     xmlns:TabContext="clr-namespace:Farawla.Core.TabContext"
     SnapsToDevicePixels="True"
-    Name="Main"
-    Title="Farawla" Height="600" Width="600" WindowStyle="SingleBorderWindow">
+    Name="Main" Icon="Resources/transparent.ico"
+    Title="Farawla" Height="600" Width="600">
 	
 	<Grid x:Name="RootGrid">
 		<TabContext:ExtendedTabControl x:Name="Tab" />

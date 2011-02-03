@@ -5,28 +5,22 @@
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
-  "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\farawla.html"
-  ],
+  "OpenTabs": [],
   "ClosedTabs": [
     {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\web.config",
-      "Index": 1
+      "Path": "C:\\Users\\Ahmad\\Desktop\\regular-expressions-cheat-sheet-v2.png",
+      "Index": 0
     },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\updater.cmd",
-      "Index": 2
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\web.config",
+      "Index": 0
     },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\test.html",
-      "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\web.config",
-      "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\updater.cmd",
       "Index": 0
     },
     {

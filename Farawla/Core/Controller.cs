@@ -224,6 +224,8 @@ namespace Farawla.Core
 		{
 			if (OnProjectOpened != null)
 				OnProjectOpened(path);
+
+			MainWindow.Title = Path.GetFileName(path);
 		}
 
 		public void FileDropped(string[] files)
