@@ -5,7 +5,9 @@
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
-  "OpenTabs": [],
+  "OpenTabs": [
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\404.html"
+  ],
   "ClosedTabs": [
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\regular-expressions-cheat-sheet-v2.png",
@@ -57,7 +59,7 @@
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#FFE1A90E"
+        "Color": "#FFE7DFC9"
       }
     }
   ]

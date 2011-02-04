@@ -26,7 +26,7 @@ public static class FrameworkElementExtension
 
 		if (from > to)
 			step *= -1;
-
+		
 		var timer = new DispatcherTimer
 		{
 			Interval = TimeSpan.FromMilliseconds(duration)

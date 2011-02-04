@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -65,7 +66,7 @@ namespace Farawla.Core.Sidebar
 			// temporarily, emitate an accordion's behaviour
 			
 			foreach(var btn in Controller.Current.Widgets.Where(w => w != button.Widget && w.SidebarButton.IsExpanded).Select(b => b.SidebarButton))
-				btn.CollapseWidget();
+			    btn.CollapseWidget();
 		}
 
 		public void UpdateWidgetSize()
@@ -77,17 +78,14 @@ namespace Farawla.Core.Sidebar
 			foreach (var button in buttons.Where(b => !b.IsStretchable && b.IsExpandable && b.IsExpanded))
 			{
 				button.Control.Height = button.WidgetHeight;
-				workspace -= button.WidgetHeight + BUTTON_HEIGHT + 10;
+				//workspace -= button.WidgetHeight + BUTTON_HEIGHT + 10;
 			}
 
 			// reduce workspace for each non-Expandable button
 			workspace -= BUTTON_HEIGHT * buttons.Where(b => !b.IsExpandable || !b.IsExpanded).Count();
 
 			// set the Height on Stretchable components
-			var stretchables = buttons.Where(b => b.IsStretchable && b.IsExpanded);
-			var count = stretchables.Count();
-
-			workspace = (workspace / count) - ((BUTTON_HEIGHT + 10) * count);
+			workspace -= (BUTTON_HEIGHT + 10);
 			
 			if (workspace < 0)
 				workspace = 0;

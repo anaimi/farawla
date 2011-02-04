@@ -113,5 +113,10 @@ namespace Farawla.Core.Sidebar
 			IsExpanded = true;
 			Loaded += (s, e) => ExpandWidget(null);
 		}
+
+		public override string ToString()
+		{
+			return Label.Text;
+		}
 	}
 }
