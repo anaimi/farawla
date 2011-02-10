@@ -1,3 +1,6 @@
+/*
+	Language: JavaScript
+*/
 {
 	Spans: [
 		{
@@ -36,6 +39,14 @@
 		{
 			Name: "terminal",
 			Regex: "\\b(true|false|null|NaN|Infinity|undefined)\\b"
+		},
+		{
+			Name: "number",
+			Regex: "((0x)?(\\d+)(\\.\\d+)?(f)?)"
+		},
+		{
+			Name: "regex",
+			Regex: "\\/(.)+\\/"
 		}
 		
 	]

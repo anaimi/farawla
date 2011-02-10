@@ -1,3 +1,6 @@
+/*
+	Language: Ruby
+*/
 {
 	Spans: [
 		{
@@ -66,8 +69,20 @@
 			Regex: "\\b(Array|Bignum|Binding|Class|Continuation|Dir|Exception|FalseClass|File::Stat|File|Fixnum|Float|Hash|Integer|IO|MatchData|Method|Module|NilClass|Numeric|Object|Proc|Range|Regexp|String|Struct|Symbol|ThreadGroup|Thread|Time|TrueClass)\\b"
 		},
 		{
+			Name: "symbol",
+			Regex: "\\:(\\w|-)+"
+		},
+		{
 			Name: "terminal",
 			Regex: "\\b(true|false|nil)\\b"
+		},
+		{
+			Name: "number",
+			Regex: "((0x)?(\\d+)(\\.\\d+)?(f)?)"
+		},
+		{
+			Name: "regex",
+			Regex: "\\/(.)+\\/"
 		}
 		
 	]

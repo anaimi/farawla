@@ -160,8 +160,8 @@ namespace Farawla.Features.Search
 				tab.MakeActive();
 				
 				// scroll
-				var line = tab.Editor.Document.GetLineByOffset(match.Index).LineNumber;
-				tab.Editor.ScrollToLine(line);
+				var position = tab.Editor.Document.GetLocation(match.Index);
+				tab.Editor.ScrollTo(position.Line, position.Column);
 			}
 
 			// redraw
