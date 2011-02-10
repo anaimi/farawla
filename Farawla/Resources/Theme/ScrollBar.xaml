@@ -18,7 +18,7 @@
 			          	Name="Arrow"
 			            HorizontalAlignment="Center"
 			            VerticalAlignment="Center"
-			            Fill="{Binding Converter={Core:ThemeColorConverter}, ConverterParameter='SecondaryWidgetColor'}"
+			            Fill="{Binding Converter={Core:ThemeColorConverter}, ConverterParameter='PrimaryWidgetColor,0.8'}"
 			            Data="{Binding Path=Content,RelativeSource={RelativeSource TemplatedParent}}" />
 					</Border>
 					<ControlTemplate.Triggers>
@@ -96,7 +96,7 @@
 					<Thumb 
 			          Style="{StaticResource ScrollBarThumb}" 
 			          Margin="5,0,5,0"  
-			          Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='SecondaryWidgetColor'}" />
+			          Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor,0.8'}" />
 				</Track.Thumb>
 				<Track.IncreaseRepeatButton>
 					<RepeatButton 
@@ -143,7 +143,7 @@
 					<Thumb 
 			          Style="{StaticResource ScrollBarThumb}" 
 			          Margin="0,5,0,5"  
-			          Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='SecondaryWidgetColor'}" />
+			          Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor,0.8'}" />
 				</Track.Thumb>
 				<Track.IncreaseRepeatButton>
 					<RepeatButton 

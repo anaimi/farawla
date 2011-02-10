@@ -10,6 +10,14 @@
   ],
   "ClosedTabs": [
     {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
+      "Index": 3
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\notes.txt",
+      "Index": 1
+    },
+    {
       "Path": "C:\\Users\\Ahmad\\Desktop\\regular-expressions-cheat-sheet-v2.png",
       "Index": 0
     },
@@ -40,10 +48,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb\\README",
       "Index": 2
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\settings.js",
-      "Index": 3
     }
   ],
   "Widgets": [
@@ -51,7 +55,7 @@
       "Name": "Projects",
       "Values": {
         "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
-        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\v8,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
+        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\v8,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb,C:\\Users\\Ahmad\\Desktop\\Projects\\codebox-web,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
         "JavaScriptFrameworks": ",Core",
         "JavaScript": "Disable"
       }

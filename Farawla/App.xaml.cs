@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 using Farawla.Core;
 using System.ServiceModel;
 using Farawla.Utilities;
@@ -23,6 +24,10 @@ namespace Farawla
 		
 		protected override void OnStartup(StartupEventArgs e)
 		{
+			// unhandleed exceptions
+			AppDomain.CurrentDomain.UnhandledException += ExceptionOccured;
+			//Application.Current.DispatcherUnhandledException += ExceptionOccured;
+			
 			// named pipe configuration
 			var pipeConf = new PipeConfiguration {
 				Uri = "net.pipe://localhost/Pipe",
@@ -86,6 +91,11 @@ namespace Farawla
 			{
 				Current.Properties["Argument0"] = arg;
 			}
+		}
+
+		private void ExceptionOccured(object sender, UnhandledExceptionEventArgs e)
+		{
+			
 		}
 	}
 }

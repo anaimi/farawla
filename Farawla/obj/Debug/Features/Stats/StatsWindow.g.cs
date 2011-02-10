@@ -10,7 +10,6 @@
 //------------------------------------------------------------------------------
 
 using Farawla.Core;
-using ICSharpCode.AvalonEdit.CodeCompletion;
 using System;
 using System.Diagnostics;
 using System.Windows;

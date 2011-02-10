@@ -8,7 +8,7 @@
 	</LinearGradientBrush>
 
 	<!-- TabControl style -->
-	<Style x:Key="TabControlControl" TargetType="{x:Type TabControl}">
+	<Style x:Key="MainTabControl" TargetType="{x:Type TabControl}">
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="TabControl">
@@ -29,5 +29,41 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+	
+	<!-- TabItem template -->
+	<ControlTemplate TargetType="TabItem" x:Key="MainTabItemTemplate">
+		<Grid x:Name="Container" Margin="0,0,-15,0">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+
+			<Path x:Name="Left" Grid.Column="0" Fill="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveColor'}" Data="M0,20 L20,0 L20,20" Width="20" Height="20" />
+			<Rectangle x:Name="Middle" Grid.Column="1" Fill="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveColor'}" Height="20" />
+			<Path x:Name="Right" Grid.Column="2" Fill="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveColor'}" Data="M0,0 L20,20 L0,20" Width="20" Height="20" />
+
+			<ContentPresenter Grid.Column="1" HorizontalAlignment="Center" x:Name="Content" ContentSource="Header" Margin="5,2,5,2" VerticalAlignment="Center" TextBlock.Foreground="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveCaptionColor'}" />
+		</Grid>
+
+		<ControlTemplate.Triggers>
+
+			<Trigger Property="IsMouseOver" Value="True" SourceName="Container">
+				<Setter TargetName="Left" Property="Fill" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabHoverColor'}" />
+				<Setter TargetName="Middle" Property="Fill" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabHoverColor'}" />
+				<Setter TargetName="Right" Property="Fill" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabHoverColor'}" />
+			</Trigger>
+
+			<Trigger Property="Selector.IsSelected" Value="True">
+				<Setter TargetName="Left" Property="Fill" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabSelectedColor'}" />
+				<Setter TargetName="Middle" Property="Fill" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabSelectedColor'}" />
+				<Setter TargetName="Right" Property="Fill" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabSelectedColor'}" />
+
+				<Setter TargetName="Content" Property="TextBlock.Foreground" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabSelectedCaptionColor'}" />
+			</Trigger>
+
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
 
 </ResourceDictionary>

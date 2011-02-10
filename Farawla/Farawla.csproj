@@ -209,6 +209,7 @@
     <Compile Include="Core\Bootstrapper.cs" />
     <Compile Include="Core\Controller.cs" />
     <Compile Include="Core\KeyboardObserver.cs" />
+    <Compile Include="Core\TabContext\DragDropTabManager.cs" />
     <Compile Include="Features\Stats\StatsWindow.cs">
       <DependentUpon>StatsWindow.xaml</DependentUpon>
     </Compile>

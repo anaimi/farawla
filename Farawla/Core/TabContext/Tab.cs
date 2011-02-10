@@ -102,15 +102,15 @@ namespace Farawla.Core.TabContext
 			TabItem.Tag = this;
 			TabItem.Content = Editor;
 			
-			// tab header & tooltip
-			if (path.IsBlank())
-			{
-				TabItem.Header = new TextBlock() { Text = Name };
-			}
-			else
-			{
-				TabItem.Header = new TextBlock() { Text = Name, ToolTip = path };
-			}
+			// tab header
+			var header = new TextBlock();
+			header.IsHitTestVisible = false;
+			header.Text = Name;
+			
+			if (!path.IsBlank())
+				header.ToolTip = path;
+			
+			TabItem.Header = header;
 			
 			// tab header double click
 			TabItem.MouseDoubleClick += (s, e) => {
@@ -140,6 +140,13 @@ namespace Farawla.Core.TabContext
 		
 		public void MadeActive()
 		{
+			for(var i = 0; i < Controller.Current.CurrentTabs.Count; i++)
+			{
+				Panel.SetZIndex(Controller.Current.CurrentTabs[i].TabItem, i);
+			}
+			
+			Panel.SetZIndex(TabItem, Controller.Current.CurrentTabs.Count);
+			
 			DelayedAction.Invoke(250, () => Editor.Focus());
 		}
 
