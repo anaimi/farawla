@@ -29,8 +29,8 @@ namespace Farawla.Core.TabContext
 
 			blocks = new List<HighlightedBlocks>();
 
-			tabsColor = new SolidColorBrush(Theme.Instance.TabColor.ToColor());
-			spacesColor = new SolidColorBrush(Theme.Instance.SpaceColor.ToColor());
+			tabsColor = new SolidColorBrush(Theme.Instance.ShowTabColor.ToColor());
+			spacesColor = new SolidColorBrush(Theme.Instance.ShowSpaceColor.ToColor());
 
 			if (Theme.Instance.HighlightLineOfCaret)
 			{
@@ -72,7 +72,8 @@ namespace Farawla.Core.TabContext
 			viewportFirstLine = editor.TextArea.TextView.GetDocumentLineByVisualTop(editor.TextArea.TextView.ScrollOffset.Y);
 			viewportLastLine = editor.TextArea.TextView.GetDocumentLineByVisualTop(editor.TextArea.TextView.ScrollOffset.Y + editor.ActualHeight);
 
-			// draw tabs
+			#region Draw tabs
+
 			if (Settings.Instance.ShowTabsInEditor)
 			{
 				foreach (Match match in Regex.Matches(editor.Text, "\t"))
@@ -81,7 +82,7 @@ namespace Farawla.Core.TabContext
 						continue;
 					
 					var point = GetPositionFromOffset(VisualYPosition.LineMiddle, match.Index);
-
+					
 					var x1 = point.X - editor.TextArea.TextView.ScrollOffset.X + 3;
 					var y1 = point.Y - editor.TextArea.TextView.ScrollOffset.Y;
 
@@ -100,8 +101,11 @@ namespace Farawla.Core.TabContext
 					ctx.DrawLine(pen, new Point(x1, y1), new Point(x2, y2));
 				}
 			}
+			
+			#endregion
 
-			// draw spaces
+			#region Draw spaces
+			
 			if (Settings.Instance.ShowSpacesInEditor)
 			{
 				foreach (Match match in Regex.Matches(editor.Text, " "))
@@ -129,8 +133,11 @@ namespace Farawla.Core.TabContext
 					ctx.DrawLine(pen, new Point(x1, y1), new Point(x2, y2));
 				}
 			}
+			
+			#endregion
 
-			// draw highlighted line
+			#region Draw highlighted line
+			
 			if (Theme.Instance.HighlightLineOfCaret && editor.TextArea.IsFocused)
 			{
 				var line = editor.Document.GetLineByOffset(editor.CaretOffset);
@@ -139,8 +146,11 @@ namespace Farawla.Core.TabContext
 
 				ctx.DrawRoundedRectangle(lineOfCaret, new Pen(), new Rect(start.X, start.Y - editor.TextArea.TextView.ScrollOffset.Y, textView.ActualWidth, end.Y - start.Y), 3, 3);
 			}
+			
+			#endregion
 
-			// draw blocks
+			#region Draw blocks
+			
 			foreach (var block in blocks)
 			{
 				if (!IsOffsetInsideViewport(block.Offset, block.Offset + block.Length))
@@ -160,14 +170,16 @@ namespace Farawla.Core.TabContext
 				
 				ctx.DrawRoundedRectangle(new SolidColorBrush(block.Color), new Pen(), new Rect(x, y, width, height), 3, 3);
 			}
+			
+			#endregion
 		}
 		
 		private bool IsOffsetInsideViewport(int offsetFrom, int offsetTo)
 		{
-			if (offsetFrom < viewportFirstLine.Offset && offsetTo < viewportFirstLine.Offset)
+			if (offsetFrom < viewportFirstLine.Offset && offsetTo < viewportFirstLine.EndOffset)
 				return false;
-			
-			if (offsetFrom > viewportLastLine.Offset && offsetTo > viewportLastLine.Offset)
+
+			if (offsetFrom > viewportLastLine.Offset && offsetTo > viewportLastLine.EndOffset)
 				return false;
 			
 			return true;

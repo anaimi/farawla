@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Media;
 using Farawla.Features;
 using Newtonsoft.Json;
-using System.Drawing;
 using System.Windows.Media.Imaging;
 using System.Windows;
-using Brush=System.Drawing.Brush;
 
 namespace Farawla.Core
 {
@@ -22,8 +18,8 @@ namespace Farawla.Core
 		public const string DEFAULT_EDITOR_MATCHING_TOKENS_BACKGROUND = "#FFFFFF00";
 		public const string DEFAULT_EDITOR_MATCHING_BRACKETS_BACKGROUND = "#FFFFEE78";
 		
-		public const string DEFAULT_EDITOR_TAB_COLOR = "#FFCCCCCC";
-		public const string DEFAULT_EDITOR_SPACE_COLOR = "#FFAAAAAA";
+		public const string DEFAULT_EDITOR_SHOW_TAB_COLOR = "#FFCCCCCC";
+		public const string DEFAULT_EDITOR_SHOW_SPACE_COLOR = "#FFAAAAAA";
 		public const string DEFAULT_EDITOR_LINE_OF_CARET = "#22FFFF00";
 		
 		public const string DEFAULT_PRIMARY_WIDGET_COLOR = "#44606060";
@@ -76,8 +72,8 @@ namespace Farawla.Core
 		public string MatchingTokensBackground { get; set; }
 		public string MatchingBracketsBackground { get; set; }
 		
-		public string TabColor { get; set; }
-		public string SpaceColor { get; set; }
+		public string ShowTabColor { get; set; }
+		public string ShowSpaceColor { get; set; }
 
 		public string PrimaryWidgetColor { get; set; }
 		public string SecondaryWidgetColor { get; set; }
@@ -116,8 +112,8 @@ namespace Farawla.Core
 			MatchingTokensBackground = DEFAULT_EDITOR_MATCHING_TOKENS_BACKGROUND;
 			MatchingBracketsBackground = DEFAULT_EDITOR_MATCHING_BRACKETS_BACKGROUND;
 			
-			TabColor = DEFAULT_EDITOR_TAB_COLOR;
-			SpaceColor = DEFAULT_EDITOR_SPACE_COLOR;
+			ShowTabColor = DEFAULT_EDITOR_SHOW_TAB_COLOR;
+			ShowSpaceColor = DEFAULT_EDITOR_SHOW_SPACE_COLOR;
 			LineOfCaretColor = DEFAULT_EDITOR_LINE_OF_CARET;
 
 			PrimaryWidgetColor = DEFAULT_PRIMARY_WIDGET_COLOR;

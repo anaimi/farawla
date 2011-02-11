@@ -19,8 +19,8 @@
 	MatchingTokensBackground: "#FFFFFF00", /* when highlighting an alpha-num sequence of characters, the editor will change the background of matching text to this color -- also, used to highlight results when searching before hitting enter */
 	MatchingBracketsBackground: "#FFE2F7F9", /* when caret is next to a bracket, it will highlgiht the backgrounds of the pair. A bracket is one of: (,),{,},[,] */
 	
-	TabColor: "#FF86B626", /* if Show Tabs is enabled, lines of this color whill be drawn */
-	SpaceColor: "#FFFF0000", /* if Show Spaces in enabled, dots of this color will be drawn */
+	ShowTabColor: "#FF86B626", /* if Show Tabs is enabled, lines of this color whill be drawn */
+	ShowSpaceColor: "#FFFF0000", /* if Show Spaces in enabled, dots of this color will be drawn */
 	
 	HighlightLineOfCaret: true,
 	LineOfCaretColor: "#22FFFF00",
@@ -29,8 +29,8 @@
 	SecondaryWidgetColor: "#11000000",
 	TextWidgetColor: "#FFFFFFFF",
 	
-	CompletionWindowBackground: "#919AD429",
-	CompletionWindowForeground: "#FFFF0000",
+	CompletionWindowBackground: "#553769A0,#883769A0",
+	CompletionWindowForeground: "#FFFFFFFF",
 	
 	Background: "#FFFFFFFF",
 	Foreground: "#FF000000",

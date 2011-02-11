@@ -235,6 +235,22 @@ namespace Farawla.Core.Language
 			get { return _rules; }
 		}
 
+		public IEnumerable<HighlightingColor> NamedHighlightingColors
+		{
+			get
+			{
+				foreach (var rule in _rules.Rules)
+				{
+					yield return rule.Color;
+				}
+
+				foreach (var span in _rules.Spans)
+				{
+					yield return span.SpanColor;
+				}
+			}
+		}
+
 		public string Name
 		{
 			get { return _name; }

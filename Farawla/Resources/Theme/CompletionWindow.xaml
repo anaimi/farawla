@@ -4,9 +4,44 @@
     xmlns:Core="clr-namespace:Farawla.Core">
 
 	<Style TargetType="{x:Type CodeCompletion:CompletionWindow}">
-		<Setter Property="ResizeMode" Value="NoResize" />
-		<Setter Property="Background" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='CompletionWindowBackground'}" />
-		<Setter Property="Foreground" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='CompletionWindowForeground'}" />
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="WindowStyle" Value="None" />
+		<Setter Property="AllowsTransparency" Value="True" />
+
+		<!--<Setter Property="Background" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='CompletionWindowBackground'}" />
+		<Setter Property="Foreground" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='CompletionWindowForeground'}" />-->
 	</Style>
 	
+	<!-- item style doesn't work ... -->
+	<Style x:Key="CompletionListBoxItem" TargetType="ListBoxItem">
+		<Setter Property="OverridesDefaultStyle" Value="True" />
+		
+		<Style.Triggers>
+			<Trigger Property="IsSelected" Value="True">
+				<Setter Property="Background" Value="LightGreen" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<Style TargetType="{x:Type CodeCompletion:CompletionListBox}">
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="Foreground" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='CompletionWindowForeground'}" />
+		<Setter Property="ItemContainerStyle" Value="{StaticResource CompletionListBoxItem}" />
+		
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ListBox">
+					<Border Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='Background'}">
+						<Border Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='CompletionWindowBackground'}" CornerRadius="5" Padding="0,5,0,5">
+							<ScrollViewer Margin="0" Focusable="false" HorizontalScrollBarVisibility="Disabled">
+								<StackPanel IsItemsHost="True" />
+							</ScrollViewer>
+						</Border>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		
+	</Style>
+
 </ResourceDictionary>

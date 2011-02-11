@@ -18,6 +18,8 @@ namespace Farawla.Core.TabContext
 		public string Owner { get; private set; }
 		public string Text { get; private set; }
 		public object Description { get; private set; }
+		public double Priority { get; private set; }
+
 		public object Content { get; private set; }
 		public CompletionItemType Type { get; private set; }
 		public ImageSource Image { get; private set; }
@@ -27,6 +29,7 @@ namespace Farawla.Core.TabContext
 			Owner = owner;
 			Text = text;
 			Type = type;
+			Priority = 0;
 
 			switch (type)
 			{
