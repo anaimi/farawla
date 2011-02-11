@@ -36,8 +36,10 @@ namespace Farawla.Features.Completion
 			completionWorker.DoWork += (s, e) => PopulateAutoComplete(e);
 		}
 
-		private void PopulateTokensBeforeCaret(string code, int caretOffset)
+		public void PopulateTokensBeforeCaret()
 		{
+			var code = Tab.Editor.Text;
+			var caretOffset = Tab.Editor.CaretOffset;
 			var insideParenthesis = 0;
 			var index = caretOffset - 1;
 			var delimiter = string.Empty;
@@ -54,7 +56,7 @@ namespace Farawla.Features.Completion
 					{
 						insideParenthesis++;
 					}
-					else if (char.IsLetterOrDigit(_char))
+					else if (IsIdentifierCharacter(_char))
 					{
 						sequence.Insert(0, _char);
 					}
@@ -223,7 +225,7 @@ namespace Farawla.Features.Completion
 
 		public bool ShowWindow()
 		{
-			PopulateTokensBeforeCaret(Tab.Editor.Text, Tab.Editor.CaretOffset);
+			PopulateTokensBeforeCaret();
 
 			if (IgnoredScopes.Any(s => s.IsCaretInsideScope(Tab.Editor.CaretOffset)))
 			{
@@ -339,6 +341,17 @@ namespace Farawla.Features.Completion
 				return Tab.Editor.CaretOffset - TokensBeforeCaret.First().Length;
 
 			return Tab.Editor.CaretOffset - enteredText.Length;
+		}
+		
+		public bool IsIdentifierCharacter(char c)
+		{
+			if (char.IsLetterOrDigit(c))
+				return true;
+			
+			if (LanguageCompletion.AllowableIdentifierCharacters.Contains(c.ToString()))
+				return true;
+
+			return false;
 		}
 	}
 

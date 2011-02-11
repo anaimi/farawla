@@ -39,6 +39,25 @@ namespace Farawla.Features.Completion
 			Controller.Current.OnTabCreated += OnNewTab;
 			Controller.Current.OnActiveTabChanged += OnActiveTabChanged;
 			Controller.Current.OnStart += OnActiveTabChanged;
+			
+			// keyboard binding
+			Controller.Current.Keyboard.AddBinding(KeyCombination.Ctrl, Key.Space, ManuallyShowCompletionWindow);
+		}
+
+		private void ManuallyShowCompletionWindow()
+		{
+			var tab = Controller.Current.ActiveTab;
+			
+			if (tab.AutoCompleteState == null)
+				return;
+
+			var enteredText = string.Empty;
+			tab.AutoCompleteState.PopulateTokensBeforeCaret();
+
+			if (tab.AutoCompleteState.TokensBeforeCaret.Count > 0)
+				enteredText = tab.AutoCompleteState.TokensBeforeCaret[0];
+
+			tab.ShowCompletionWindow(tab.AutoCompleteState.GetCompletionWindowOffset(""), enteredText, false);
 		}
 
 		private void OnNewTab(Tab tab)
@@ -103,9 +122,9 @@ namespace Farawla.Features.Completion
 			if (tab.AutoCompleteState == null)
 				return;
 			
-			if (e.Text.Length > 0)
+			if (e.Text.Length == 1)
 			{
-				if (!char.IsLetterOrDigit(e.Text[0]))
+				if (!tab.AutoCompleteState.IsIdentifierCharacter(e.Text[0]))
 				{
 					var isDelimiterText = tab.AutoCompleteState.LanguageCompletion.ObjectAttributeDelimiters.Any(d => d == e.Text);
 
@@ -121,7 +140,9 @@ namespace Farawla.Features.Completion
 			
 			if (tab.AutoCompleteState.ShowWindow())
 			{
-				tab.ShowCompletionWindow(tab.AutoCompleteState.GetCompletionWindowOffset(e.Text));
+				var isDelimiter = tab.AutoCompleteState.LanguageCompletion.ObjectAttributeDelimiters.Any(d => d == e.Text);
+
+				tab.ShowCompletionWindow(tab.AutoCompleteState.GetCompletionWindowOffset(e.Text), e.Text, isDelimiter);
 			}
 			else
 			{

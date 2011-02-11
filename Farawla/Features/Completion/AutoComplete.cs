@@ -19,6 +19,7 @@ namespace Farawla.Features.Completion
 		public List<Type> Types { get; set; }
 		
 		public List<string> ObjectAttributeDelimiters { get; set; }
+		public List<string> AllowableIdentifierCharacters { get; set; }
 		
 		public string BaseTypeName { get; set; }
 		public string GlobalTypeName { get; set; }
@@ -38,6 +39,7 @@ namespace Farawla.Features.Completion
 			Frameworks = new List<Framework>();
 			
 			ObjectAttributeDelimiters = new List<string>();
+			AllowableIdentifierCharacters = new List<string>();
 			
 			// DONOT initialize IgnoreExpressions
 		}

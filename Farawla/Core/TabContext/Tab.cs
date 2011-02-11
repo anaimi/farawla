@@ -348,30 +348,41 @@ namespace Farawla.Core.TabContext
 
 		public void CompletionRequestInsertion(TextCompositionEventArgs e, bool isDelimiterText)
 		{
-			if (completionWindow != null && (completionWindow.IsActive || isDelimiterText))
+			if (completionWindow != null && completionWindow.IsVisible && isDelimiterText)
 				completionWindow.CompletionList.RequestInsertion(e);
 		}
-		
-		public void ShowCompletionWindow(int offset)
+
+		public void ShowCompletionWindow(int offset, string enteredText, bool isDelimiter)
 		{
 			if (IsShowingCompletionWindow)
 				return;
 			
 			IsShowingCompletionWindow = true;
 
+			// create window
 			completionWindow = new CompletionWindow(Editor.TextArea);
-
-			completionWindow.Background = new SolidColorBrush(Colors.Purple);
 			completionWindow.StartOffset = offset;
 			
+			// data
 			foreach (var item in completionItems)
 				completionWindow.CompletionList.CompletionData.Add(item);
 
+			//// tooltip
+			//completionWindow.ToolTip = new ToolTip() {
+			//    HorizontalOffset = 20,
+			//};
+			
+			// select text
+			if (!isDelimiter)
+				completionWindow.CompletionList.SelectItem(enteredText);
+			
+			// show		
 			completionWindow.Show();
 			
+			// events
 			completionWindow.Closed += (s, e) => {
-			                           	IsShowingCompletionWindow = false;
-			                           };
+				IsShowingCompletionWindow = false;
+			};
 		}
 		
 		public void HideCompletionWindow()

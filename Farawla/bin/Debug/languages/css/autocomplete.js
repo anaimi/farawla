@@ -25,5 +25,6 @@
 	GlobalTypeName: "_Farawla_Global",
 	FunctionTypeName: "_Farawla_Function",
 	BaseTypeName: "Object",
-	ObjectAttributeDelimiters: [","]
+	ObjectAttributeDelimiters: [","],
+	AllowableIdentifierCharacters: ["-"]
 }
