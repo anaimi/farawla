@@ -47,7 +47,9 @@ namespace Farawla.Core.TabContext
 			}
 
 			Content = text; // use this property for fancy UI
-			Description = description;
+			
+			if (!description.IsBlank())
+				Description = description;
 		}
 
 		public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)

@@ -3,12 +3,16 @@
   "ThemeName": "clouds",
   "IsWindowMaximized": true,
   "ShowSpacesInEditor": false,
-  "ShowTabsInEditor": false,
+  "ShowTabsInEditor": true,
   "ShowFilesStartingWithDot": false,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\app\\helpers\\admin_helper.rb"
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js"
   ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\app\\helpers\\admin_helper.rb",
+      "Index": 0
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
       "Index": 0
@@ -44,10 +48,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\app\\controllers\\admin_controller.rb",
       "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes\\clouds\\theme.js",
-      "Index": 2
     }
   ],
   "Widgets": [

@@ -81,13 +81,20 @@ namespace Farawla.Core.TabContext
 					if (!IsOffsetInsideViewport(match.Index, match.Index + 1))
 						continue;
 					
-					var point = GetPositionFromOffset(VisualYPosition.LineMiddle, match.Index);
+					var rects = BackgroundGeometryBuilder.GetRectsForSegment(editor.TextArea.TextView, new TextSegment {
+						StartOffset = match.Index,
+						Length = 1,
+					});
 					
-					var x1 = point.X - editor.TextArea.TextView.ScrollOffset.X + 3;
-					var y1 = point.Y - editor.TextArea.TextView.ScrollOffset.Y;
+					if (rects.Count() == 0)
+						continue;
+					
+					var rect = rects.First();
+					var x1 = rect.X + 3;
+					var y1 = rect.Y + rect.Height / 2;
 
-					var x2 = point.X - editor.TextArea.TextView.ScrollOffset.X + 23;
-					var y2 = point.Y - editor.TextArea.TextView.ScrollOffset.Y;
+					var x2 = rect.X + rect.Width - 3;
+					var y2 = y1;
 
 					if (x1 < 0 || y1 < 0 || x2 < 0 || y2 < 0 || x1 == x2)
 						continue;
