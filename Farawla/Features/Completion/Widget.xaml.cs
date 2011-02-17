@@ -50,6 +50,9 @@ namespace Farawla.Features.Completion
 			
 			if (tab.AutoCompleteState == null)
 				return;
+			
+			if (tab.AutoCompleteState.IsInIgnoredSection())
+				return;
 
 			var enteredText = string.Empty;
 			tab.AutoCompleteState.PopulateTokensBeforeCaret();

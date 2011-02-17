@@ -16,6 +16,7 @@ using ICSharpCode.AvalonEdit.CodeCompletion;
 using System.Windows.Input;
 using FontFamily=System.Windows.Media.FontFamily;
 using Farawla.Utilities;
+using Farawla.Features;
 
 namespace Farawla.Core.TabContext
 {
@@ -30,6 +31,7 @@ namespace Farawla.Core.TabContext
 		public TabItem TabItem { get; private set; }
 		public TextEditor Editor { get; private set; }
 		public BlockHighlighter BlockHighlighter { get; private set; }
+		public DocumentHighlighter DocumentHighlighter { get; private set; }
 
 		public bool IsNewDocument
 		{
@@ -121,8 +123,11 @@ namespace Farawla.Core.TabContext
 			// syntax highlighter
 			if (Language.HasSyntax)
 			{
-				HighlightingManager.Instance.RegisterHighlighting(Language.Name, Language.Associations.ToArray(), Language.Syntax.GetHighlighter());
-				Editor.SyntaxHighlighting = Language.Syntax.GetHighlighter();
+				//HighlightingManager.Instance.RegisterHighlighting(Language.Name, Language.Associations.ToArray(), Language.Syntax.GetHighlighter());
+				
+				var ruleset = Language.Syntax.GetHighlighter();
+				Editor.SyntaxHighlighting = ruleset;
+				DocumentHighlighter = new DocumentHighlighter(Editor.Document, ruleset.MainRuleSet);
 			}
 			
 			// assign completion window
@@ -167,7 +172,14 @@ namespace Farawla.Core.TabContext
 				}
 			}
 
-			Editor.Save(DocumentPath);
+			try
+			{
+				Editor.Save(DocumentPath);
+			}
+			catch(Exception e)
+			{
+				Notifier.Show("Error saving '" + DocumentPath + "':\n" + e.Message);
+			}
 
 			IsSaved = true;
 			MarkWindowAsSaved();

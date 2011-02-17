@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Farawla.Core.TabContext;
+using ICSharpCode.AvalonEdit.Highlighting;
 
 namespace Farawla.Features.Completion
 {
@@ -15,7 +16,6 @@ namespace Farawla.Features.Completion
 
 		public List<IdentifierMatch> GlobalIdentifiers { get; set; }
 		public List<AutoCompleteItem> AvailableOptions { get; set; }
-		public List<ScopeRange> IgnoredScopes { get; set; }
 		public List<string> TokensBeforeCaret { get; set; }
 
 		private BackgroundWorker completionWorker;
@@ -28,7 +28,6 @@ namespace Farawla.Features.Completion
 			// arrange
 			GlobalIdentifiers = new List<IdentifierMatch>();
 			AvailableOptions = new List<AutoCompleteItem>();
-			IgnoredScopes = new List<ScopeRange>();
 			TokensBeforeCaret = new List<string>();
 
 			// initialize completion worker
@@ -62,9 +61,9 @@ namespace Farawla.Features.Completion
 					}
 					else if (LanguageCompletion.ObjectAttributeDelimiters.Any(d => d.Contains(_char)))
 					{
-						delimiter = _char + delimiter;
+						var newDelimiter = _char + delimiter;
 
-						if (LanguageCompletion.ObjectAttributeDelimiters.Any(d => d == delimiter))
+						if (LanguageCompletion.ObjectAttributeDelimiters.Any(d => d == newDelimiter))
 						{
 							delimiter = string.Empty;
 							result.Add(sequence.ToString());
@@ -100,35 +99,6 @@ namespace Farawla.Features.Completion
 			var scopes = new List<ScopeRange>();
 			
 			GlobalIdentifiers.Clear();
-			
-			#region Ignore sections
-
-			IgnoredScopes = new List<ScopeRange>();
-
-			if (LanguageCompletion.IgnoreExpressions == null)
-			{
-				LanguageCompletion.IgnoreExpressions = new List<Regex>();
-
-				foreach (var section in LanguageCompletion.IgnoreSections)
-					LanguageCompletion.IgnoreExpressions.Add(new Regex(section, RegexOptions.Compiled | RegexOptions.CultureInvariant));
-			}
-
-			foreach (var section in LanguageCompletion.IgnoreExpressions)
-			{
-				var match = section.Match(sbCode.ToString());
-
-				while (match.Success)
-				{
-					for (var i = 0; i < match.Length; i++)
-						sbCode[match.Index + i] = ' ';
-
-					IgnoredScopes.Add(new ScopeRange(match.Index, match.Index + match.Length));
-
-					match = match.NextMatch();
-				}
-			}
-
-			#endregion
 
 			#region Populate scopes
 
@@ -225,13 +195,13 @@ namespace Farawla.Features.Completion
 
 		public bool ShowWindow()
 		{
-			PopulateTokensBeforeCaret();
-
-			if (IgnoredScopes.Any(s => s.IsCaretInsideScope(Tab.Editor.CaretOffset)))
+			if (IsInIgnoredSection())
 			{
 				return false;
 			}
 
+			PopulateTokensBeforeCaret();
+			
 			if (TokensBeforeCaret.Count > 0 && AvailableOptions.Any(i => i.Text.StartsWith(TokensBeforeCaret.First())))
 			{
 				return true;
@@ -341,6 +311,24 @@ namespace Farawla.Features.Completion
 				return Tab.Editor.CaretOffset - TokensBeforeCaret.First().Length;
 
 			return Tab.Editor.CaretOffset - enteredText.Length;
+		}
+		
+		public bool IsInIgnoredSection()
+		{
+			var offset = Tab.Editor.CaretOffset;
+			var line = Tab.DocumentHighlighter.HighlightLine(Tab.Editor.Document.GetLineByOffset(offset));
+			var sections = line.Sections.Where(s => s.Offset <= offset && s.Offset + s.Length >= offset).ToList();
+
+			foreach(var ignored in LanguageCompletion.IgnoreSections)
+			{
+				foreach (var section in sections)
+				{
+					if (section.Color.Name.StartsWith(ignored))
+						return true;
+				}
+			}
+
+			return false;
 		}
 		
 		public bool IsIdentifierCharacter(char c)

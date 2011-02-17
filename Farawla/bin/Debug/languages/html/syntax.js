@@ -13,6 +13,12 @@
 			Start: "<script\\ type=\"text/javascript\">",
 			End: "</script>",
 			Reference: "javascript"
+		},
+		{
+			Name: "processing-syntax",
+			Start: "<script\\ type=\"application/processing\">",
+			End: "</script>",
+			Reference: "javascript"
 		}
 	]
 }

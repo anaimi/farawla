@@ -17,16 +17,14 @@ namespace Farawla.Features.Completion
 		public List<Inference> Inference { get; set; }
 		public List<Framework> Frameworks { get; set; }
 		public List<Type> Types { get; set; }
-		
+
+		public List<string> IgnoreSections { get; set; }		
 		public List<string> ObjectAttributeDelimiters { get; set; }
 		public List<string> AllowableIdentifierCharacters { get; set; }
 		
 		public string BaseTypeName { get; set; }
 		public string GlobalTypeName { get; set; }
 		public string FunctionTypeName { get; set; }
-				
-		public List<Regex> IgnoreExpressions { get; set; }
-		public List<string> IgnoreSections { get; set; }
 
 		private string languagePath;
 
@@ -37,11 +35,10 @@ namespace Farawla.Features.Completion
 			Inference = new List<Inference>();
 			Types = new List<Type>();
 			Frameworks = new List<Framework>();
-			
+
+			IgnoreSections = new List<string>();
 			ObjectAttributeDelimiters = new List<string>();
 			AllowableIdentifierCharacters = new List<string>();
-			
-			// DONOT initialize IgnoreExpressions
 		}
 
 		public Type GetGlobalType()

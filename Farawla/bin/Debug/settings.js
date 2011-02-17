@@ -6,11 +6,33 @@
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes\\clouds\\theme.js",
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\stylesheets\\main.css"
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\app\\helpers\\admin_helper.rb"
   ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\stylesheets\\main.css",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\404.html",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes\\clouds\\theme.js",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\stylesheets\\main.css",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
+      "Index": 0
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\404.html",
       "Index": 0
@@ -26,30 +48,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes\\clouds\\theme.js",
       "Index": 2
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages\\ruby\\syntax.js",
-      "Index": 3
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages\\js\\syntax.js",
-      "Index": 4
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\vendor\\plugins\\active_scaffold\\test\\mock_app\\config\\environments\\test.rb",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\config\\environments\\test.rb",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
-      "Index": 3
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\notes.txt",
-      "Index": 1
     }
   ],
   "Widgets": [
@@ -61,7 +59,9 @@
         "JavaScriptFrameworks": ",Core,Browser Objects",
         "JavaScript": "Enable",
         "CSSFrameworks": ",CSS 2.1",
-        "CSS": "Enable"
+        "CSS": "Enable",
+        "RubyFrameworks": ",Core",
+        "Ruby": "Enable"
       }
     },
     {

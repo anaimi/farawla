@@ -2,21 +2,21 @@
 	Identifiers: [
 		{
 			OptionType: "Object",
-			Match: "(?<name>\\w+)(\\s?)=(\\s?)(?<expression>.+)(,)"
-		},
-		{
-			OptionType: "Object",
-			Match: "(?<name>\\w+)(\\s?)=(\\s?)(?<expression>.+)(;)"
+			Match: "(?<name>\\w+)(\\s?)=(\\s?)(?<expression>.+)(,|;|\\n)?"
 		},
 		{
 			OptionType: "Function",
-			Match: "function(\\s)(?<name>\\w+)(\\s?)\\((?<parameters>.*)\\)(\\s?){"
+			Match: "def(\\s)(?<name>\\w+)(\\s?)\\((?<parameters>.*)\\)(\\s?){"
 		}
 	],
 	
 	Inference: [
 		{
 			Expression: "\\\"(.*)\\\"",
+			Type: "String"
+		},
+		{
+			Expression: "%\\{(.*)\\}",
 			Type: "String"
 		},
 		{
@@ -30,6 +30,10 @@
 		{
 			Expression: "\\[(.*)\\]",
 			Type: "Array"
+		},
+		{
+			Expression: "\\{(.*)\\}",
+			Type: "Hash"
 		}
 	],
 		
@@ -41,6 +45,14 @@
 		{
 			Begin: "\\(",
 			End: "\\)"
+		},
+		{
+			Begin: "begin",
+			End: "end"
+		},
+		{
+			Begin: "do",
+			End: "end"
 		}
 	],
 	
@@ -49,8 +61,7 @@
 	],
 	
 	Frameworks: [
-		{ Name: "Core", Path: "framework-core.js" },
-		{ Name: "Browser Objects", Path: "framework-browser.js" }
+		{ Name: "Core", Path: "framework-core.js" }
 	],
 	
 	GlobalTypeName: "_Farawla_Global",
