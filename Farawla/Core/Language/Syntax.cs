@@ -104,15 +104,19 @@ namespace Farawla.Core.Language
 		{
 			var span = new HighlightingSpan();
 
-			span.SpanColor = GetColor();
-			span.StartExpression = GetRegexFromString(Start);
-			span.EndExpression = GetRegexFromString(End);
-			span.RuleSet = GetRuleSetFromSyntax();
-			
 			if (Reference.IsBlank())
 			{
 				span.StartColor = span.EndColor = span.SpanColor;
 			}
+			else
+			{
+				Name = Reference + "-syntax";
+			}
+
+			span.SpanColor = GetColor();
+			span.StartExpression = GetRegexFromString(Start);
+			span.EndExpression = GetRegexFromString(End);
+			span.RuleSet = GetRuleSetFromSyntax();
 			
 			if (!Escape.IsBlank())
 			{
@@ -127,7 +131,6 @@ namespace Farawla.Core.Language
 					EndExpression = GetRegexFromString(".")
 				});
 			}
-			//TODO: use escape character
 
 			return span;
 		}
@@ -171,7 +174,12 @@ namespace Farawla.Core.Language
 	public class GenericRule
 	{
 		public string Name { get; set; }
-
+		
+		public GenericRule()
+		{
+			Name = "";
+		}
+		
 		protected FontWeight GetFontWeight()
 		{
 			return FontWeights.Normal;

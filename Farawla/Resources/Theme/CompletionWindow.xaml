@@ -7,9 +7,6 @@
 		<Setter Property="Background" Value="Transparent" />
 		<Setter Property="WindowStyle" Value="None" />
 		<Setter Property="AllowsTransparency" Value="True" />
-
-		<!--<Setter Property="Background" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='CompletionWindowBackground'}" />
-		<Setter Property="Foreground" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='CompletionWindowForeground'}" />-->
 	</Style>
 	
 	<!-- item style doesn't work ... -->

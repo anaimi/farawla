@@ -18,6 +18,7 @@ namespace Farawla.Features.Snippets
 	{
 		public BarButton SidebarButton { get; set; }
 		public Dictionary<string, SnippetGroup> Snippets { get; set; }
+		public SnippetGroup ActiveGroup { get; set; }
 		
 		public Widget()
 		{
@@ -35,61 +36,46 @@ namespace Farawla.Features.Snippets
 			Controller.Current.OnActiveTabChanged += ActiveTabChanged;
 			Controller.Current.OnStart += ActiveTabChanged;
 			
-			// assign on text enter event
-			Controller.Current.OnTabCreated += (tab) => {
-				tab.Editor.TextArea.KeyUp += (s, e) => OnTextEntered(tab, e);
-			};
+			// assign on tab created
+			Controller.Current.OnTabCreated += TabCreated;
+		}
+		
+		private void TabCreated(Tab tab)
+		{
+			tab.Editor.TextArea.KeyUp += (s, e) => OnTextEntered(tab, e);
+			tab.Editor.TextArea.Caret.PositionChanged += (s, e) => CaretPositionChanged(tab);
+		}
+
+		private void CaretPositionChanged(Tab tab)
+		{
+			var segments = tab.GetCurrentSegmentNames();
+			
+			if (segments.Count == 0)
+			{
+				ShowSnippets(tab.Language.Name);
+				return;
+			}
+
+			var segmentName = segments.FirstOrDefault(s => s.EndsWith("-syntax"));
+			
+			if (segmentName.IsBlank())
+				return;
+
+			ShowSnippets(segmentName.Replace("-syntax", ""));
 		}
 
 		private void ActiveTabChanged()
 		{
 			var tab = Controller.Current.ActiveTab;
 			
-			if (!tab.Language.IsDefault)
-			{
-				// not cached? populate it
-				if (!Snippets.ContainsKey(tab.Language.Name))
-				{
-					var path = tab.Language.Directory + "\\snippets.js";
-
-					if (File.Exists(path))
-					{
-						PopulateSnippets(tab.Language.Name, path);
-					}
-					else
-					{
-						Snippets.Add(tab.Language.Name, new SnippetGroup());
-					}
-				}
-				
-				// get the cached panel
-				var snippets = Snippets[tab.Language.Name];
-				
-				// hide it if null
-				if (snippets == null || snippets.Snippets.Count == 0)
-				{
-					ShowNoSnippets();
-				}
-				
-				// show it otherwise
-				else
-				{
-					ShowSnippets(Snippets[tab.Language.Name].Panel);
-				}
-				
-			}
-			else
-			{
-				ShowNoSnippets();
-			}
+			ShowSnippets(tab.Language.Name);
 		}
 
 		private void OnTextEntered(Tab tab, KeyEventArgs e)
 		{
-			if (!Snippets.ContainsKey(tab.Language.Name) || e.Key != Key.Tab)
+			if (ActiveGroup == null || e.Key != Key.Tab)
 				return;
 
-			var group = Snippets[tab.Language.Name];
 			var line = tab.Editor.Document.GetLineByOffset(tab.Editor.CaretOffset);
 			var length = tab.Editor.CaretOffset - line.Offset - 1;
 			
@@ -97,7 +83,7 @@ namespace Farawla.Features.Snippets
 				return;
 			
 			var text = tab.Editor.Document.GetText(line.Offset, length);
-			var snippet = group.Snippets.FirstOrDefault(s => text.EndsWith(s.Trigger));
+			var snippet = ActiveGroup.Snippets.FirstOrDefault(s => text.EndsWith(s.Trigger));
 			
 			if (snippet == null)
 				return;
@@ -140,16 +126,54 @@ namespace Farawla.Features.Snippets
 			Snippets.Add(name, new SnippetGroup { Panel = panel, Snippets = list });
 		}
 		
-		private void ShowSnippets(StackPanel panel)
+		private void ShowSnippets(string languageName)
 		{
-			NoSnippets.Visibility = Visibility.Collapsed;
-			Container.Visibility = Visibility.Visible;
-			
-			Container.Child = panel;
+			var language = Controller.Current.Languages.GetLanguageByName(languageName);
+
+			if (language.IsDefault)
+			{
+				ShowNoSnippets();
+				return;
+			}
+
+			// not cached? populate it
+			if (!Snippets.ContainsKey(language.Name))
+			{
+				var path = language.Directory + "\\snippets.js";
+
+				if (File.Exists(path))
+				{
+					PopulateSnippets(language.Name, path);
+				}
+				else
+				{
+					Snippets.Add(language.Name, new SnippetGroup());
+				}
+			}
+
+			// get the cached panel
+			var snippets = Snippets[language.Name];
+
+			// hide it if null
+			if (snippets == null || snippets.Snippets.Count == 0)
+			{
+				ShowNoSnippets();
+			}
+
+			// show it otherwise
+			else
+			{
+				ActiveGroup = Snippets[language.Name];
+				NoSnippets.Visibility = Visibility.Collapsed;
+				Container.Visibility = Visibility.Visible;
+
+				Container.Child = ActiveGroup.Panel;
+			}
 		}
 		
 		private void ShowNoSnippets()
 		{
+			ActiveGroup = null;
 			NoSnippets.Visibility = Visibility.Visible;
 			Container.Visibility = Visibility.Collapsed;
 		}

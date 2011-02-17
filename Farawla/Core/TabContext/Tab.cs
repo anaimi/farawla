@@ -266,6 +266,17 @@ namespace Farawla.Core.TabContext
 			// update count (also open a new tab if tab count is zero)
 			Controller.Current.TabCountUpdated();
 		}
+		
+		public List<string> GetCurrentSegmentNames()
+		{
+			var offset = Editor.CaretOffset;
+			var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(offset));
+			
+			return line.Sections
+						.Where(s => s.Offset <= offset && s.Offset + s.Length >= offset)
+						.Select(s => s.Color.Name)
+						.ToList();
+		}
 
 		private void TextChanged(object sender, EventArgs e)
 		{

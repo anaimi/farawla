@@ -315,15 +315,13 @@ namespace Farawla.Features.Completion
 		
 		public bool IsInIgnoredSection()
 		{
-			var offset = Tab.Editor.CaretOffset;
-			var line = Tab.DocumentHighlighter.HighlightLine(Tab.Editor.Document.GetLineByOffset(offset));
-			var sections = line.Sections.Where(s => s.Offset <= offset && s.Offset + s.Length >= offset).ToList();
+			var segments = Tab.GetCurrentSegmentNames();
 
 			foreach(var ignored in LanguageCompletion.IgnoreSections)
 			{
-				foreach (var section in sections)
+				foreach (var segment in segments)
 				{
-					if (section.Color.Name.StartsWith(ignored))
+					if (segment.StartsWith(ignored))
 						return true;
 				}
 			}

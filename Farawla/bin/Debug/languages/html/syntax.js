@@ -3,22 +3,19 @@
 	
 	Spans: [
 		{
-			Name: "css-syntax",
 			Start: "<style\\ type=\"text/css\">",
 			End: "</style>",
-			Reference: "css"
+			Reference: "CSS"
 		},
 		{
-			Name: "js-syntax",
 			Start: "<script\\ type=\"text/javascript\">",
 			End: "</script>",
-			Reference: "javascript"
+			Reference: "JavaScript"
 		},
 		{
-			Name: "processing-syntax",
 			Start: "<script\\ type=\"application/processing\">",
 			End: "</script>",
-			Reference: "javascript"
+			Reference: "Processing"
 		}
 	]
 }
