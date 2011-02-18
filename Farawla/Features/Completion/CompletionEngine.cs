@@ -1,44 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using Farawla.Core.TabContext;
-using ICSharpCode.AvalonEdit.Highlighting;
+using Farawla.Core;
 
 namespace Farawla.Features.Completion
 {
-	public class AutoCompleteState
+	public class CompletionEngine
 	{
-		public Tab Tab { get; set; }
+		public EditorSegment Segment { get; set; }
 		public AutoComplete LanguageCompletion { get; set; }
-
+		
 		public List<IdentifierMatch> GlobalIdentifiers { get; set; }
 		public List<AutoCompleteItem> AvailableOptions { get; set; }
 		public List<string> TokensBeforeCaret { get; set; }
-
-		private BackgroundWorker completionWorker;
-
-		public AutoCompleteState(Tab tab, AutoComplete completion)
+		
+		public Tab ActiveTab
 		{
-			Tab = tab;
-			LanguageCompletion = completion;
+			get { return Controller.Current.ActiveTab; }
+		}
+		
+		public bool IsEnabled
+		{
+			get
+			{
+				return LanguageCompletion != null && Segment != null;
+			}
+		}
 
-			// arrange
-			GlobalIdentifiers = new List<IdentifierMatch>();
-			AvailableOptions = new List<AutoCompleteItem>();
-			TokensBeforeCaret = new List<string>();
+		private BackgroundWorker completionWorker;		
+		
+		public CompletionEngine()
+		{
+			Reset(null, null);
 
 			// initialize completion worker
 			completionWorker = new BackgroundWorker();
 			completionWorker.DoWork += (s, e) => PopulateAutoComplete(e);
 		}
-
+		
+		public void Reset(EditorSegment segment, AutoComplete completion)
+		{
+			Segment = segment;
+			LanguageCompletion = completion;			
+			
+			GlobalIdentifiers = new List<IdentifierMatch>();
+			AvailableOptions = new List<AutoCompleteItem>();
+			TokensBeforeCaret = new List<string>();
+		}
+		
+		public void TextChanged()
+		{
+			if (!completionWorker.IsBusy)
+			{
+				completionWorker.RunWorkerAsync(new EditorState
+				{
+					CaretOffset = ActiveTab.Editor.CaretOffset - Segment.Offset,
+					Text = Segment.GetText()
+				});
+			}
+		}
+		
+		//
+		
 		public void PopulateTokensBeforeCaret()
 		{
-			var code = Tab.Editor.Text;
-			var caretOffset = Tab.Editor.CaretOffset;
+			var code = Segment.GetText();
+			var caretOffset = ActiveTab.Editor.CaretOffset - Segment.Offset;
 			var insideParenthesis = 0;
 			var index = caretOffset - 1;
 			var delimiter = string.Empty;
@@ -92,7 +121,7 @@ namespace Farawla.Features.Completion
 			else
 				TokensBeforeCaret = result;
 		}
-
+		
 		public void PopulateGlobalIdentifiers(string code, int caretOffset)
 		{
 			var sbCode = new StringBuilder(code);
@@ -192,60 +221,7 @@ namespace Farawla.Features.Completion
 
 			#endregion
 		}
-
-		public bool ShowWindow()
-		{
-			if (IsInIgnoredSection())
-			{
-				return false;
-			}
-
-			PopulateTokensBeforeCaret();
-			
-			if (TokensBeforeCaret.Count > 0 && AvailableOptions.Any(i => i.Text.StartsWith(TokensBeforeCaret.First())))
-			{
-				return true;
-			}
-
-			return false;
-		}
-
-		public void TextChanged()
-		{
-			if (!completionWorker.IsBusy)
-			{
-				completionWorker.RunWorkerAsync(new EditorState
-				{
-					CaretOffset = Tab.Editor.CaretOffset,
-					Text = Tab.Editor.Text
-				});
-			}
-		}
-
-		public Type GetPossibleTypeFromParent(Type type, string token)
-		{
-			if (type == null)
-				return null;
-
-			var option = type.Options.FirstOrDefault(o => o.Name == token);
-
-			if (option == null)
-				return null;
-
-			return LanguageCompletion.Types.FirstOrDefault(t => t.Name == option.ReturnType);
-		}
-
-		public Type GetPossibleTypeByInference(string expression)
-		{
-			foreach(var exp in LanguageCompletion.Inference)
-			{
-				if (exp.ExpressionRegex.Match(expression).Success)
-					return exp.GetCompletionType(LanguageCompletion);
-			}
-
-			return LanguageCompletion.GetBaseType();
-		}
-
+		
 		public void PopulateAutoComplete(DoWorkEventArgs args)
 		{
 			var state = args.Argument as EditorState;
@@ -257,9 +233,10 @@ namespace Farawla.Features.Completion
 			}
 			else
 			{
-				List<TypeOption> typeOptions = new List<TypeOption>();
+				var typeOptions = new List<TypeOption>();
 				var type = LanguageCompletion.GetGlobalType();
 				var baseType = LanguageCompletion.GetBaseType();
+				
 				AvailableOptions = new List<AutoCompleteItem>();
 				
 				for(var i = TokensBeforeCaret.Count - 1; i > 0; i--)
@@ -299,29 +276,63 @@ namespace Farawla.Features.Completion
 			
 			// add items
 			var items = AvailableOptions.Select(i => i as CompletionWindowItem).ToList();
-			Tab.Editor.Invoke(() => Tab.AddCompletionItems(AutoCompleteItem.COMPLETION_OWNER_NAME, items));
+			ActiveTab.Editor.Invoke(() => ActiveTab.AddCompletionItems(AutoCompleteItem.COMPLETION_OWNER_NAME, items));
+		}
+		
+		//
+		
+		public Type GetPossibleTypeFromParent(Type type, string token)
+		{
+			if (type == null)
+				return null;
+
+			var option = type.Options.FirstOrDefault(o => o.Name == token);
+
+			if (option == null)
+				return null;
+
+			return LanguageCompletion.Types.FirstOrDefault(t => t.Name == option.ReturnType);
 		}
 
-		public int GetCompletionWindowOffset(string enteredText)
+		public Type GetPossibleTypeByInference(string expression)
 		{
-			if (LanguageCompletion.ObjectAttributeDelimiters.Contains(enteredText))
-				return Tab.Editor.CaretOffset;
+			foreach (var exp in LanguageCompletion.Inference)
+			{
+				if (exp.ExpressionRegex.Match(expression).Success)
+					return exp.GetCompletionType(LanguageCompletion);
+			}
 
-			if (TokensBeforeCaret.Count > 0)
-				return Tab.Editor.CaretOffset - TokensBeforeCaret.First().Length;
+			return LanguageCompletion.GetBaseType();
+		}
+		
+		//
+		
+		public bool CanShowWindow()
+		{
+			if (IsInIgnoredSection())
+			{
+				return false;
+			}
 
-			return Tab.Editor.CaretOffset - enteredText.Length;
+			PopulateTokensBeforeCaret();
+
+			if (TokensBeforeCaret.Count > 0 && AvailableOptions.Any(i => i.Text.StartsWith(TokensBeforeCaret.First())))
+			{
+				return true;
+			}
+
+			return false;
 		}
 		
 		public bool IsInIgnoredSection()
 		{
-			var segments = Tab.GetCurrentSegmentNames();
+			var segments = ActiveTab.GetCurrentSegments();
 
 			foreach(var ignored in LanguageCompletion.IgnoreSections)
 			{
 				foreach (var segment in segments)
 				{
-					if (segment.StartsWith(ignored))
+					if (segment.Name.StartsWith(ignored))
 						return true;
 				}
 			}

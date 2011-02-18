@@ -12,6 +12,43 @@ namespace Farawla.Features.Completion
 {
 	public class AutoComplete
 	{
+		#region static instances: GetCompletion
+
+		private static WidgetSettings Settings = Core.Settings.Instance.GetWidgetSettings("Completion");
+		
+		private static Dictionary<string, AutoComplete> instances = new Dictionary<string, AutoComplete>();
+		
+		public static AutoComplete GetCompletion(string languageName)
+		{
+			languageName = languageName.ToLower();
+			
+			if (!instances.ContainsKey(languageName))
+			{
+				var language = Controller.Current.Languages.GetLanguageByName(languageName);
+				var languagePath = language.Directory + "\\";
+
+				if (File.Exists(languagePath + "autocomplete.js"))
+				{
+					var json = File.ReadAllText(languagePath + "autocomplete.js");
+					var completion = JsonConvert.DeserializeObject<AutoComplete>(json);
+					var frameworks = completion.GetEnabledFrameworks();
+
+					completion.Initialize(languageName, languagePath);
+					completion.LoadFrameworks(frameworks);
+					
+					instances.Add(language.Name.ToLower(), completion);
+				}
+				else
+				{
+					instances.Add(language.Name.ToLower(), null);
+				}
+			}
+
+			return instances[languageName];
+		}
+		
+		#endregion
+		
 		public List<Identifier> Identifiers { get; set; }
 		public List<Scope> Scopes { get; set; }
 		public List<Inference> Inference { get; set; }
@@ -26,7 +63,8 @@ namespace Farawla.Features.Completion
 		public string GlobalTypeName { get; set; }
 		public string FunctionTypeName { get; set; }
 
-		private string languagePath;
+		public string LanguageName { get; private set; }
+		public string LanguagePath { get; private set; }
 
 		public AutoComplete()
 		{
@@ -39,6 +77,12 @@ namespace Farawla.Features.Completion
 			IgnoreSections = new List<string>();
 			ObjectAttributeDelimiters = new List<string>();
 			AllowableIdentifierCharacters = new List<string>();
+		}
+
+		public void Initialize(string languageName, string languagePath)
+		{
+			LanguageName = languageName;
+			LanguagePath = languagePath;
 		}
 
 		public Type GetGlobalType()
@@ -56,9 +100,9 @@ namespace Farawla.Features.Completion
 			return Types.FirstOrDefault(t => t.Name == FunctionTypeName);
 		}
 		
-		public void Initialize(string languagePath)
+		public List<string> GetEnabledFrameworks()
 		{
-			this.languagePath = languagePath;
+			return Settings[LanguageName + "Frameworks"].Split(',').Distinct().ToList();
 		}
 
 		public void LoadFrameworks(List<string> frameworksNames)
@@ -67,12 +111,12 @@ namespace Farawla.Features.Completion
 			
 			foreach(var framework in Frameworks.Where(f => frameworksNames.Contains(f.Name)))
 			{
-				if (!File.Exists(languagePath + framework.Path))
+				if (!File.Exists(LanguagePath + framework.Path))
 				{
 					continue;
 				}
 
-				var json = File.ReadAllText(languagePath + framework.Path);
+				var json = File.ReadAllText(LanguagePath + framework.Path);
 				var obj = JsonConvert.DeserializeObject<FrameworkTypes>(json);
 				
 				foreach(var type in obj.Types)

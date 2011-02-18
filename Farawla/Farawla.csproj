@@ -210,6 +210,7 @@
     <Compile Include="Core\Controller.cs" />
     <Compile Include="Core\KeyboardObserver.cs" />
     <Compile Include="Core\TabContext\DragDropTabManager.cs" />
+    <Compile Include="Core\TabContext\EditorSegment.cs" />
     <Compile Include="Features\Stats\StatsWindow.cs">
       <DependentUpon>StatsWindow.xaml</DependentUpon>
     </Compile>
@@ -247,7 +248,7 @@
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Completion\AutoCompleteItem.cs" />
-    <Compile Include="Features\Completion\AutoCompleteState.cs" />
+    <Compile Include="Features\Completion\CompletionEngine.cs" />
     <Compile Include="Features\Completion\Framework.cs" />
     <Compile Include="Features\Completion\Identifier.cs" />
     <Compile Include="Features\Completion\Inference.cs" />
@@ -256,7 +257,6 @@
     <Compile Include="Features\Completion\Widget.xaml.cs">
       <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Features\Completion\Tab.cs" />
     <Compile Include="Features\Projects\FileOperationAPIWrapper.cs" />
     <Compile Include="Core\Notifier\ModalInputBox.xaml.cs">
       <DependentUpon>ModalInputBox.xaml</DependentUpon>

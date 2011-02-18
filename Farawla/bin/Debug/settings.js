@@ -55,13 +55,7 @@
       "Name": "Projects",
       "Values": {
         "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
-        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\v8,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb,C:\\Users\\Ahmad\\Desktop\\Projects\\codebox-web,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
-        "JavaScriptFrameworks": ",Core,Browser Objects",
-        "JavaScript": "Enable",
-        "CSSFrameworks": ",CSS 2.1",
-        "CSS": "Enable",
-        "RubyFrameworks": ",Core",
-        "Ruby": "Enable"
+        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\v8,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb,C:\\Users\\Ahmad\\Desktop\\Projects\\codebox-web,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog"
       }
     },
     {
@@ -69,6 +63,10 @@
       "Values": {
         "Color": "#9B3769A0"
       }
+    },
+    {
+      "Name": "Completion",
+      "Values": {}
     }
   ]
 }

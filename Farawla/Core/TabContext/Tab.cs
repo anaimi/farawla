@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,6 +9,7 @@ using System.Windows.Media;
 using Farawla.Core.Language;
 using System.Windows.Controls;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Rendering;
 using Microsoft.Win32;
@@ -268,18 +269,44 @@ namespace Farawla.Core.TabContext
 			Controller.Current.TabCountUpdated();
 		}
 		
-		public List<string> GetCurrentSegmentNames()
+		public List<EditorSegment> GetCurrentSegments()
 		{
 			if (DocumentHighlighter == null)
-				return new List<string>();
+				return new List<EditorSegment>();
 			
 			var offset = Editor.CaretOffset;
 			var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(offset));
 			
 			return line.Sections
 						.Where(s => s.Offset <= offset && s.Offset + s.Length >= offset)
-						.Select(s => s.Color.Name)
+						.Select(s => new EditorSegment(this, s.Color.Name, s.Offset, s.Length))
 						.ToList();
+		}
+		
+		public EditorSegment GetOverlappingSegment(string name, int offset)
+		{
+			//var foo = DocumentHighlighter.GetSpanStack(Editor.Document.GetLineByOffset(offset).LineNumber).ToList();
+			//var bar = foo[0];
+			
+			var length = 0;
+			var localOffset = offset;
+			
+			while(true)
+			{
+				var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(localOffset));
+
+				var sections = line.Sections.Where(s => s.Color.Name.StartsWith(name) && s.Offset >= localOffset);
+				
+				if (sections.Count() == 0)
+					break;
+
+				var largestSection = sections.FirstOrDefault(s => s.Length == sections.Max(ss => ss.Length));
+				
+				length += largestSection.Length;
+				localOffset += largestSection.Length;
+			}
+
+			return new EditorSegment(this, name, offset, length);
 		}
 
 		private void TextChanged(object sender, EventArgs e)
@@ -318,8 +345,9 @@ namespace Farawla.Core.TabContext
 			
 			#region CurrentLanguageName changed
 
+			EditorSegment segment = null;
 			var oldName = ContextLanguageName;
-			var segments = GetCurrentSegmentNames();
+			var segments = GetCurrentSegments();
 
 			if (segments.Count == 0)
 			{
@@ -327,16 +355,18 @@ namespace Farawla.Core.TabContext
 			}
 			else
 			{
-				var segmentName = segments.FirstOrDefault(s => s.EndsWith("-syntax"));
+				segment = segments.FirstOrDefault(s => s.Name.EndsWith("-syntax"));
 
-				if (!segmentName.IsBlank())
+				if (segment != null)
 				{
-					ContextLanguageName = segmentName.Replace("-syntax", "");
+					segment = GetOverlappingSegment(segment.Name, segment.Offset);
+					
+					ContextLanguageName = segment.Name.Replace("-syntax", "");
 				}
 			}
 
 			if (oldName != ContextLanguageName)
-				Controller.Current.ContextLanguageChanged(ContextLanguageName);
+				Controller.Current.ContextLanguageChanged(segment, ContextLanguageName);
 			
 			#endregion
 		}
@@ -537,5 +567,10 @@ namespace Farawla.Core.TabContext
 		}
 
 		#endregion
+
+		public override string ToString()
+		{
+			return Name + "(" + DocumentPath + ")";
+		}
 	}
 }

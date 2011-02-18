@@ -39,7 +39,7 @@ namespace Farawla.Features.Snippets
 			tab.Editor.TextArea.KeyUp += (s, e) => OnTextEntered(tab, e);
 		}
 
-		private void ContextLanguageChanged(string languageName)
+		private void ContextLanguageChanged(EditorSegment segment, string languageName)
 		{
 			ShowSnippets(languageName);
 		}

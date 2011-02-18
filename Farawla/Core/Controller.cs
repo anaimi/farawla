@@ -34,27 +34,16 @@ namespace Farawla.Core
 		public List<Tab> CurrentTabs { get; private set; }
 		public Languages Languages { get; private set; }
 		public MainWindow MainWindow { get; private set; }
-		
-		public Tab ActiveTab
-		{
-			get
-			{
-				foreach(var tab in CurrentTabs)
-					if (tab.TabItem == MainWindow.Tab.SelectedItem as TabItem)
-						return tab;
-
-				return CurrentTabs.Last();
-			}
-		}
+		public Tab ActiveTab { get; set; }
 
 		public event Action OnStart;
 		public event Action OnExit;
 		public event Action OnResize;
 		public event Action OnActiveTabChanged;
-		public event Action<string> OnContextLanguageChanged;
 		public event Action<Tab> OnTabCreated;
 		public event Action<string> OnProjectOpened;
 		public event Action<string[]> OnFileDropped;
+		public event Action<EditorSegment, string> OnContextLanguageChanged;
 		
 		public static void Initialize(MainWindow instance)
 		{
@@ -75,26 +64,42 @@ namespace Farawla.Core
 			else
 				_current.MainWindow.WindowState = WindowState.Normal;
 			
+			// assign active window change event
+			_current.MainWindow.Tab.SelectionChanged += (s, e) => {
+				var item = _current.MainWindow.Tab.SelectedItem as TabItem;
+				
+				// set active tab
+				if (item != null)
+				{
+					_current.ActiveTab = item.Tag as Tab;
+				}
+				
+				// notify active tab
+				if (_current.ActiveTab != null)
+				{
+					_current.ActiveTab.MadeActive();
+				}
+				
+				// notify active tab changed listeners
+				if (_current.OnActiveTabChanged != null)
+				{
+					_current.OnActiveTabChanged();
+				}
+
+				// notify context listeners
+				if (_current.ActiveTab != null)
+				{
+					_current.ContextLanguageChanged(new EditorSegment(_current.ActiveTab), _current.ActiveTab.ContextLanguageName);
+				}
+			};
+
 			// open files that were open
 			if (Settings.Instance.OpenTabs.Count > 0)
 			{
-				foreach(var tab in Settings.Instance.OpenTabs)
+				foreach (var tab in Settings.Instance.OpenTabs)
 					if (File.Exists(tab))
 						_current.CreateNewTab(tab);
 			}
-			
-			// assign active window change event
-			_current.MainWindow.Tab.SelectionChanged += (s, e) => {
-				if (_current.OnActiveTabChanged != null)
-				{
-					if (_current.ActiveTab != null)
-					{
-						_current.ActiveTab.MadeActive();
-					}
-					
-					_current.OnActiveTabChanged();
-				}
-			};
 			
 			// never show zero tabs
 			if (_current.CurrentTabs.Count == 0)
@@ -234,10 +239,10 @@ namespace Farawla.Core
 				OnFileDropped(files);
 		}
 		
-		public void ContextLanguageChanged(string languageName)
+		public void ContextLanguageChanged(EditorSegment segment, string languageName)
 		{
 			if (OnContextLanguageChanged != null)
-				OnContextLanguageChanged(languageName);
+				OnContextLanguageChanged(segment, languageName);
 		}
 		
 		public void TabCountUpdated()
