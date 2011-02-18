@@ -51,7 +51,7 @@ namespace Farawla.Core
 		public event Action OnExit;
 		public event Action OnResize;
 		public event Action OnActiveTabChanged;
-		public event Action OnOverlayClicked;
+		public event Action<string> OnContextLanguageChanged;
 		public event Action<Tab> OnTabCreated;
 		public event Action<string> OnProjectOpened;
 		public event Action<string[]> OnFileDropped;
@@ -232,6 +232,12 @@ namespace Farawla.Core
 		{
 			if (OnFileDropped != null)
 				OnFileDropped(files);
+		}
+		
+		public void ContextLanguageChanged(string languageName)
+		{
+			if (OnContextLanguageChanged != null)
+				OnContextLanguageChanged(languageName);
 		}
 		
 		public void TabCountUpdated()

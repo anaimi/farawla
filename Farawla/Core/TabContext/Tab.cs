@@ -24,6 +24,7 @@ namespace Farawla.Core.TabContext
 	{
 		public string Name { get; set; }
 		public string DocumentPath { get; set; }
+		public string ContextLanguageName { get; private set; }
 		public bool IsSaved { get; private set; }
 		public bool IsShowingCompletionWindow { get; set; }
 
@@ -269,6 +270,9 @@ namespace Farawla.Core.TabContext
 		
 		public List<string> GetCurrentSegmentNames()
 		{
+			if (DocumentHighlighter == null)
+				return new List<string>();
+			
 			var offset = Editor.CaretOffset;
 			var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(offset));
 			
@@ -311,6 +315,30 @@ namespace Farawla.Core.TabContext
 		private void CaretOffsetChanged(object sender, EventArgs e)
 		{
 			HighlightBracketsIfNextToCaret();
+			
+			#region CurrentLanguageName changed
+
+			var oldName = ContextLanguageName;
+			var segments = GetCurrentSegmentNames();
+
+			if (segments.Count == 0)
+			{
+				ContextLanguageName = Language.Name;
+			}
+			else
+			{
+				var segmentName = segments.FirstOrDefault(s => s.EndsWith("-syntax"));
+
+				if (!segmentName.IsBlank())
+				{
+					ContextLanguageName = segmentName.Replace("-syntax", "");
+				}
+			}
+
+			if (oldName != ContextLanguageName)
+				Controller.Current.ContextLanguageChanged(ContextLanguageName);
+			
+			#endregion
 		}
 		
 		#region Completion

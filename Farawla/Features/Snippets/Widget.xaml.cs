@@ -4,13 +4,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Farawla.Core;
 using Farawla.Core.Sidebar;
-using System.Diagnostics;
-using Farawla.Core.Language;
 using System.IO;
 using System.Windows;
 using Farawla.Core.TabContext;
 using Newtonsoft.Json;
-using System.Text;
 
 namespace Farawla.Features.Snippets
 {
@@ -32,43 +29,19 @@ namespace Farawla.Features.Snippets
 			// initialize
 			Snippets = new Dictionary<string, SnippetGroup>();
 			
-			// assign on active window change event
-			Controller.Current.OnActiveTabChanged += ActiveTabChanged;
-			Controller.Current.OnStart += ActiveTabChanged;
-			
-			// assign on tab created
+			// assign events
+			Controller.Current.OnContextLanguageChanged += ContextLanguageChanged;
 			Controller.Current.OnTabCreated += TabCreated;
 		}
 		
 		private void TabCreated(Tab tab)
 		{
 			tab.Editor.TextArea.KeyUp += (s, e) => OnTextEntered(tab, e);
-			tab.Editor.TextArea.Caret.PositionChanged += (s, e) => CaretPositionChanged(tab);
 		}
 
-		private void CaretPositionChanged(Tab tab)
+		private void ContextLanguageChanged(string languageName)
 		{
-			var segments = tab.GetCurrentSegmentNames();
-			
-			if (segments.Count == 0)
-			{
-				ShowSnippets(tab.Language.Name);
-				return;
-			}
-
-			var segmentName = segments.FirstOrDefault(s => s.EndsWith("-syntax"));
-			
-			if (segmentName.IsBlank())
-				return;
-
-			ShowSnippets(segmentName.Replace("-syntax", ""));
-		}
-
-		private void ActiveTabChanged()
-		{
-			var tab = Controller.Current.ActiveTab;
-			
-			ShowSnippets(tab.Language.Name);
+			ShowSnippets(languageName);
 		}
 
 		private void OnTextEntered(Tab tab, KeyEventArgs e)

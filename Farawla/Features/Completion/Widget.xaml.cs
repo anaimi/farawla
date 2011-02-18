@@ -19,6 +19,7 @@ namespace Farawla.Features.Completion
 		public BarButton SidebarButton { get; set; }
 		public WidgetSettings Settings { get; set; }
 		public Dictionary<string, AutoComplete> LanguageCompletions { get; set; }
+		public AutoComplete ActiveCompletion { get; set; }
 		
 		public Widget()
 		{
@@ -37,8 +38,7 @@ namespace Farawla.Features.Completion
 			
 			// assign events
 			Controller.Current.OnTabCreated += OnNewTab;
-			Controller.Current.OnActiveTabChanged += OnActiveTabChanged;
-			Controller.Current.OnStart += OnActiveTabChanged;
+			Controller.Current.OnContextLanguageChanged += OnContextLanguageChanged;
 			
 			// keyboard binding
 			Controller.Current.Keyboard.AddBinding(KeyCombination.Ctrl, Key.Space, ManuallyShowCompletionWindow);
@@ -68,62 +68,35 @@ namespace Farawla.Features.Completion
 			if (tab.Language.IsDefault)
 				return;
 			
-			// get language completion from cache
-			if (!LanguageCompletions.ContainsKey(tab.Language.Name))
-			{
-				var languagePath = tab.Language.Directory + "\\";
-				
-				if (File.Exists(languagePath + "autocomplete.js"))
-				{
-					var json = File.ReadAllText(languagePath + "autocomplete.js");
-					var completion = JsonConvert.DeserializeObject<AutoComplete>(json);
-					
-					completion.Initialize(languagePath);
-					
-					LanguageCompletions.Add(tab.Language.Name, completion);
-					completion.LoadFrameworks(GetEnabledFramrworksFromSettings(tab.Language));
-				}
-				else
-				{
-					LanguageCompletions.Add(tab.Language.Name, null);
-				}
-			}
+			// always listen to caret move
+			tab.Editor.TextArea.TextEntered += TextEntered;
+			tab.Editor.TextArea.TextEntering += TextEntering;
 			
 			// get from cache
-			var languageCompletion = LanguageCompletions[tab.Language.Name];
+			var languageCompletion = GetLanguageCompletion(tab.Language.Name);
 			
 			// stop if has no completion rules
 			if (languageCompletion == null)
 				return;
 			
 			// enable it if it should be enabled
-			if (!Settings.KeyExists(tab.Language.Name))
-				Settings[tab.Language.Name] = "Disable";
-
-			if (Settings[tab.Language.Name] == "Disable")
-				return;
-			
-			EnableCompletion(tab, languageCompletion);
-		}
-		
-		private void OnActiveTabChanged()
-		{
-			var tab = Controller.Current.ActiveTab;
-			var language = GetLanguageCompletion(tab);
-
-			if (language == null)
+			if (IsEnabledLanguage(tab.Language.Name))
 			{
-				ShowNoCompletionSettings();
-				return;
+				EnableCompletion(tab, languageCompletion);
 			}
-			
-			ShowCompletionSettings(tab, language);
 		}
 
-		private void TextEntering(Tab tab, TextCompositionEventArgs e)
+		private void OnContextLanguageChanged(string languageName)
 		{
-			if (tab.AutoCompleteState == null)
+			AttemptToShowCompletionSettings(languageName);
+		}
+
+		private void TextEntering(object sender, TextCompositionEventArgs e)
+		{
+			if (ActiveCompletion == null)
 				return;
+
+			var tab = Controller.Current.ActiveTab;
 			
 			if (e.Text.Length == 1)
 			{
@@ -136,10 +109,12 @@ namespace Farawla.Features.Completion
 			}
 		}
 
-		private void TextEntered(Tab tab, TextCompositionEventArgs e)
+		private void TextEntered(object sender, TextCompositionEventArgs e)
 		{
-			if (tab.AutoCompleteState == null)
+			if (ActiveCompletion == null)
 				return;
+
+			var tab = Controller.Current.ActiveTab;
 			
 			if (tab.AutoCompleteState.ShowWindow())
 			{
@@ -155,76 +130,87 @@ namespace Farawla.Features.Completion
 			tab.AutoCompleteState.TextChanged();
 		}
 		
-		private void ShowNoCompletionSettings()
-		{
-			CompletionSettings.Visibility = Visibility.Collapsed;
-			NoCompletionSettings.Visibility = Visibility.Visible;
-		}
 		
-		private void ShowCompletionSettings(Tab tab, AutoComplete language)
+		private void AttemptToShowCompletionSettings(string languageName)
 		{
-			var isDisable = Settings[tab.Language.Name] == "Disable";
-			var frameworks = GetEnabledFramrworksFromSettings(tab.Language);
-			
-			NoCompletionSettings.Visibility = Visibility.Collapsed;
-			CompletionSettings.Visibility = Visibility.Visible;
+			var language = GetLanguageCompletion(languageName);
 
-			CompletionState.Content = "Enable for " + tab.Language.Name;
-			CompletionState.IsChecked = !isDisable;
-
-			FrameworksContainer.IsEnabled = !isDisable;
-
-			FrameworksContainer.Children.Clear();
-			
-			foreach (var framework in language.Frameworks)
+			if (language == null)
 			{
-				var content = framework.Name;
-				var cb = new CheckBox();
-
-				cb.Content = content;
-				
-				if (frameworks.Contains(content))
-				{
-					cb.IsChecked = true;
-				}
-				
-				cb.Click += (s, e) => {
-					if (cb.IsChecked.Value)
-					{
-						EnableFramework(content);
-					}
-					else
-					{
-						DisableFramework(content);
-					}
-				};
-
-				FrameworksContainer.Children.Add(cb);
+				ShowNoCompletionSettings();
+				return;
 			}
+
+			ShowCompletionSettings(languageName, language);
 		}
+
 		
-		private AutoComplete GetLanguageCompletion(Tab tab)
+		private AutoComplete GetLanguageCompletion(string languageName)
 		{
-			if (tab.Language.IsDefault || !LanguageCompletions.ContainsKey(tab.Language.Name))
-			{
+			if (languageName == LanguageMeta.DEFAULT_NAME)
 				return null;
+			
+			if (!LanguageCompletions.ContainsKey(languageName))
+			{
+				var language = Controller.Current.Languages.GetLanguageByName(languageName);
+				var languagePath = language.Directory + "\\";
+
+				if (File.Exists(languagePath + "autocomplete.js"))
+				{
+					var json = File.ReadAllText(languagePath + "autocomplete.js");
+					var completion = JsonConvert.DeserializeObject<AutoComplete>(json);
+
+					completion.Initialize(languagePath);
+
+					LanguageCompletions.Add(language.Name, completion);
+					completion.LoadFrameworks(GetEnabledFramrworksFromSettings(language));
+				}
+				else
+				{
+					LanguageCompletions.Add(language.Name, null);
+				}
 			}
 
-			return LanguageCompletions[tab.Language.Name];
+			if (LanguageCompletions[languageName] == null)
+				return null;
+
+			return LanguageCompletions[languageName];
 		}
 
 		private List<string> GetEnabledFramrworksFromSettings(LanguageMeta language)
 		{
 			return Settings[language.Name + "Frameworks"].Split(',').Distinct().ToList();
 		}
+		
+		private void EnableCompletion(Tab tab, AutoComplete languageCompletion)
+		{
+			// get window completion
+			tab.AutoCompleteState = new AutoCompleteState(tab, languageCompletion);
+
+			// initial population
+			tab.AutoCompleteState.TextChanged();
+		}
+
+		private bool IsEnabledLanguage(string languageName)
+		{
+			if (!Settings.KeyExists(languageName))
+				Settings[languageName] = "Disable";
+
+			if (Settings[languageName] == "Disable")
+				return false;
+
+			return true;
+		}
+
+		#region UI clicks handlers (enable, disable)
 
 		private void CompletionStateChanged(object sender, RoutedEventArgs e)
 		{
 			var isEnabled = CompletionState.IsChecked.Value;
-			var completion = GetLanguageCompletion(Controller.Current.ActiveTab);
+			var completion = GetLanguageCompletion(Controller.Current.ActiveTab.Language.Name);
 
 			Settings[Controller.Current.ActiveTab.Language.Name] = isEnabled ? "Enable" : "Disable";
-			
+
 			// inform all tabs
 			foreach (var tab in Controller.Current.CurrentTabs.Where(t => t.Language == Controller.Current.ActiveTab.Language))
 			{
@@ -237,35 +223,17 @@ namespace Farawla.Features.Completion
 					DisableCompletion(tab);
 				}
 			}
-			
+
 			// update frameworks if enabled
 			if (isEnabled)
 			{
 				ReloadLanguageFrameworks(Controller.Current.ActiveTab.Language);
-				FrameworksContainer.IsEnabled = true;				
+				FrameworksContainer.IsEnabled = true;
 			}
 			else
 			{
-				FrameworksContainer.IsEnabled = false;				
+				FrameworksContainer.IsEnabled = false;
 			}
-		}
-		
-		private void EnableCompletion(Tab tab, AutoComplete languageCompletion)
-		{
-			// get window completion
-			tab.AutoCompleteState = new AutoCompleteState(tab, languageCompletion);
-
-			// assign event
-			if (!tab.WasAssignedAutoCompletionState)
-			{
-				tab.Editor.TextArea.TextEntered += (s, e) => TextEntered(tab, e);
-				tab.Editor.TextArea.TextEntering += (s, e) => TextEntering(tab, e);
-			}
-
-			tab.WasAssignedAutoCompletionState = true;
-
-			// initial population
-			tab.AutoCompleteState.TextChanged();
 		}
 
 		private void DisableCompletion(Tab tab)
@@ -273,19 +241,19 @@ namespace Farawla.Features.Completion
 			// remove it
 			tab.AutoCompleteState = null;
 		}
-		
+
 		private void EnableFramework(string name)
 		{
 			var language = Controller.Current.ActiveTab.Language;
 			var values = GetEnabledFramrworksFromSettings(language).Where(f => f != name).ToList();
-			
+
 			values.Add(name);
 
 			Settings[language.Name + "Frameworks"] = string.Join(",", values.ToArray());
 
 			ReloadLanguageFrameworks(language);
 		}
-		
+
 		private void DisableFramework(string name)
 		{
 			var language = Controller.Current.ActiveTab.Language;
@@ -301,6 +269,61 @@ namespace Farawla.Features.Completion
 			var frameworks = GetEnabledFramrworksFromSettings(language);
 
 			Controller.Current.ActiveTab.AutoCompleteState.LanguageCompletion.LoadFrameworks(frameworks);
+		}		
+
+		#endregion
+
+		private void ShowCompletionSettings(string languageName, AutoComplete completion)
+		{
+			var language = Controller.Current.Languages.GetLanguageByName(languageName);
+			var isDisable = Settings[language.Name] == "Disable";
+			var frameworks = GetEnabledFramrworksFromSettings(language);
+
+			ActiveCompletion = completion;
+			NoCompletionSettings.Visibility = Visibility.Collapsed;
+			CompletionSettings.Visibility = Visibility.Visible;
+
+			CompletionState.Content = "Enable for " + language.Name;
+			CompletionState.IsChecked = !isDisable;
+
+			FrameworksContainer.IsEnabled = !isDisable;
+
+			FrameworksContainer.Children.Clear();
+
+			foreach (var framework in ActiveCompletion.Frameworks)
+			{
+				var content = framework.Name;
+				var cb = new CheckBox();
+
+				cb.Content = content;
+
+				if (frameworks.Contains(content))
+				{
+					cb.IsChecked = true;
+				}
+
+				cb.Click += (s, e) =>
+				{
+					if (cb.IsChecked.Value)
+					{
+						EnableFramework(content);
+					}
+					else
+					{
+						DisableFramework(content);
+					}
+				};
+
+				FrameworksContainer.Children.Add(cb);
+			}
 		}
+
+		private void ShowNoCompletionSettings()
+		{
+			ActiveCompletion = null;
+			CompletionSettings.Visibility = Visibility.Collapsed;
+			NoCompletionSettings.Visibility = Visibility.Visible;
+		}
+		
 	}
 }

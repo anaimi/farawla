@@ -5,7 +5,9 @@
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": true,
   "ShowFilesStartingWithDot": false,
-  "OpenTabs": [],
+  "OpenTabs": [
+    "C:\\Users\\Ahmad\\Desktop\\test.html"
+  ],
   "ClosedTabs": [
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
