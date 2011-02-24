@@ -94,7 +94,7 @@ namespace Farawla.Features.Stats
 			
 			// position
 			var location = tab.Editor.Document.GetLocation(tab.Editor.CaretOffset);
-			Position.Text = "Line " + location.Line + ", Column " + location.Column;
+			Position.Text = "Line " + location.Line + ", Column " + location.Column + ", Offset " + tab.Editor.CaretOffset;
 
 			// words
 			var wordsCount = Regex.Matches(tab.Editor.Text, @"[\S]+").Count;

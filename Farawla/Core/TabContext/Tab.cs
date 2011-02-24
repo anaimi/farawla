@@ -283,30 +283,58 @@ namespace Farawla.Core.TabContext
 						.ToList();
 		}
 		
-		public EditorSegment GetOverlappingSegment(string name, int offset)
+		public EditorSegment GetOverlappingSegment(string name, int midOffset)
 		{
-			//var foo = DocumentHighlighter.GetSpanStack(Editor.Document.GetLineByOffset(offset).LineNumber).ToList();
-			//var bar = foo[0];
+			var startOffset = midOffset;
+			var endOffset = midOffset;
 			
-			var length = 0;
-			var localOffset = offset;
-			
+			// before
 			while(true)
 			{
-				var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(localOffset));
+				var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(startOffset - 1));
 
-				var sections = line.Sections.Where(s => s.Color.Name.StartsWith(name) && s.Offset >= localOffset);
-				
+				var sections = line.Sections.Where(s => s.Color.Name.StartsWith(name) && s.Offset <= startOffset);
+
 				if (sections.Count() == 0)
 					break;
 
-				var largestSection = sections.FirstOrDefault(s => s.Length == sections.Max(ss => ss.Length));
+				var smallestSec = sections.FirstOrDefault(s => s.Offset == sections.Min(ss => ss.Offset));
+
+				startOffset = smallestSec.Offset;
+			}
+			
+			// after
+			var localEndOffset = endOffset;
+			while(true)
+			{
+				// validate index
+				if (Editor.Text.Length < localEndOffset)
+				{
+					endOffset = Editor.Text.Length - 1;
+					break;
+				}
+
+				// eat whitespace
+				while (Editor.Text.Length > localEndOffset && char.IsWhiteSpace(Editor.Text[localEndOffset]))
+				{
+					localEndOffset++;
+				}
 				
-				length += largestSection.Length;
-				localOffset += largestSection.Length;
+				// check for segment
+				var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(localEndOffset));
+
+				var sections = line.Sections.Where(s => s.Color.Name.StartsWith(name) && s.Offset <= localEndOffset && (s.Offset + s.Length) > endOffset);
+				
+				if (sections.Count() == 0)
+					break;
+				
+				var largestSec = sections.FirstOrDefault(s => s.EndOffset() == sections.Max(ss => ss.EndOffset()));
+				
+				endOffset = largestSec.EndOffset();
+				localEndOffset = endOffset + 1;				
 			}
 
-			return new EditorSegment(this, name, offset, length);
+			return new EditorSegment(this, name, startOffset, endOffset - startOffset);
 		}
 
 		private void TextChanged(object sender, EventArgs e)
@@ -357,7 +385,7 @@ namespace Farawla.Core.TabContext
 			{
 				segment = segments.FirstOrDefault(s => s.Name.EndsWith("-syntax"));
 
-				if (segment != null)
+				if (segment != null && !segment.Name.StartsWith(oldName))
 				{
 					segment = GetOverlappingSegment(segment.Name, segment.Offset);
 					
@@ -571,6 +599,14 @@ namespace Farawla.Core.TabContext
 		public override string ToString()
 		{
 			return Name + "(" + DocumentPath + ")";
+		}
+	}
+	
+	public static class SectionExtension
+	{
+		public static int EndOffset(this HighlightedSection section)
+		{
+			return section.Offset + section.Length;
 		}
 	}
 }
