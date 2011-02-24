@@ -55,7 +55,7 @@
       "Name": "Projects",
       "Values": {
         "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
-        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\Projects\\v8,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb,C:\\Users\\Ahmad\\Desktop\\Projects\\codebox-web,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog"
+        "PreviouslyOpenedProjects": "C:\\Users\\Ahmad\\Desktop\\Projects\\v8,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb,C:\\Users\\Ahmad\\Desktop\\Projects\\codebox-web,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog"
       }
     },
     {
@@ -66,7 +66,12 @@
     },
     {
       "Name": "Completion",
-      "Values": {}
+      "Values": {
+        "CSSFrameworks": "CSS 2.1",
+        "JavaScriptFrameworks": "Core,Browser Objects",
+        "CSS": "",
+        "JavaScript": ""
+      }
     }
   ]
 }

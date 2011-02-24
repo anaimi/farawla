@@ -31,10 +31,9 @@ namespace Farawla.Features.Completion
 				{
 					var json = File.ReadAllText(languagePath + "autocomplete.js");
 					var completion = JsonConvert.DeserializeObject<AutoComplete>(json);
-					var frameworks = completion.GetEnabledFrameworks();
+					completion.Initialize(language.Name, languagePath);
 
-					completion.Initialize(languageName, languagePath);
-					completion.LoadFrameworks(frameworks);
+					completion.LoadFrameworks(completion.GetEnabledFrameworks());
 					
 					instances.Add(language.Name.ToLower(), completion);
 				}
@@ -102,7 +101,7 @@ namespace Farawla.Features.Completion
 		
 		public List<string> GetEnabledFrameworks()
 		{
-			return Settings[LanguageName + "Frameworks"].Split(',').Distinct().ToList();
+			return Settings[LanguageName + "Frameworks"].Split(',').Distinct().Where(f => !f.IsBlank()).ToList();
 		}
 
 		public void LoadFrameworks(List<string> frameworksNames)

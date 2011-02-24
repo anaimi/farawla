@@ -50,9 +50,9 @@ namespace Farawla.Features.Completion
 			tab.Editor.TextArea.TextEntering += TextEntering;
 		}
 
-		private void OnContextLanguageChanged(EditorSegment segment, string languageName)
+		private void OnContextLanguageChanged(EditorSegment segment)
 		{
-			var completion = AutoComplete.GetCompletion(languageName);
+			var completion = AutoComplete.GetCompletion(segment.SyntaxName);
 			
 			Engine.Reset(segment, completion);
 
@@ -62,7 +62,7 @@ namespace Farawla.Features.Completion
 			}
 			else
 			{
-				ShowCompletionSettings(completion, languageName);
+				ShowCompletionSettings(completion, segment.SyntaxName);
 			}
 		}
 

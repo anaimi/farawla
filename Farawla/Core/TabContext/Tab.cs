@@ -25,7 +25,7 @@ namespace Farawla.Core.TabContext
 	{
 		public string Name { get; set; }
 		public string DocumentPath { get; set; }
-		public string ContextLanguageName { get; private set; }
+		public EditorSegment ActiveLanguageSegment { get; private set; }
 		public bool IsSaved { get; private set; }
 		public bool IsShowingCompletionWindow { get; set; }
 
@@ -374,27 +374,27 @@ namespace Farawla.Core.TabContext
 			#region CurrentLanguageName changed
 
 			EditorSegment segment = null;
-			var oldName = ContextLanguageName;
+			var oldSegment = ActiveLanguageSegment;
 			var segments = GetCurrentSegments();
 
 			if (segments.Count == 0)
 			{
-				ContextLanguageName = Language.Name;
+				ActiveLanguageSegment = new EditorSegment(this);
 			}
 			else
 			{
-				segment = segments.FirstOrDefault(s => s.Name.EndsWith("-syntax"));
+				segment = segments.FirstOrDefault(s => s.IsSyntax);
 
-				if (segment != null && !segment.Name.StartsWith(oldName))
+				if (segment != null && !segment.Equals(oldSegment))
 				{
 					segment = GetOverlappingSegment(segment.Name, segment.Offset);
-					
-					ContextLanguageName = segment.Name.Replace("-syntax", "");
+
+					ActiveLanguageSegment = segment;
 				}
 			}
 
-			if (oldName != ContextLanguageName)
-				Controller.Current.ContextLanguageChanged(segment, ContextLanguageName);
+			if (oldSegment != null && !oldSegment.Equals(ActiveLanguageSegment))
+				Controller.Current.ActiveSegmentChanged(ActiveLanguageSegment);
 			
 			#endregion
 		}

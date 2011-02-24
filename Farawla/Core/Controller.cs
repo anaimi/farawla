@@ -43,7 +43,7 @@ namespace Farawla.Core
 		public event Action<Tab> OnTabCreated;
 		public event Action<string> OnProjectOpened;
 		public event Action<string[]> OnFileDropped;
-		public event Action<EditorSegment, string> OnContextLanguageChanged;
+		public event Action<EditorSegment> OnContextLanguageChanged;
 		
 		public static void Initialize(MainWindow instance)
 		{
@@ -89,7 +89,7 @@ namespace Farawla.Core
 				// notify context listeners
 				if (_current.ActiveTab != null)
 				{
-					_current.ContextLanguageChanged(new EditorSegment(_current.ActiveTab), _current.ActiveTab.ContextLanguageName);
+					_current.ActiveSegmentChanged(new EditorSegment(_current.ActiveTab));
 				}
 			};
 
@@ -239,10 +239,10 @@ namespace Farawla.Core
 				OnFileDropped(files);
 		}
 		
-		public void ContextLanguageChanged(EditorSegment segment, string languageName)
+		public void ActiveSegmentChanged(EditorSegment segment)
 		{
 			if (OnContextLanguageChanged != null)
-				OnContextLanguageChanged(segment, languageName);
+				OnContextLanguageChanged(segment);
 		}
 		
 		public void TabCountUpdated()

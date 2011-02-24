@@ -28,9 +28,49 @@ namespace Farawla.Core.TabContext
 			Length = tab.Editor.Text.Length;
 		}
 		
-		public string GetText()
+		public bool IsSyntax
 		{
-			return Tab.Editor.Document.GetText(Offset, Length);
+			get
+			{
+				return Name.EndsWith("-syntax");
+			}
 		}
+		
+		public string SyntaxName
+		{
+			get
+			{
+				return Name.Replace("-syntax", "");
+			}
+		}
+		
+		public string Text
+		{
+			get
+			{
+				return Tab.Editor.Document.GetText(Offset, Length);
+			}
+		}
+		
+		public override bool Equals(object obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+			{
+				return false;
+			}
+
+			var other = obj as EditorSegment;
+			
+			if (other.Name != Name) return false;
+			if (other.Offset != Offset) return false;
+			if (other.Length != Length) return false;
+
+			return true;
+		}
+		
+		public override int GetHashCode()
+		{
+			return Offset.GetHashCode();
+		}
 	}
 }

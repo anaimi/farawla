@@ -34,6 +34,11 @@ namespace Farawla.Features.Completion
 		public CompletionEngine()
 		{
 			Reset(null, null);
+			
+			// arrange
+			GlobalIdentifiers = new List<IdentifierMatch>();
+			AvailableOptions = new List<AutoCompleteItem>();
+			TokensBeforeCaret = new List<string>();
 
 			// initialize completion worker
 			completionWorker = new BackgroundWorker();
@@ -43,11 +48,15 @@ namespace Farawla.Features.Completion
 		public void Reset(EditorSegment segment, AutoComplete completion)
 		{
 			Segment = segment;
-			LanguageCompletion = completion;			
 			
-			GlobalIdentifiers = new List<IdentifierMatch>();
-			AvailableOptions = new List<AutoCompleteItem>();
-			TokensBeforeCaret = new List<string>();
+			if (LanguageCompletion != null && completion != null && completion.LanguageName != completion.LanguageName)
+			{
+				GlobalIdentifiers = new List<IdentifierMatch>();
+				AvailableOptions = new List<AutoCompleteItem>();
+				TokensBeforeCaret = new List<string>();
+			}
+
+			LanguageCompletion = completion;
 		}
 		
 		public void TextChanged()
@@ -57,7 +66,7 @@ namespace Farawla.Features.Completion
 				completionWorker.RunWorkerAsync(new EditorState
 				{
 					CaretOffset = ActiveTab.Editor.CaretOffset - Segment.Offset,
-					Text = Segment.GetText()
+					Text = Segment.Text
 				});
 			}
 		}
@@ -66,7 +75,7 @@ namespace Farawla.Features.Completion
 		
 		public void PopulateTokensBeforeCaret()
 		{
-			var code = Segment.GetText();
+			var code = Segment.Text;
 			var caretOffset = ActiveTab.Editor.CaretOffset - Segment.Offset;
 			var insideParenthesis = 0;
 			var index = caretOffset - 1;
@@ -74,7 +83,7 @@ namespace Farawla.Features.Completion
 			var sequence = new StringBuilder();
 			var result = new List<string>();
 
-			while (index >= 0)
+			while (index >= 0 && index < code.Length)
 			{
 				var _char = code[index];
 
@@ -124,6 +133,7 @@ namespace Farawla.Features.Completion
 		
 		public void PopulateGlobalIdentifiers(string code, int caretOffset)
 		{
+			var options = new List<AutoCompleteItem>();
 			var sbCode = new StringBuilder(code);
 			var scopes = new List<ScopeRange>();
 			
@@ -201,7 +211,7 @@ namespace Farawla.Features.Completion
 
 			#endregion
 
-			AvailableOptions = GlobalIdentifiers
+			options = GlobalIdentifiers
 				.Where(i => i.Scope.From < caretOffset && i.Scope.To >= caretOffset)
 				.Distinct()
 				.Select(m => new AutoCompleteItem(m.Type, m.Name, m.Expression))
@@ -215,11 +225,13 @@ namespace Farawla.Features.Completion
 			{
 				foreach (var option in global.Options)
 				{
-					AvailableOptions.Add(new AutoCompleteItem(option.GetCompletionType(), option.Name, option.Description));
+					options.Add(new AutoCompleteItem(option.GetCompletionType(), option.Name, option.Description));
 				}
 			}
 
 			#endregion
+
+			AvailableOptions = options;
 		}
 		
 		public void PopulateAutoComplete(DoWorkEventArgs args)

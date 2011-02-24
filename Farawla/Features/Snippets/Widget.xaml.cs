@@ -16,6 +16,7 @@ namespace Farawla.Features.Snippets
 		public BarButton SidebarButton { get; set; }
 		public Dictionary<string, SnippetGroup> Snippets { get; set; }
 		public SnippetGroup ActiveGroup { get; set; }
+		public string ActiveGroupName;
 		
 		public Widget()
 		{
@@ -39,9 +40,12 @@ namespace Farawla.Features.Snippets
 			tab.Editor.TextArea.KeyUp += (s, e) => OnTextEntered(tab, e);
 		}
 
-		private void ContextLanguageChanged(EditorSegment segment, string languageName)
+		private void ContextLanguageChanged(EditorSegment segment)
 		{
-			ShowSnippets(languageName);
+			if (ActiveGroupName == segment.SyntaxName)
+				return;
+			
+			ShowSnippets(segment.SyntaxName);
 		}
 
 		private void OnTextEntered(Tab tab, KeyEventArgs e)
@@ -137,6 +141,8 @@ namespace Farawla.Features.Snippets
 			else
 			{
 				ActiveGroup = Snippets[language.Name];
+				ActiveGroupName = language.Name;
+				
 				NoSnippets.Visibility = Visibility.Collapsed;
 				Container.Visibility = Visibility.Visible;
 
