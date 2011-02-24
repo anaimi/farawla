@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Media;
 using Farawla.Features;
+using Farawla.Utilities;
 using Newtonsoft.Json;
 using System.Windows.Media.Imaging;
 using System.Windows;
@@ -59,7 +60,8 @@ namespace Farawla.Core
 					}
 					else
 					{
-						_instance = JsonConvert.DeserializeObject<Theme>(File.ReadAllText(path)) ?? new Theme();
+						_instance = JsonHelper.Load<Theme>(path) ?? new Theme();
+						
 					}
 				}
 
@@ -162,7 +164,7 @@ namespace Farawla.Core
 			return source;
 		}
 		
-		public System.Windows.Media.Color GetColor(string key)
+		public Color GetColor(string key)
 		{
 			if (SyntaxColors.ContainsKey(key))
 				return SyntaxColors[key].ToColor();
@@ -195,7 +197,7 @@ namespace Farawla.Core
 		{
 			var opacity = 1.0;
 			var colorName = parameter as string;
-			System.Windows.Media.Brush color;
+			Brush color;
 			
 			if (colorName == null)
 				return DefaultColor;

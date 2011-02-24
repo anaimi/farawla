@@ -7,6 +7,7 @@ using System.Linq;
 using Farawla.Features;
 using System;
 using System.Windows.Forms;
+using Farawla.Utilities;
 
 namespace Farawla.Core
 {
@@ -41,7 +42,7 @@ namespace Farawla.Core
 					}
 					else
 					{
-						_instance = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(ExecDir + FILE_NAME));
+						_instance = JsonHelper.Load<Settings>(FILE_NAME);
 						
 						if (_instance == null)
 							_instance = new Settings();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Farawla.Features.Completion;
+using Farawla.Utilities;
 using Newtonsoft.Json;
 
 namespace Farawla.Core.Language
@@ -40,9 +41,7 @@ namespace Farawla.Core.Language
 			if (File.Exists(Directory + "\\syntax.js"))
 			{
 				HasSyntax = true;
-
-				var json = File.ReadAllText(Directory + "\\syntax.js");
-				Syntax = JsonConvert.DeserializeObject<Syntax>(json);
+				Syntax = JsonHelper.Load<Syntax>(Directory + "\\syntax.js");
 			}
 			else
 			{

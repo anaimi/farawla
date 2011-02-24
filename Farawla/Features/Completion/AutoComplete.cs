@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using Farawla.Core;
 using System.IO;
 using Newtonsoft.Json;
+using Farawla.Utilities;
 
 namespace Farawla.Features.Completion
 {
@@ -29,10 +30,9 @@ namespace Farawla.Features.Completion
 
 				if (File.Exists(languagePath + "autocomplete.js"))
 				{
-					var json = File.ReadAllText(languagePath + "autocomplete.js");
-					var completion = JsonConvert.DeserializeObject<AutoComplete>(json);
+					var completion = JsonHelper.Load<AutoComplete>(languagePath + "autocomplete.js");
+					
 					completion.Initialize(language.Name, languagePath);
-
 					completion.LoadFrameworks(completion.GetEnabledFrameworks());
 					
 					instances.Add(language.Name.ToLower(), completion);
@@ -115,8 +115,7 @@ namespace Farawla.Features.Completion
 					continue;
 				}
 
-				var json = File.ReadAllText(LanguagePath + framework.Path);
-				var obj = JsonConvert.DeserializeObject<FrameworkTypes>(json);
+				var obj = JsonHelper.Load<FrameworkTypes>(LanguagePath + framework.Path);
 				
 				foreach(var type in obj.Types)
 				{

@@ -3,6 +3,7 @@ using System.Linq;
 using System.IO;
 using Farawla.Features;
 using Newtonsoft.Json;
+using Farawla.Utilities;
 
 namespace Farawla.Core.Language
 {
@@ -77,9 +78,8 @@ namespace Farawla.Core.Language
 					continue;
 				}
 
-				var json = File.ReadAllText(path);
-				var obj = JsonConvert.DeserializeObject<LanguageMeta>(json);
-
+				var obj = JsonHelper.Load<LanguageMeta>(path);
+				
 				obj.Directory = lang;
 				obj.LoadChildren();
 

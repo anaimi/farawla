@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using Farawla.Core;
 using System.ServiceModel;
 using Farawla.Utilities;
+using System.IO;
+using Newtonsoft.Json;
+using Farawla.Features;
+using System.Net;
 
 namespace Farawla
 {
@@ -20,13 +26,14 @@ namespace Farawla
 	/// </summary>
 	public partial class App : Application
 	{
+		private const string EXCEPTION_URL = "http://localhost:4567/exception";
+		
 		private static Mutex mutex = new Mutex(true, "Farawla");
 		
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			// unhandleed exceptions
 			AppDomain.CurrentDomain.UnhandledException += ExceptionOccured;
-			//Application.Current.DispatcherUnhandledException += ExceptionOccured;
 			
 			// named pipe configuration
 			var pipeConf = new PipeConfiguration {
@@ -95,7 +102,38 @@ namespace Farawla
 
 		private void ExceptionOccured(object sender, UnhandledExceptionEventArgs e)
 		{
+			var answer = MessageBox.Show("An error occured - may I submit it?\nNo personal details will be included.", "KaBOOOM!", MessageBoxButton.YesNo);
 			
+			if (answer == MessageBoxResult.Yes)
+			{
+				var exception = e.ExceptionObject as Exception;
+
+				if (exception == null)
+					return;
+
+				while (true)
+				{
+					if (exception.InnerException == null)
+						break;
+
+					exception = exception.InnerException;
+				}
+
+				// arrange
+				var form = new NameValueCollection();
+				var client = new WebClient();
+
+				// set values
+				form["version"] = "dev";
+				form["os"] = Environment.OSVersion.ToString();
+				form["message"] = exception.Message;
+				form["trace"] = exception.StackTrace;
+
+				// post it
+				client.UploadValues(EXCEPTION_URL, "POST", form);
+			}
+			
+			Process.GetCurrentProcess().Kill();
 		}
 	}
 }

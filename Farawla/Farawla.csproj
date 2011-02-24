@@ -316,6 +316,7 @@
     <Compile Include="Core\Settings\Settings.cs" />
     <Compile Include="Utilities\Extensions\FrameworkElementExtension.cs" />
     <Compile Include="Utilities\FileTypeAssociation.cs" />
+    <Compile Include="Utilities\JsonHelper.cs" />
     <Compile Include="Utilities\NamedPipeHelper.cs" />
     <Compile Include="Utilities\Resources.cs" />
     <Compile Include="Utilities\WatermarkService.cs" />

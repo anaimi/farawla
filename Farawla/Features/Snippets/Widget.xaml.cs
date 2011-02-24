@@ -7,6 +7,7 @@ using Farawla.Core.Sidebar;
 using System.IO;
 using System.Windows;
 using Farawla.Core.TabContext;
+using Farawla.Utilities;
 using Newtonsoft.Json;
 
 namespace Farawla.Features.Snippets
@@ -78,8 +79,7 @@ namespace Farawla.Features.Snippets
 
 			#region Populate list
 			
-			var json = File.ReadAllText(path);
-			var list = JsonConvert.DeserializeObject<List<Snippet>>(json);
+			var list = JsonHelper.Load<List<Snippet>>(path);
 			
 			if (list == null)
 			{
