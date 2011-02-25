@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -79,6 +80,9 @@ namespace Farawla.Core
 			
 			// never highlight a list item in file association list
 			FileAssociationList.SelectionChanged += (s, e) => { FileAssociationList.SelectedIndex = -1; };
+			
+			// version
+			NameAndVersion.Text = "Farawla v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
 		}
 		
 		public new void ShowDialog()

@@ -26,7 +26,7 @@ namespace Farawla
 	/// </summary>
 	public partial class App : Application
 	{
-		private const string EXCEPTION_URL = "http://localhost:4567/exception";
+		private const string EXCEPTION_URL = "http://www.getfarawla.com/exception";
 		
 		private static Mutex mutex = new Mutex(true, "Farawla");
 		
@@ -106,7 +106,9 @@ namespace Farawla
 			
 			if (answer == MessageBoxResult.Yes)
 			{
-				var exception = e.ExceptionObject as Exception;
+				try
+				{
+					var exception = e.ExceptionObject as Exception;
 
 				if (exception == null)
 					return;
@@ -131,6 +133,11 @@ namespace Farawla
 
 				// post it
 				client.UploadValues(EXCEPTION_URL, "POST", form);
+				}
+				catch
+				{
+					
+				}
 			}
 			
 			Process.GetCurrentProcess().Kill();

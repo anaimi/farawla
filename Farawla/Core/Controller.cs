@@ -47,7 +47,7 @@ namespace Farawla.Core
 		
 		public static void Initialize(MainWindow instance)
 		{
-			//_current = new Controller();
+			_current = new Controller();
 
 			_current.MainWindow = instance;
 			_current.Widgets = new List<IWidget>();
