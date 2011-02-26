@@ -103,6 +103,9 @@ namespace Farawla
 
 		private void ExceptionOccured(object sender, UnhandledExceptionEventArgs e)
 		{
+			if (Settings.IsDebugMode)
+				return;
+			
 			var exception = e.ExceptionObject as Exception;
 
 			if (exception == null)
@@ -127,7 +130,7 @@ namespace Farawla
 					var client = new WebClient();
 
 					// set values
-					form["version"] = "dev";
+					form["version"] = Settings.NameAndVersion;
 					form["os"] = Environment.OSVersion.ToString();
 					form["message"] = exception.Message;
 					form["trace"] = exception.StackTrace;

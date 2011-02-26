@@ -82,7 +82,7 @@ namespace Farawla.Core
 			FileAssociationList.SelectionChanged += (s, e) => { FileAssociationList.SelectedIndex = -1; };
 			
 			// version
-			NameAndVersion.Text = "Farawla v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+			NameAndVersion.Text = Core.Settings.NameAndVersion;
 		}
 		
 		public new void ShowDialog()
@@ -103,7 +103,8 @@ namespace Farawla.Core
 					associations.Add(new FileAssociation { Extension = "." + asso, Language = lang.Name });
 			
 			// add default value
-			associations.Add(new FileAssociation { Extension = ".txt", Language = "Default"});
+			associations.Add(new FileAssociation { Extension = ".txt", Language = "Default" });
+			associations.Add(new FileAssociation { Extension = ".log", Language = "Default" });
 			
 			// build them
 			foreach(var association in associations.OrderBy(a => a.Extension))

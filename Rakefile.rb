@@ -5,9 +5,16 @@ require 'FileUtils'
 
 SOLUTION_PATH = "Farawla.sln"
 PUBLISH_PATH = "C:/Users/Ahmad/Desktop/My Dropbox/Farawla/app/"
+LOCAL_DEPLOY_PATH = "C:/Users/Ahmad/Farawla/"
 
 task :publish => [:build, :zip] do
 	puts "Done."
+end
+
+task :deployl do
+	puts "Deploy locally..."
+	FileUtils.cp Dir.glob("#{PUBLISH_PATH}*.exe"), LOCAL_DEPLOY_PATH
+	FileUtils.cp Dir.glob("#{PUBLISH_PATH}*.dll"), LOCAL_DEPLOY_PATH
 end
 
 msbuild :clean do |msb|

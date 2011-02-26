@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Windows.Documents;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,7 @@ namespace Farawla.Core
 	public class Settings: IWidget
 	{
 		public BarButton SidebarButton { get; set; }
+		
 		public static string ExecDir
 		{
 			get { return Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\"; }
@@ -21,6 +23,20 @@ namespace Farawla.Core
 		public static string ExecPath
 		{
 			get { return System.Reflection.Assembly.GetExecutingAssembly().Location; }
+		}
+		public static bool IsDebugMode
+		{
+			get
+			{
+				return System.Diagnostics.Debugger.IsAttached;
+			}
+		}
+		public static string NameAndVersion
+		{
+			get
+			{
+				return "Farawla v" + Assembly.GetExecutingAssembly().GetName().Version + (IsDebugMode ? " (dev)" : "");
+			}
 		}
 
 		public const string DEFAULT_THEME = "clouds";
