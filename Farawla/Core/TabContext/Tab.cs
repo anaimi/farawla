@@ -373,11 +373,11 @@ namespace Farawla.Core.TabContext
 			
 			#region CurrentLanguageName changed
 
-			EditorSegment segment = null;
+			EditorSegment segment;
 			var oldSegment = ActiveLanguageSegment;
 			var segments = GetCurrentSegments();
 
-			if (segments.Count == 0)
+			if (segments.Where(s => s.IsSyntax).Count() == 0)
 			{
 				ActiveLanguageSegment = new EditorSegment(this);
 			}
