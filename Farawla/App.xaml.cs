@@ -26,6 +26,7 @@ namespace Farawla
 	/// </summary>
 	public partial class App : Application
 	{
+		private const string EXCEPTION_FILE_NAME = "exception.txt";
 		private const string EXCEPTION_URL = "http://www.getfarawla.com/exception";
 		
 		private static Mutex mutex = new Mutex(true, "Farawla");
@@ -102,43 +103,48 @@ namespace Farawla
 
 		private void ExceptionOccured(object sender, UnhandledExceptionEventArgs e)
 		{
+			var exception = e.ExceptionObject as Exception;
+
+			if (exception == null)
+				return;
+
+			while (true)
+			{
+				if (exception.InnerException == null)
+					break;
+
+				exception = exception.InnerException;
+			}
+
 			var answer = MessageBox.Show("An error occured - may I submit it?\nNo personal details will be included.", "KaBOOOM!", MessageBoxButton.YesNo);
 			
 			if (answer == MessageBoxResult.Yes)
 			{
 				try
 				{
-					var exception = e.ExceptionObject as Exception;
+					// arrange
+					var form = new NameValueCollection();
+					var client = new WebClient();
 
-				if (exception == null)
-					return;
+					// set values
+					form["version"] = "dev";
+					form["os"] = Environment.OSVersion.ToString();
+					form["message"] = exception.Message;
+					form["trace"] = exception.StackTrace;
 
-				while (true)
-				{
-					if (exception.InnerException == null)
-						break;
-
-					exception = exception.InnerException;
+					// post it
+					client.UploadValues(EXCEPTION_URL, "POST", form);
 				}
-
-				// arrange
-				var form = new NameValueCollection();
-				var client = new WebClient();
-
-				// set values
-				form["version"] = "dev";
-				form["os"] = Environment.OSVersion.ToString();
-				form["message"] = exception.Message;
-				form["trace"] = exception.StackTrace;
-
-				// post it
-				client.UploadValues(EXCEPTION_URL, "POST", form);
-				}
-				catch
-				{
-					
-				}
+				catch {}
 			}
+			
+			try
+			{
+				var message = exception.Message + "\n\n" + exception.StackTrace;
+				
+				File.WriteAllText(Settings.ExecDir + EXCEPTION_FILE_NAME, message);
+			}
+			catch {}
 			
 			Process.GetCurrentProcess().Kill();
 		}

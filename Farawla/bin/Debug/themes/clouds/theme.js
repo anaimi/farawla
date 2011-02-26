@@ -1,40 +1,71 @@
 /*
-	In SyntaxColors (last arrtibute in this file), you specify the name of the syntax.
-	The name here is the same in "syntax.js" file inside a language file.
-	Example, if you defined a "comment" span inside "syntax.js", then all comment spans will be colored as specified by you in this file.
-	Also note, that spaces in a color's name means 'more specifically' ... for example, let's say you have the span "comment multi-line". The editor
-	will try to find the color "comment multi-line" from the SyntaxColors below. If not found, it will less restrictive by removing the last token,
-	making the new name "comment" and searching for that color. This way enables theme designers to generalize and specialize colors as needed.
+	Clouds
+	By Ahmad Al-Naimi
+	'Heavily' inspired from http://fredhq.com/projects/clouds
 */
 
 {
+	/* Background colors for document tab headers */
 	WindowTabSelectedColor: "#FFFFFFFF,#FFF4F8FE",
 	WindowTabHoverColor: "#FFB0B0B0,#FFA0A0A0",
 	WindowTabInactiveColor: "#FFA0A0A0,#FF909090",
+	
+	/* Text colors for document tab headers */
 	WindowTabSelectedCaptionColor: "#FF000000",
 	WindowTabInactiveCaptionColor: "#FF000000",
+	
+	/* Color for the main tab, the thin border between the tab header and the editor */
 	WindowTabToolbarColor: "#FFF4F8FE",
+	
+	/* Color of the tab headers in the Settings dialog */
 	SettingsTabCaptionColor: "#FFE1A90E",
 	
-	MatchingTokensBackground: "#FFFFFF00", /* when highlighting an alpha-num sequence of characters, the editor will change the background of matching text to this color -- also, used to highlight results when searching before hitting enter */
-	MatchingBracketsBackground: "#FFE2F7F9", /* when caret is next to a bracket, it will highlgiht the backgrounds of the pair. A bracket is one of: (,),{,},[,] */
+	/* Background of characters matching the current highlighted alpha-num characters */
+	MatchingTokensBackground: "#FFFFFF00",
 	
-	ShowTabColor: "#FF86B626", /* if Show Tabs is enabled, lines of this color whill be drawn */
+	/* Background of bracket pairs when caret is next to a bracket */
+	MatchingBracketsBackground: "#FFE2F7F9",
+	
+	/* If Show Tabs is enabled (from Settings) a line will appear over every tab */
+	ShowTabColor: "#FF86B626",
+	
+	/* If Show Spaces is enabled (from Settings) a dot will appear over every space character */
 	ShowSpaceColor: "#FFFF0000", /* if Show Spaces in enabled, dots of this color will be drawn */
 	
+	/* Background of the line hosting the caret */
 	HighlightLineOfCaret: true,
 	LineOfCaretColor: "#22FFFF00",
 	
+	/*
+		The widgets (in the sidebar) are colored using two colors
+		It's better to keep these semi-transparent as there's a lot of layering
+		Usually 'Primary' would be used for the background and 'Secondary' for the borders - this rule is not always followed
+	*/
 	PrimaryWidgetColor: "#553769A0",
 	SecondaryWidgetColor: "#11000000",
+	
+	/* Color Text in the widgets */
 	TextWidgetColor: "#FFFFFFFF",
 	
+	/* Completion window background and foreground (text) */
 	CompletionWindowBackground: "#553769A0,#883769A0",
 	CompletionWindowForeground: "#FFFFFFFF",
 	
+	/* Editor background and foreground (text) */
 	Background: "#FFFFFFFF",
 	Foreground: "#FF000000",
 	
+	/*
+		Text highlighting:
+		Each pair represent the name of the syntax and the color of the text recognized as part of that syntax.
+		So if 'comment' is given the color #00FF00, then all comments (in all languages) will be colored in Red.
+		
+		Note about syntax names:
+			If a name contains a space, such as 'comment block', then the space will be interpreted as 'more specifically'.
+			Meaning, the engine will attempt to find the color 'comment block', but if it doesn't find it, it
+			will remove the last token and just search for 'comment'...
+			So as a theme designer, it's better to be as general as possible.
+	*/
 	SyntaxColors: {
 		"comment": "#BCC8BA",
 		"string": "#5D90CD",

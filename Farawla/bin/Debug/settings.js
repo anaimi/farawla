@@ -5,10 +5,12 @@
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": true,
   "ShowFilesStartingWithDot": false,
-  "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js"
-  ],
+  "OpenTabs": [],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
+      "Index": 0
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\test.html",
       "Index": 0
@@ -44,10 +46,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes\\clouds\\theme.js",
       "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\stylesheets\\main.css",
-      "Index": 1
     }
   ],
   "Widgets": [

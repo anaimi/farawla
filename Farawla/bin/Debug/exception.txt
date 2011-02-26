@@ -1,0 +1,5 @@
+Object reference not set to an instance of an object.
+
+   at Farawla.Core.Controller.Initialize(MainWindow instance) in C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\Core\Controller.cs:line 52
+   at Farawla.Core.Bootstrapper.Initialize(MainWindow instance) in C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\Core\Bootstrapper.cs:line 10
+   at Farawla.MainWindow..ctor() in C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\MainWindow.xaml.cs:line 21
