@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media;
 using Farawla.Core.Language;
 using System.Windows.Controls;
@@ -101,23 +102,25 @@ namespace Farawla.Core.TabContext
 				Editor.Load(path);		
 			}
 
+			// tab header
+			var header = new TextBlock();
+			header.Text = Name;
+						
+			// tab header tooltip
+			if (!path.IsBlank())
+			{
+				header.ToolTip = path;
+			}
+
 			// tab
 			TabItem = new TabItem();
 			TabItem.Tag = this;
-			TabItem.Content = Editor;
-			
-			// tab header
-			var header = new TextBlock();
-			header.IsHitTestVisible = false;
-			header.Text = Name;
-			
-			if (!path.IsBlank())
-				header.ToolTip = path;
-			
 			TabItem.Header = header;
-			
+			TabItem.Content = Editor;
+
 			// tab header double click
-			TabItem.MouseDoubleClick += (s, e) => {
+			TabItem.MouseDoubleClick += (s, e) =>
+			{
 				if (!(e.OriginalSource is TextView))
 					Close();
 			};

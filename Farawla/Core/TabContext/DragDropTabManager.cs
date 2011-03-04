@@ -82,7 +82,14 @@ namespace Farawla.Core.TabContext
 
 		private void TabItem_PreviewMouseDown(object sender, MouseEventArgs e)
 		{
-			var ti = e.Source as TabItem;
+			TabItem ti;
+			
+			if (e.Source is TabItem)
+				ti = e.Source as TabItem;
+			else if (e.Source is TextBlock)
+				ti = (e.Source as TextBlock).Parent as TabItem;
+			else
+				return;
 			
 			if (ti != null && e.LeftButton == MouseButtonState.Pressed)
 			{
@@ -107,6 +114,12 @@ namespace Farawla.Core.TabContext
 				return;
 
 			var pt = e.GetPosition(tc);
+
+			if (movingTabItem == null || !movingTabItem.IsVisible)
+			{
+				tc_MouseLeftButtonUp(sender, null);
+				return;
+			}
 
 			if (!isMoving)
 			{

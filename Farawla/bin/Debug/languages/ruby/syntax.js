@@ -11,7 +11,7 @@
 		{
 			Name: "comment single-line",
 			Start: "\\#",
-			End: ".*"
+			End: "$"
 		},
 		{
 			Name: "string single-quote",

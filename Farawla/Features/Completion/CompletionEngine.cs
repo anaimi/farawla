@@ -48,8 +48,8 @@ namespace Farawla.Features.Completion
 		public void Reset(EditorSegment segment, AutoComplete completion)
 		{
 			Segment = segment;
-			
-			if (LanguageCompletion != null && completion != null && completion.LanguageName != completion.LanguageName)
+
+			if (LanguageCompletion != null && completion != null && LanguageCompletion.LanguageName != completion.LanguageName)
 			{
 				GlobalIdentifiers = new List<IdentifierMatch>();
 				AvailableOptions = new List<AutoCompleteItem>();

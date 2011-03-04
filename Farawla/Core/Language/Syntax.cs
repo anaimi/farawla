@@ -104,16 +104,13 @@ namespace Farawla.Core.Language
 		{
 			var span = new HighlightingSpan();
 
-			if (Reference.IsBlank())
-			{
-				span.StartColor = span.EndColor = span.SpanColor;
-			}
-			else
+			if (!Reference.IsBlank())
 			{
 				Name = Reference + "-syntax";
 			}
 
 			span.SpanColor = GetColor();
+			span.StartColor = span.EndColor = span.SpanColor;
 			span.StartExpression = GetRegexFromString(Start);
 			span.EndExpression = GetRegexFromString(End);
 			span.RuleSet = GetRuleSetFromSyntax();
