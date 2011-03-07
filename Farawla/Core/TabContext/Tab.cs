@@ -302,7 +302,10 @@ namespace Farawla.Core.TabContext
 					break;
 
 				var smallestSec = sections.FirstOrDefault(s => s.Offset == sections.Min(ss => ss.Offset));
-
+				
+				if (smallestSec.Offset >= startOffset)
+					break;
+				
 				startOffset = smallestSec.Offset;
 			}
 			
