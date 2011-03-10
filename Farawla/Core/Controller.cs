@@ -164,6 +164,7 @@ namespace Farawla.Core
 			// keybindings for ctrl+#
 			Keyboard.AddBinding(KeyCombination.Ctrl, KeyboardNumberNavigation, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9);
 			Keyboard.AddBinding(KeyCombination.Ctrl, KeyboardNumberNavigation, Key.NumPad1, Key.NumPad2, Key.NumPad3, Key.NumPad4, Key.NumPad5, Key.NumPad6, Key.NumPad7, Key.NumPad8, Key.NumPad9);
+			//Keyboard.AddBinding(KeyCombination.Ctrl, KeyboardArrowNavigation, Key.Left, Key.Right);			
 			
 			#endregion
 			
@@ -310,6 +311,31 @@ namespace Farawla.Core
 				return;
 			
 			CurrentTabs[index].MakeActive();
+		}
+
+		private void KeyboardArrowNavigation(Key key)
+		{
+			if (CurrentTabs.Count == 0)
+				return;
+			
+			if (key == Key.Left)
+			{
+				var target = CurrentTabs.FirstOrDefault(t => t.Index == ActiveTab.Index - 1);
+				
+				if (target == null)
+					return;
+				
+				target.MakeActive();
+			}
+			else if (key == Key.Right)
+			{
+				var target = CurrentTabs.FirstOrDefault(t => t.Index == ActiveTab.Index + 1);
+
+				if (target == null)
+					return;
+
+				target.MakeActive();
+			}
 		}
 	}
 }

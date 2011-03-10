@@ -38,27 +38,40 @@
 
 			<!-- position -->
 			<TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource Label}" Text="Position" />
-			<TextBlock x:Name="Position" Grid.Column="1" Grid.Row="0" Text="100" />
+			<TextBlock x:Name="Position" Grid.Column="1" Grid.Row="0"/>
 
 			<!-- chars -->
 			<TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource Label}" Text="Chars" />
-			<TextBlock x:Name="Chars" Grid.Column="1" Grid.Row="1" Text="100" />
+			<TextBlock x:Name="Chars" Grid.Column="1" Grid.Row="1" />
 
 			<!-- words -->
 			<TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource Label}" Text="Words" />
-			<TextBlock x:Name="Words" Grid.Column="1" Grid.Row="2" Text="100" />
+			<TextBlock x:Name="Words" Grid.Column="1" Grid.Row="2"/>
 
 			<!-- date created -->
 			<TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource Label}" Text="Date Created" />
-			<TextBlock x:Name="DateCreated" Grid.Column="1" Grid.Row="3" Text="100" />
+			<TextBlock x:Name="DateCreated" Grid.Column="1" Grid.Row="3" />
 
 			<!-- last modified -->
 			<TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource Label}" Text="Last Modified" />
-			<TextBlock x:Name="LastModified" Grid.Column="1" Grid.Row="4" Text="100" />
+			<TextBlock x:Name="LastModified" Grid.Column="1" Grid.Row="4" />
 			
 			<!-- encoding -->
 			<TextBlock Grid.Column="0" Grid.Row="5" Style="{StaticResource Label}" Text="Encoding" />
-			<TextBlock x:Name="Encoding" Grid.Column="1" Grid.Row="5" Text="100" />
+			<StackPanel Grid.Column="1" Grid.Row="5" Orientation="Horizontal">
+				<TextBlock x:Name="Encoding" />
+				<Button x:Name="EncodingBtn" Content="change" Margin="10,0,0,0" Style="{StaticResource SimpleButton}" Height="16" Padding="5,0,5,0" FontSize="10" Click="EncodingBtnClick">
+					<Button.ContextMenu>
+						<ContextMenu>
+							<MenuItem Header="ASCII" Tag="ASCII" Click="EncodingChangeSelected" />
+							<MenuItem Header="Unicode (UTF-7)" Tag="utf-7" Click="EncodingChangeSelected" />
+							<MenuItem Header="Unicode (UTF-8)" Tag="utf-8" Click="EncodingChangeSelected" />
+							<MenuItem Header="Unicode (UTF-16)" Tag="utf-16" Click="EncodingChangeSelected" />
+							<MenuItem Header="Western European (Windows)" Tag="windows-1252" Click="EncodingChangeSelected" />
+						</ContextMenu>
+					</Button.ContextMenu>
+				</Button>
+			</StackPanel>
 			
 			<!-- file size -->
 			<TextBlock Grid.Column="0" Grid.Row="6" Style="{StaticResource Label}" Text="File Size" />

@@ -87,19 +87,22 @@ namespace Farawla.Core
 
 		public bool Equals(KeyCombination combination, Key key)
 		{
-			if (Combination != combination) return false;
+			if (Combination != combination)
+				return false;
 			
 			if (KeySet == null)
 			{
-				if (key != Key) return false;
+				if (key == Key)
+					return true;
 			}
 			else
 			{
-				if (KeySet.Contains(key)) return true;
+				if (KeySet.Contains(key))
+					return true;
 			}
 			
 
-			return true;
+			return false;
 		}
 		
 		public void ExecuteCommand(KeyEventArgs e)

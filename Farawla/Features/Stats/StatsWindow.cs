@@ -71,10 +71,15 @@ namespace Farawla.Features.Stats
 
 		private void OnKeyUp(object sender, KeyEventArgs e)
 		{
+			HideStats();
+		}
+		
+		private void HideStats()
+		{
 			// set sidebar opacity
-			Controller.Current.MainWindow.Sidebar.Opacity = sidebarOpacity;			
+			Controller.Current.MainWindow.Sidebar.Opacity = sidebarOpacity;
 			Controller.Current.MainWindow.Sidebar.DontHideSidebar = false;
-			
+
 			// hide
 			Hide();
 		}
@@ -137,6 +142,20 @@ namespace Farawla.Features.Stats
 				// file size
 				FileSize.Text = tab.Editor.Encoding.GetByteCount(tab.Editor.Text).ToPrettyBytes();
 			}
+		}
+
+		private void EncodingBtnClick(object sender, RoutedEventArgs e)
+		{
+			EncodingBtn.ContextMenu.IsOpen = true;
+		}
+
+		private void EncodingChangeSelected(object sender, RoutedEventArgs e)
+		{
+			var item = sender as MenuItem;
+
+			Controller.Current.ActiveTab.Editor.Encoding = System.Text.Encoding.GetEncoding(item.Tag as string);
+			
+			HideStats();
 		}
 	}
 }

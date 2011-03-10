@@ -91,6 +91,7 @@ namespace Farawla.Core.TabContext
 			Editor.TextArea.SelectionChanged += SelectionChanged;
 			Editor.TextArea.Caret.PositionChanged += CaretOffsetChanged;
 			Editor.TextArea.GotFocus += EditorGotFocus;
+			Editor.Encoding = System.Text.Encoding.GetEncoding("ASCII");
 			
 			// renderer
 			BlockHighlighter = new BlockHighlighter(Editor);
