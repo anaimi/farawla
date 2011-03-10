@@ -179,6 +179,10 @@ namespace Farawla.Core
 			{
 				CreateNewTab(App.Current.Properties["Argument0"].ToString());
 			}
+			
+			// inform segment changed observers
+			if (OnContextLanguageChanged != null && ActiveTab != null && ActiveTab.ActiveLanguageSegment != null)
+				OnContextLanguageChanged(ActiveTab.ActiveLanguageSegment);
 		}
 
 		public void Closing(CancelEventArgs args)

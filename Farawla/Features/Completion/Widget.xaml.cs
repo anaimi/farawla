@@ -60,7 +60,7 @@ namespace Farawla.Features.Completion
 			{
 				ShowNoCompletionSettings();
 			}
-			else
+			else if (ActiveCompletion == null || !ActiveCompletion.IsSameLanguageAs(completion))
 			{
 				ShowCompletionSettings(completion, segment.SyntaxName);
 			}
@@ -134,8 +134,9 @@ namespace Farawla.Features.Completion
 		private void CompletionStateChanged(object sender, RoutedEventArgs e)
 		{
 			var isEnabled = CompletionState.IsChecked.Value;
-			
-			Settings[ActiveCompletion.LanguageName] = isEnabled ? "Enable" : "Disable";
+
+			// set value (updates Settings)
+			ActiveCompletion.IsEnabled = isEnabled;
 
 			// update frameworks if enabled
 			if (isEnabled)
@@ -179,7 +180,6 @@ namespace Farawla.Features.Completion
 		private void ShowCompletionSettings(AutoComplete completion, string languageName)
 		{
 			var language = Controller.Current.Languages.GetLanguageByName(languageName);
-			var isDisable = Settings[language.Name] == "Disable";
 			var frameworks = completion.GetEnabledFrameworks();
 
 			ActiveCompletion = completion;
@@ -187,9 +187,9 @@ namespace Farawla.Features.Completion
 			CompletionSettings.Visibility = Visibility.Visible;
 
 			CompletionState.Content = "Enable for " + language.Name;
-			CompletionState.IsChecked = !isDisable;
+			CompletionState.IsChecked = completion.IsEnabled;
 
-			FrameworksContainer.IsEnabled = !isDisable;
+			FrameworksContainer.IsEnabled = completion.IsEnabled;
 			FrameworksContainer.Children.Clear();
 
 			foreach (var framework in ActiveCompletion.Frameworks)
@@ -226,17 +226,5 @@ namespace Farawla.Features.Completion
 			CompletionSettings.Visibility = Visibility.Collapsed;
 			NoCompletionSettings.Visibility = Visibility.Visible;
 		}
-
-		private bool IsLanguageEnabled(string languageName)
-		{
-			if (!Settings.KeyExists(languageName))
-				Settings[languageName] = "Disable";
-
-			if (Settings[languageName] == "Disable")
-				return false;
-
-			return true;
-		}
-		
 	}
 }

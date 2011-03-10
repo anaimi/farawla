@@ -25,7 +25,7 @@ namespace Farawla.Features.Completion
 		{
 			get
 			{
-				return LanguageCompletion != null && Segment != null;
+				return LanguageCompletion != null && LanguageCompletion.IsEnabled && Segment != null;
 			}
 		}
 
@@ -49,7 +49,7 @@ namespace Farawla.Features.Completion
 		{
 			Segment = segment;
 
-			if (LanguageCompletion != null && completion != null && LanguageCompletion.LanguageName != completion.LanguageName)
+			if (LanguageCompletion != null && !LanguageCompletion.IsSameLanguageAs(completion))
 			{
 				GlobalIdentifiers = new List<IdentifierMatch>();
 				AvailableOptions = new List<AutoCompleteItem>();

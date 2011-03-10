@@ -64,6 +64,17 @@ namespace Farawla.Features.Completion
 
 		public string LanguageName { get; private set; }
 		public string LanguagePath { get; private set; }
+		public bool IsEnabled
+		{
+			get
+			{
+				return Settings[LanguageName] == "Enabled";
+			}
+			set
+			{
+				Settings[LanguageName] = value ? "Enabled" : "Disabled";
+			}
+		}
 
 		public AutoComplete()
 		{
@@ -131,6 +142,17 @@ namespace Farawla.Features.Completion
 					}
 				}
 			}
+		}
+		
+		public bool IsSameLanguageAs(AutoComplete completion)
+		{
+			if (completion == null)
+				return false;
+			
+			if (completion.LanguageName != LanguageName)
+				return false;
+
+			return true;
 		}
 	}
 }

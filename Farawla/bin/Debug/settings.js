@@ -6,10 +6,21 @@
   "ShowTabsInEditor": true,
   "ShowFilesStartingWithDot": false,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\public\\css\\main.css",
-    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\index.erb"
+    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\public\\css\\main.css"
   ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\layout.erb",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\public\\css\\main.css",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\index.erb",
+      "Index": 0
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\public\\css\\main.css",
       "Index": 3
@@ -37,18 +48,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
       "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\test.html",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\404.html",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\app\\helpers\\admin_helper.rb",
-      "Index": 0
     }
   ],
   "Widgets": [
@@ -70,8 +69,8 @@
       "Values": {
         "CSSFrameworks": "CSS 2.1",
         "JavaScriptFrameworks": "Core,Browser Objects",
-        "CSS": "",
-        "JavaScript": "",
+        "CSS": "Enabled",
+        "JavaScript": "Enabled",
         "RubyFrameworks": "",
         "Ruby": ""
       }

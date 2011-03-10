@@ -135,12 +135,15 @@ namespace Farawla.Features.Snippets
 			if (snippets == null || snippets.Snippets.Count == 0)
 			{
 				ShowNoSnippets();
+
+				ActiveGroup = snippets;
+				ActiveGroupName = language.Name;
 			}
 
 			// show it otherwise
 			else
 			{
-				ActiveGroup = Snippets[language.Name];
+				ActiveGroup = snippets;
 				ActiveGroupName = language.Name;
 				
 				NoSnippets.Visibility = Visibility.Collapsed;
