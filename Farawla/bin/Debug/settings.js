@@ -8,6 +8,18 @@
   "OpenTabs": [],
   "ClosedTabs": [
     {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\public\\js\\jquery.js",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\Rakefile.rb",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\app.rb",
+      "Index": 1
+    },
+    {
       "Path": "C:\\Users\\Ahmad\\Desktop\\test.rb",
       "Index": 0
     },
@@ -33,18 +45,6 @@
     },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\index.erb",
-      "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\public\\css\\main.css",
-      "Index": 3
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\index.erb",
-      "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\config\\deploy.rb",
       "Index": 0
     }
   ],
