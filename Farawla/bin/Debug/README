@@ -42,6 +42,13 @@ theme by cloning an existing one and modifying the values.
 If you create a new theme and you want to see it part of the themes package the comes 
 with Farawla, please share! See documentation @ http://getfarawla.com for more info.
 
+== Known Issues
+	- Things get noticeably slow when editing a large file; Since this requires major code
+	  surgery and mental gymnastics, I decided to work on it only after gauging community
+	  feedback to Farawla and the size of traction it receives, to know whether it's
+	  worth the effort.
+	- Completion is unpolished, and somewhat buggy. Use with discretion.
+
 == Feedback
 Anything blew up? thoughts on the experience so far? Do want to add or remove
 a functionality of a feature? I would happily hear what you have to say. E-mail and 
