@@ -35,7 +35,7 @@ namespace Farawla.Core
 		{
 			get
 			{
-				return "Farawla v" + Assembly.GetExecutingAssembly().GetName().Version + (IsDebugMode ? " (dev)" : "");
+				return "Farawla v" + Assembly.GetExecutingAssembly().GetName().Version + (IsDebugMode ? " (dev)" : "") + " (beta)";
 			}
 		}
 
