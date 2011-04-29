@@ -55,13 +55,17 @@ namespace Farawla.Core
 						Notifier.Show("Settings file does not exists... I'll create one for you");
 						
 						_instance = new Settings();
+						_instance.IsFirstTime = true;
 					}
 					else
 					{
 						_instance = JsonHelper.Load<Settings>(FILE_NAME);
 						
 						if (_instance == null)
+						{
 							_instance = new Settings();
+							_instance.IsFirstTime = true;
+						}
 					}
 
 					// create sidebar button
@@ -81,6 +85,7 @@ namespace Farawla.Core
 		#endregion
 		
 		public string ThemeName { get; set; }
+		public bool IsFirstTime { get; set; }		
 		public bool IsWindowMaximized { get; set; }
 		
 		public bool ShowSpacesInEditor { get; set; }
@@ -90,7 +95,7 @@ namespace Farawla.Core
 		public List<string> OpenTabs { get; set; }
 		public List<ClosedTabs> ClosedTabs { get; set; }
 		public List<WidgetSettings> Widgets { get; set; }
-
+		
 		public Settings()
 		{
 			// set default settings

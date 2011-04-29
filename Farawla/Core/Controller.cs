@@ -172,18 +172,27 @@ namespace Farawla.Core
 			if (OnTabCreated != null)
 				CurrentTabs.ForEach(OnTabCreated);
 			
+			// inform onstart observers
 			if (OnStart != null)
 				OnStart();
-			
-			// check command-line args
-			if (App.Current.Properties["Argument0"] != null)
-			{
-				CreateNewTab(App.Current.Properties["Argument0"].ToString());
-			}
-			
+
 			// inform segment changed observers
 			if (OnContextLanguageChanged != null && ActiveTab != null && ActiveTab.ActiveLanguageSegment != null)
 				OnContextLanguageChanged(ActiveTab.ActiveLanguageSegment);
+			
+			// check command-line args
+			if (App.Current.Properties["Argument0"] != null)
+				CreateNewTab(App.Current.Properties["Argument0"].ToString());
+			
+			// open readme if first time
+			if (Settings.Instance.IsFirstTime)
+			{
+				var path = Settings.ExecDir + "README";
+				
+				if (File.Exists(path))
+					CreateNewTab(path);
+			}
+				
 		}
 
 		public void Closing(CancelEventArgs args)
@@ -211,6 +220,7 @@ namespace Farawla.Core
 				Settings.Instance.OpenTabs.Add(tab.DocumentPath);
 			
 			// save settings
+			Settings.Instance.IsFirstTime = false;
 			Settings.Instance.Save();
 			
 			// DIE!

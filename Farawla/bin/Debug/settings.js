@@ -1,12 +1,21 @@
 {
   "SidebarButton": null,
   "ThemeName": "clouds",
+  "IsFirstTime": false,
   "IsWindowMaximized": true,
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": true,
   "ShowFilesStartingWithDot": false,
   "OpenTabs": [],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\README",
+      "Index": 0
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\readme.txt",
+      "Index": 0
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\public\\js\\jquery.js",
       "Index": 0
@@ -38,14 +47,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\layout.erb",
       "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\public\\css\\main.css",
-      "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\index.erb",
-      "Index": 0
     }
   ],
   "Widgets": [
