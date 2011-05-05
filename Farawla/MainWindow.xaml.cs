@@ -1,14 +1,6 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Interop;
-using System.Windows.Media;
+﻿using System.Windows;
 using Farawla.Core;
-using Standard;
 using System.Windows.Input;
-using System.Diagnostics;
 
 namespace Farawla
 {
@@ -18,6 +10,8 @@ namespace Farawla
 		{
 			InitializeComponent();
 
+			Style = (Style)Resources["GlassStyle"];
+			
 			Bootstrapper.Initialize(this);
 
 			Loaded += (s, e) => Controller.Current.Start();
@@ -27,6 +21,20 @@ namespace Farawla
 			
 			MouseMove += ChangeSidebarVisibility;
 			Drop += (s, e) => Controller.Current.FileDropped((string[])e.Data.GetData(DataFormats.FileDrop));
+			
+			RootGrid.MouseLeftButtonDown += (s, e) => {
+				if (e.ClickCount >= 2)
+				{
+					if (WindowState == WindowState.Maximized)
+					{
+						WindowState = WindowState.Normal;
+					}
+					else
+					{
+						WindowState = WindowState.Maximized;
+					}
+				}                              	
+			};
 		}
 		
 		private void ChangeSidebarVisibility(object sender, MouseEventArgs e)
@@ -49,14 +57,6 @@ namespace Farawla
 			{
 				Sidebar.Opacity = 0;
 			}
-		}
-
-		protected override void OnSourceInitialized(EventArgs e)
-		{
-			base.OnSourceInitialized(e);
-
-			GlassHelper.ExtendGlassFrameComplete(this);
-			GlassHelper.SetWindowThemeAttribute(this, false, false);
 		}
 	}
 }

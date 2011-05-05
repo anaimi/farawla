@@ -126,6 +126,11 @@ namespace Farawla.Core.TabContext
 					Close();
 			};
 			
+			TabItem.MouseLeftButtonDown += (s, e) =>
+			{
+				e.Handled = true;
+			};
+			
 			// syntax highlighter
 			if (Language.HasSyntax)
 			{

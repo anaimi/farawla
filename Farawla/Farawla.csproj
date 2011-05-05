@@ -58,6 +58,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\AvalonEdit\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Windows.Shell, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Microsoft.Windows.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\JSON\Newtonsoft.Json.dll</HintPath>
@@ -293,14 +297,6 @@
     <Compile Include="Utilities\Extensions\TimeSpanExtension.cs" />
     <Compile Include="Features\IWidget.cs" />
     <Compile Include="Core\Notifier\Notifier.cs" />
-    <Compile Include="Lib\Chrome\Debug.cs" />
-    <Compile Include="Lib\Chrome\DpiHelper.cs" />
-    <Compile Include="Lib\Chrome\GlassHelper.cs" />
-    <Compile Include="Lib\Chrome\Interop\ComGuids.cs" />
-    <Compile Include="Lib\Chrome\Interop\ErrorCodes.cs" />
-    <Compile Include="Lib\Chrome\Interop\NativeMethods.cs" />
-    <Compile Include="Lib\Chrome\Interop\ShellProvider.cs" />
-    <Compile Include="Lib\Chrome\Verify.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
