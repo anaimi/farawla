@@ -8,7 +8,7 @@ namespace Farawla.Core
 	{
 		private Notifier.OnPromptEvent OnEnter { get; set; }
 
-		public ModalInputBox(string description, string details, string input, Notifier.OnPromptEvent onEnter)
+		public ModalInputBox(string description, string details, string input, int highlight, Notifier.OnPromptEvent onEnter)
 		{
 			InitializeComponent();
 
@@ -18,9 +18,18 @@ namespace Farawla.Core
 			OnEnter = onEnter;
 
 			Input.KeyDown += InputKeyDown;
-			
+
 			if (Input.Text.Length > 0)
-				Input.Select(0, Input.Text.Length);
+			{
+				if (highlight == -1)
+				{
+					Input.Select(0, Input.Text.Length);
+				}
+				else if (highlight > 0 && Input.Text.Length >= highlight)
+				{
+					Input.Select(0, highlight);
+				}
+			}
 
 			Loaded += (s, e) => Input.Focus();
 		}

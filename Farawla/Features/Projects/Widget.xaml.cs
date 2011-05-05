@@ -225,7 +225,9 @@ namespace Farawla.Features.Projects
 
 		private void RenameFile(FileItem item)
 		{
-			Notifier.Prompt("Rename", item.Path, item.FileName, (canceled, result) => {
+			var highlight = item.FileName.IndexOf('.');
+			
+			Notifier.Prompt("Rename", item.Path, item.FileName, highlight, (canceled, result) => {
 				if (!canceled)
 				{
 					item.Rename(result);
