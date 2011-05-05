@@ -16,6 +16,7 @@ using System.IO;
 using Orientation=System.Windows.Controls.Orientation;
 using Path=System.IO.Path;
 using Farawla.Utilities;
+using MouseEventArgs=System.Windows.Input.MouseEventArgs;
 
 namespace Farawla.Core
 {
@@ -61,11 +62,8 @@ namespace Farawla.Core
 			// close on escape
 			KeyDown += (s, e) => {
 				if (e.Key == Key.Escape)
-					Close();
+					CloseDialog(null, null);
 			};
-			
-			// close on click
-			CloseDialogText.MouseDown += (s, e) => Close();
 
 			// populate themes
 			PopulateThemesList();
@@ -200,6 +198,11 @@ namespace Farawla.Core
 			var manager = Controller.Current.Widgets.FirstOrDefault(w => w is Features.Projects.Widget) as Features.Projects.Widget;
 			
 			manager.RefreshProject();
+		}
+
+		private void CloseDialog(object sender, RoutedEventArgs e)
+		{
+			Close();
 		}
 	}
 }

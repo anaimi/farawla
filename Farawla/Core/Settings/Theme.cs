@@ -37,7 +37,6 @@ namespace Farawla.Core
 		public const string DEFAULT_WINDOW_TAB_SELECTED_CAPTION_COLOR = "#FFFFFFFF";
 		public const string DEFAULT_WINDOW_TAB_INACTIVE_CAPTION_COLOR = "#FFAAAAAA";
 		public const string DEFAULT_WINDOW_TAB_TOOLBAR_COLOR = "#FF00FF00";
-		public const string DEFAULT_SETTINGS_TAB_CAPTION_COLOR = "#FFE1A90E";
 		
 		public const string DIRECTORY_NAME = "themes";
 		
@@ -97,7 +96,6 @@ namespace Farawla.Core
 		public string WindowTabSelectedCaptionColor { get; set; }
 		public string WindowTabInactiveCaptionColor { get; set; }
 		public string WindowTabToolbarColor { get; set; }
-		public string SettingsTabCaptionColor { get; set; }
 		
 		public Dictionary<string, string> SyntaxColors { get; set; }
 		
@@ -132,7 +130,6 @@ namespace Farawla.Core
 			WindowTabSelectedCaptionColor = DEFAULT_WINDOW_TAB_SELECTED_CAPTION_COLOR;
 			WindowTabInactiveCaptionColor = DEFAULT_WINDOW_TAB_INACTIVE_CAPTION_COLOR;
 			WindowTabToolbarColor = DEFAULT_WINDOW_TAB_TOOLBAR_COLOR;
-			SettingsTabCaptionColor = DEFAULT_SETTINGS_TAB_CAPTION_COLOR;
 			
 			// colors
 			SyntaxColors = new Dictionary<string, string>();

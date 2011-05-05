@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Core="clr-namespace:Farawla.Core"
     x:Name="CurrentSettingsWindow" Title="Settings"
-    Height="330" Width="600"
+    Height="280" Width="500"
     Background="Transparent" AllowsTransparency="True"
     WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
 	<Window.Resources>
@@ -19,119 +19,102 @@
 		</Style>
 	</Window.Resources>
 	
-    <Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="250" />
-			<RowDefinition Height="50" />
-		</Grid.RowDefinitions>
+	<Border CornerRadius="4">
+		<!-- background -->
+		<Border.Background>
+			<VisualBrush Stretch="None" ViewportUnits="Absolute" Viewport="{Binding ElementName=CurrentSettingsWindow, Path=Theme.BackgroundImageViewport}" TileMode="Tile">
+				<VisualBrush.Visual>
+					<Border Background="{Binding Converter={Core:ThemeColorConverter}, ConverterParameter='PrimaryWidgetColor'}">
+						<Border Background="{Binding Converter={Core:ThemeColorConverter}, ConverterParameter='PrimaryWidgetColor'}">
+							<Image Source="{Binding ElementName=CurrentSettingsWindow, Path=Theme.BackgroundImage}" />
+						</Border>
+					</Border>
+				</VisualBrush.Visual>
+			</VisualBrush>
+		</Border.Background>
 
-		<TabControl x:Name="SettingsTab" Grid.Row="0" Height="330" Width="500">
-			<TabControl.Resources>
-				<Style TargetType="{x:Type TabPanel}">
-					<Setter Property="HorizontalAlignment" Value="Center" />
-				</Style>
+		<!-- content -->
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="250" />
+				<RowDefinition Height="25" />
+			</Grid.RowDefinitions>
 
-				<Style TargetType="{x:Type TabControl}">
-					<Setter Property="Background" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}" />
-					<Setter Property="BorderThickness" Value="0" />
-					
-					<Setter Property="Template">
-						<Setter.Value>
-							<ControlTemplate TargetType="{x:Type TabControl}">
-								<Grid>
-									<Grid.RowDefinitions>
-										<RowDefinition Height="Auto"/>
-										<RowDefinition Height="*"/>
-									</Grid.RowDefinitions>
-									
-									<TabPanel Name="HeaderPanel" Grid.Row="0" Panel.ZIndex="1"  Margin="0,0,4,-1" IsItemsHost="True" KeyboardNavigation.TabIndex="1" Background="Transparent" />
-									
-									<Border Grid.Row="1" Padding="10">
-										<Border.Background>
-											<VisualBrush Stretch="None" ViewportUnits="Absolute" Viewport="{Binding ElementName=CurrentSettingsWindow, Path=Theme.BackgroundImageViewport}" TileMode="Tile">
-												<VisualBrush.Visual>
-													<Border Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}">
-														<Border Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}">
-															<Image Source="{Binding ElementName=CurrentSettingsWindow, Path=Theme.BackgroundImage}" />
-														</Border>
-													</Border>
-												</VisualBrush.Visual>
-											</VisualBrush>
-										</Border.Background>
-										
-										<ContentPresenter Name="PART_SelectedContentHost" ContentSource="SelectedContent" />
+			<TabControl x:Name="SettingsTab" Grid.Row="0" Height="330" Width="500" Background="Transparent" BorderThickness="0">
+				<TabControl.Resources>
+					<Style TargetType="{x:Type TabPanel}">
+						<Setter Property="HorizontalAlignment" Value="Center" />
+					</Style>
+
+					<Style TargetType="{x:Type TabItem}">
+						<Setter Property="Template">
+							<Setter.Value>
+								<ControlTemplate TargetType="{x:Type TabItem}">
+									<Border x:Name="TitleBorder" Margin="10,5,10,5" Padding="5" CornerRadius="3" Opacity="0.7" Cursor="Hand">
+										<TextBlock x:Name="Title" Foreground="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='TextWidgetColor'}" Text="{TemplateBinding Header}" />
 									</Border>
-								</Grid>
-							</ControlTemplate>
-						</Setter.Value>
-					</Setter>
-				</Style>
+									<ControlTemplate.Triggers>
+										<Trigger Property="IsSelected" Value="True">
+											<Setter TargetName="TitleBorder" Property="Background" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}" />
+											<Setter TargetName="TitleBorder" Property="Opacity" Value="1" />
+										</Trigger>
+									</ControlTemplate.Triggers>
+								</ControlTemplate>
+							</Setter.Value>
+						</Setter>
+					</Style>
+				</TabControl.Resources>
 
-				<Style TargetType="{x:Type TabItem}">
-					<Setter Property="Template">
-						<Setter.Value>
-							<ControlTemplate TargetType="{x:Type TabItem}">
-								<Border x:Name="TitleBorder" Margin="0,0,25,5" Padding="0" BorderBrush="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='SecondaryWidgetColor'}" BorderThickness="0,0,0,1" Background="#01FFFFFF" Cursor="Hand">
-									<TextBlock x:Name="Title" Foreground="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='SettingsTabCaptionColor'}" Text="{TemplateBinding Header}" Height="15" />
-								</Border>
-								<ControlTemplate.Triggers>
-									<Trigger Property="IsMouseOver" Value="True">
-										<!--<Setter TargetName="TitleBorder" Property="BorderBrush" Value="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='PrimaryWidgetColor'}" />-->
-									</Trigger>
-								</ControlTemplate.Triggers>
-							</ControlTemplate>
-						</Setter.Value>
-					</Setter>
-				</Style>
-			</TabControl.Resources>
+				<TabItem Header="General">
+					<StackPanel>
+						<GroupBox Header="Editor">
+							<StackPanel>
+								<CheckBox Content="Show tabs" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowTabsInEditor}" Click="ShowTabsAndSpacesChanged" />
+								<CheckBox Content="Show spaces" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowSpacesInEditor}" Click="ShowTabsAndSpacesChanged" />
+							</StackPanel>
+						</GroupBox>
 
-			<TabItem Header="General">
-				<StackPanel>
-					<GroupBox Header="Editor">
-						<StackPanel>
-							<CheckBox Content="Show tabs" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowTabsInEditor}" Click="ShowTabsAndSpacesChanged" />
-							<CheckBox Content="Show spaces" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowSpacesInEditor}" Click="ShowTabsAndSpacesChanged" />
-						</StackPanel>
-					</GroupBox>
+						<GroupBox Header="Project Manager">
+							<StackPanel>
+								<CheckBox Content="Show files with names starting with a dot" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowFilesStartingWithDot}" Click="ShowFilesStartingWithDotChanged"  />
+							</StackPanel>
+						</GroupBox>
 
-					<GroupBox Header="Project Manager">
-						<StackPanel>
-							<CheckBox Content="Show files with names starting with a dot" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowFilesStartingWithDot}" Click="ShowFilesStartingWithDotChanged"  />
-						</StackPanel>
-					</GroupBox>
-					
-					<GroupBox Header="Theme">
-						<StackPanel Orientation="Horizontal">
-							<ComboBox x:Name="cbThemes" Width="200" HorizontalAlignment="Left" /> <TextBlock Opacity="0.6" HorizontalAlignment="Left" Margin="10,0,0,0">requires a restart.</TextBlock>
-						</StackPanel>
-					</GroupBox>
-				</StackPanel>
-			</TabItem>
-			
-			<TabItem Header="Associations" x:Name="FileAssociationsTab">
-				<StackPanel>
-					<TextBlock Margin="0,0,0,10" HorizontalAlignment="Left" >
+						<GroupBox Header="Theme">
+							<StackPanel Orientation="Horizontal">
+								<ComboBox x:Name="cbThemes" Width="200" HorizontalAlignment="Left" />
+								<TextBlock Opacity="0.6" HorizontalAlignment="Left" Margin="10,0,0,0">requires a restart.</TextBlock>
+							</StackPanel>
+						</GroupBox>
+					</StackPanel>
+				</TabItem>
+
+				<TabItem Header="Associations" x:Name="FileAssociationsTab">
+					<StackPanel>
+						<TextBlock Margin="0,0,0,10" HorizontalAlignment="Left" >
 						Check to enable and disable file type associations.
 						<LineBreak />
 						This operation might require elevated permissions to read/write associations settings.
-					</TextBlock>
-					
-					<ListBox x:Name="FileAssociationList" Background="Transparent" BorderThickness="0" Height="170" />
-				</StackPanel>
-			</TabItem>
+						</TextBlock>
 
-			<TabItem Header="About">
-				<StackPanel>
-					<TextBlock x:Name="NameAndVersion">Farawla v0.0</TextBlock>
-					<TextBlock>By Ahmad Al-Naimi (ANaimi)</TextBlock>
-					<TextBlock>http://www.anaimi.com</TextBlock>
-				</StackPanel>
-			</TabItem>
-		</TabControl>
-		
-		<StackPanel Grid.Row="1" x:Name="CloseDialogText" Orientation="Horizontal" HorizontalAlignment="Center" Cursor="Hand" Background="#01000000" ToolTip="or click here to close">
-			<TextBlock Text="press escape to close" Margin="0,10,0,0" FontSize="16" Foreground="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='SettingsTabCaptionColor,0.8'}" />
+						<ListBox x:Name="FileAssociationList" Background="Transparent" BorderThickness="0" Height="170" />
+					</StackPanel>
+				</TabItem>
 
-		</StackPanel>
-	</Grid>
+				<TabItem Header="About">
+					<StackPanel>
+						<TextBlock x:Name="NameAndVersion">Farawla v0.0</TextBlock>
+						<TextBlock>By Ahmad Al-Naimi (ANaimi)</TextBlock>
+						<TextBlock>http://www.anaimi.com</TextBlock>
+					</StackPanel>
+				</TabItem>
+			</TabControl>
+
+			<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+				<Button Style="{StaticResource SimpleButton}" Content="Close" Padding="20,0,20,0" ToolTip="Click or press escape to save and close" Click="CloseDialog" />
+			</StackPanel>
+		</Grid>
+	</Border>
+	
+    
 </Window>

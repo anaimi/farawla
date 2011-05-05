@@ -1,7 +1,7 @@
 /*
 	Clouds
 	By Ahmad Al-Naimi
-	'Heavily' inspired from http://fredhq.com/projects/clouds
+	Heavily inspired from http://fredhq.com/projects/clouds
 */
 
 {
@@ -16,9 +16,6 @@
 	
 	/* Color for the main tab, the thin border between the tab header and the editor */
 	WindowTabToolbarColor: "#FFF4F8FE",
-	
-	/* Color of the tab headers in the Settings dialog */
-	SettingsTabCaptionColor: "#FFE1A90E",
 	
 	/* Background of characters matching the current highlighted alpha-num characters */
 	MatchingTokensBackground: "#FFFFFF00",
