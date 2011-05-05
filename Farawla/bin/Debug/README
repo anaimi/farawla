@@ -6,16 +6,23 @@ for other platforms and aesthetics.
 
 To take full advantage of what Farawla has to offer, keep reading.
 
+== Sidebar
+Just in case you didn't notice, there's a sidebar on your right. Move your mouse to the right
+and it will slowly appear. Hopefully you won't have to use it much (you'll use the keyboard
+shortcuts instead.)
+
 == Projects & Quick Jump
-To open a project, drag any folder and drop it here. The sidebar will show the name of
-the project on the top, and list its files in the tree view. Don't use your mouse to navigate
-files... that's lame. Instead, click CTRL+(comma), type part of the name, and hit enter. 
+To open a project, drag any folder and drop it here. The sidebar will show 
+the name of the project on the top, and list its files in the tree view. Don't use your 
+mouse to navigate files; that's lame. Instead, click CTRL+(comma), type part of the name, 
+and hit enter. 
 
 == Keyboard Shortcuts
 	- CTRL+T				New tab
 	- CTRL+N				New tab
 	- CTRL+F4				Close tab
-	- CTRL+SHIFT+T		Open last closed tab
+	- CTRL+SHIFT+T			Open last closed tab
+	- CTRL+O				Open individual file
 	- CTRL+<1..9>			Navigate to already opened tab
 	- CTRL+,				Quick Jump dialog
 	- CTRL+ALT (hold)	Show statistics & encoding dialog
@@ -23,9 +30,13 @@ files... that's lame. Instead, click CTRL+(comma), type part of the name, and hi
 	- CTRL+End			End of document
 	- Home					Beginning of line
 	- CTRL+Home			Beginning of document
-	- CTRL+C				Copy
 	- CTRL+V				Paste
+	- CTRL+C				Copy  (if no text is selected, it will copy the whole line)
 	- CTRL+X				Cut (if no text is selected, it will cut the whole line)
+	- CTRL+S				Save
+	- CTRL+SHIFT+S			Save as
+	- CTRL+F				Search
+	- CTRL+F3				Search again
 
 == Languages
 In the directory of the EXE you'll find a 'languages' folder. Within that folder you'll find 
@@ -39,17 +50,10 @@ To change the current theme, go to Settings on the sidebar, select a new theme, 
 restart Farawla.
 In the directory of the EXE you'll find a 'themes' folder. Feel free to create a new
 theme by cloning an existing one and modifying the values.
-If you create a new theme and you want to see it part of the themes package the comes 
+If you create a new theme and you want to see it part of the themes package that comes 
 with Farawla, please share! See documentation @ http://getfarawla.com for more info.
 
-== Known Issues
-	- Things get noticeably slow when editing a large file; Since this requires major code
-	  surgery and mental gymnastics, I decided to work on it only after gauging community
-	  feedback to Farawla and the size of traction it receives, to know whether it's
-	  worth the effort.
-	- Completion is unpolished, and somewhat buggy. Use with discretion.
-
 == Feedback
-Anything blew up? thoughts on the experience so far? Do want to add or remove
-a functionality of a feature? I would happily hear what you have to say. E-mail and 
-twitter information at http://www.anaimi.com
+Farawla is a work in progress. Let me know if anything blew up, if you have thoughts
+on the experience so far, or if you want to add or remove a functionality/feature. 
+Feedback is always welcome via E-mail or twitter. See http://www.anaimi.com
