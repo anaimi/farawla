@@ -116,7 +116,7 @@ namespace Farawla.Core
 			// if already open, make active
 			if (CurrentTabs.Any(t => t.DocumentPath == path && !t.IsNewDocument))
 			{
-				CurrentTabs.First(t => t.DocumentPath == path).MakeActive();
+				CurrentTabs.First(t => t.DocumentPath == path).MakeActive(true);
 				ActiveTab.TabItem.Focus();
 				return;
 			}
@@ -144,7 +144,7 @@ namespace Farawla.Core
 				OnTabCreated(tab);
 
 			// select/show last added item
-			tab.MakeActive();
+			tab.MakeActive(true);
 			
 			TabCountUpdated();
 		}
@@ -320,7 +320,7 @@ namespace Farawla.Core
 			if (index <= -1 || index >= CurrentTabs.Count)
 				return;
 			
-			CurrentTabs[index].MakeActive();
+			CurrentTabs[index].MakeActive(true);
 		}
 
 		private void KeyboardArrowNavigation(Key key)
@@ -335,7 +335,7 @@ namespace Farawla.Core
 				if (target == null)
 					return;
 				
-				target.MakeActive();
+				target.MakeActive(true);
 			}
 			else if (key == Key.Right)
 			{
@@ -344,7 +344,7 @@ namespace Farawla.Core
 				if (target == null)
 					return;
 
-				target.MakeActive();
+				target.MakeActive(true);
 			}
 		}
 	}

@@ -6,6 +6,7 @@ using Farawla.Core;
 using System.Windows.Input;
 using System.Windows.Media;
 using Farawla.Core.TabContext;
+using Farawla.Utilities;
 
 namespace Farawla.Features.Search
 {
@@ -157,7 +158,9 @@ namespace Farawla.Features.Search
 				tab.Editor.Select(match.Index, match.Length);
 				
 				// if not active, make it active
-				tab.MakeActive();
+				tab.MakeActive(false);
+				Query.Focus();
+				DelayedAction.Invoke(250, () => Query.Focus());				
 				
 				// scroll
 				var position = tab.Editor.Document.GetLocation(match.Index);

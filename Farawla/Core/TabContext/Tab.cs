@@ -140,13 +140,14 @@ namespace Farawla.Core.TabContext
 			completionItems = new List<CompletionWindowItem>();
 		}
 
-		public void MakeActive()
+		public void MakeActive(bool giveFocus)
 		{
 			var index = Controller.Current.CurrentTabs.IndexOf(this);
 			
 			Controller.Current.MainWindow.Tab.SelectedIndex = index;
-
-			DelayedAction.Invoke(250, () => Editor.Focus());
+			
+			if (giveFocus)
+				DelayedAction.Invoke(250, () => Editor.Focus());
 		}
 		
 		public void MadeActive()

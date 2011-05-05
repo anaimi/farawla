@@ -85,7 +85,11 @@ namespace Farawla.Features.Projects
 					var path = (string)(Files.SelectedItem as ListBoxItem).Tag;
 
 					Controller.Current.CreateNewTab(projectManager.CurrentProjectPath + "\\" + path);
-					DelayedAction.Invoke(200, Controller.Current.CurrentTabs.Last().MakeActive);
+					
+					DelayedAction.Invoke(
+						200, 
+						() => Controller.Current.CurrentTabs.Last().MakeActive(true)
+					);
 				}
 				
 				Hide();
