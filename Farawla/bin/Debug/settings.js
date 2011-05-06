@@ -65,8 +65,8 @@
         "JavaScriptFrameworks": "Core,Browser Objects",
         "CSS": "Enabled",
         "JavaScript": "Enabled",
-        "RubyFrameworks": "",
-        "Ruby": ""
+        "RubyFrameworks": "Core",
+        "Ruby": "Disabled"
       }
     }
   ]
