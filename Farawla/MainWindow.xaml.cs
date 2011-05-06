@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Farawla.Core;
 using System.Windows.Input;
+using System.Windows.Controls.Primitives;
 
 namespace Farawla
 {
@@ -22,8 +23,9 @@ namespace Farawla
 			MouseMove += ChangeSidebarVisibility;
 			Drop += (s, e) => Controller.Current.FileDropped((string[])e.Data.GetData(DataFormats.FileDrop));
 			
+			// root grid double click to maximize or minimize
 			RootGrid.MouseLeftButtonDown += (s, e) => {
-				if (e.ClickCount >= 2)
+				if (e.ClickCount >= 2 && e.MouseDevice.DirectlyOver is TabPanel)
 				{
 					if (WindowState == WindowState.Maximized)
 					{
@@ -34,6 +36,17 @@ namespace Farawla
 						WindowState = WindowState.Maximized;
 					}
 				}                              	
+			};
+			
+			// root grid to move
+			RootGrid.MouseMove += (s, e) => {
+				if (e.LeftButton != MouseButtonState.Pressed)
+					return;
+				
+				if (!(e.MouseDevice.DirectlyOver is TabPanel))
+					return;
+				
+				DragMove();
 			};
 		}
 		
@@ -57,6 +70,13 @@ namespace Farawla
 			{
 				Sidebar.Opacity = 0;
 			}
+		}
+
+		protected override void OnSourceInitialized(System.EventArgs e)
+		{
+			base.OnSourceInitialized(e);
+			
+			Sidebar.UpdateWidgetSize();
 		}
 	}
 }

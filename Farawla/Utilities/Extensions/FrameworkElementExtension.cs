@@ -21,11 +21,19 @@ public static class FrameworkElementExtension
 				completed();
 		}
 
-		var from = fe.ActualHeight;
+		var from = fe.Height;
 		var step = Math.Abs(from - to) / duration;
 
 		if (from > to)
 			step *= -1;
+		
+		if (Math.Round(step, 0) == 0)
+		{
+			if (completed != null)
+				completed();
+
+			return fe;
+		}
 		
 		var timer = new DispatcherTimer
 		{
@@ -34,7 +42,7 @@ public static class FrameworkElementExtension
 
 		timer.Tick += (s, e) =>
 		{
-			if (Math.Round(fe.Height, 2) == to)
+			if (Math.Round(fe.Height, 0) == to)
 			{
 				timer.Stop();
 				timers.Remove(fe);

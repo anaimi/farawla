@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Sidebar="clr-namespace:Farawla.Core.Sidebar"
     xmlns:TabContext="clr-namespace:Farawla.Core.TabContext"
-    xmlns:Extensions="clr-namespace:System.Windows.Extensions;assembly=Chrome"
     xmlns:Shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
     xmlns:Farawla="clr-namespace:Farawla"
     SnapsToDevicePixels="True"
@@ -29,7 +28,7 @@
 		</Style>
 	</Window.Resources>
 
-		<Grid x:Name="RootGrid" Margin="0,-18,0,0">
+		<Grid x:Name="RootGrid" Margin="0,-20,0,0">
 		
 		<TabContext:ExtendedTabControl x:Name="Tab" />
 
