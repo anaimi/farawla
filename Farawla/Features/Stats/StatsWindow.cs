@@ -25,13 +25,13 @@ namespace Farawla.Features.Stats
 	/// <summary>
 	/// Interaction logic for NotifyWindow.xaml
 	/// </summary>
-	public partial class StatsWindow : IWidget
+	public partial class Widget : IWidget
 	{
 		public BarButton SidebarButton { get; set; }
 
 		private double sidebarOpacity;
 		
-		public StatsWindow()
+		public Widget()
 		{
 			InitializeComponent();
 						
@@ -51,22 +51,7 @@ namespace Farawla.Features.Stats
 			if (!Keyboard.IsKeyDown(Key.RightCtrl) && !Keyboard.IsKeyDown(Key.LeftCtrl))
 				return;
 
-			var rect = Controller.Current.MainWindow.Sidebar.TransformToVisual(Controller.Current.MainWindow).TransformBounds(LayoutInformation.GetLayoutSlot(Controller.Current.MainWindow.Sidebar.Sidebar));
-
-			Top = rect.Top + Controller.Current.MainWindow.Sidebar.Margin.Top + Controller.Current.MainWindow.Top;
-			Left = rect.Left - Width - 20 + Controller.Current.MainWindow.Left;
-			
-			// get and set sidebar opacity
-			Controller.Current.MainWindow.Sidebar.DontHideSidebar = true;
-			sidebarOpacity = Controller.Current.MainWindow.Sidebar.Opacity;
-			Controller.Current.MainWindow.Sidebar.Opacity = 1;
-			
-			// get stats
-			ResetStats();
-			PopulateStats();
-
-			// show
-			ShowDialog();
+			ShowStats();
 		}
 
 		private void OnKeyUp(object sender, KeyEventArgs e)
@@ -74,7 +59,27 @@ namespace Farawla.Features.Stats
 			HideStats();
 		}
 		
-		private void HideStats()
+		public void ShowStats()
+		{
+			var rect = Controller.Current.MainWindow.Sidebar.TransformToVisual(Controller.Current.MainWindow).TransformBounds(LayoutInformation.GetLayoutSlot(Controller.Current.MainWindow.Sidebar.Sidebar));
+
+			Top = rect.Top + Controller.Current.MainWindow.Sidebar.Margin.Top + Controller.Current.MainWindow.Top;
+			Left = rect.Left - Width - 20 + Controller.Current.MainWindow.Left;
+
+			// get and set sidebar opacity
+			Controller.Current.MainWindow.Sidebar.DontHideSidebar = true;
+			sidebarOpacity = Controller.Current.MainWindow.Sidebar.Opacity;
+			Controller.Current.MainWindow.Sidebar.Opacity = 1;
+
+			// get stats
+			ResetStats();
+			PopulateStats();
+
+			// show
+			Show();
+		}
+		
+		public void HideStats()
 		{
 			// set sidebar opacity
 			Controller.Current.MainWindow.Sidebar.Opacity = sidebarOpacity;
@@ -154,6 +159,13 @@ namespace Farawla.Features.Stats
 			var item = sender as MenuItem;
 
 			Controller.Current.ActiveTab.Editor.Encoding = System.Text.Encoding.GetEncoding(item.Tag as string);
+			
+			HideStats();
+		}
+
+		protected override void OnDeactivated(EventArgs e)
+		{
+			base.OnDeactivated(e);
 			
 			HideStats();
 		}

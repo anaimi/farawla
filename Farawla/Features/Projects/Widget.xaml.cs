@@ -41,6 +41,7 @@ namespace Farawla.Features.Projects
 		public List<FileItem> ExpandedNodes { get; set; }
 		public FileItem LastClickedFile { get; set; }
 		public List<string> ProjectFiles { get; set; }
+		public Jump Jump;
 		
 		public Widget()
 		{
@@ -64,7 +65,7 @@ namespace Farawla.Features.Projects
 			
 			// create jump box
 			ProjectFiles = new List<string>();
-			new Jump(this);
+			Jump = new Jump(this);
 		}
 		
 		public void OnLoaded()

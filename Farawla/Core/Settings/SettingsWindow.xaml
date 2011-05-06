@@ -3,8 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Core="clr-namespace:Farawla.Core"
     x:Name="CurrentSettingsWindow" Title="Settings"
-    Height="280" Width="500"
-    Background="Transparent" AllowsTransparency="True"
+    Height="250" Width="500"
+    Background="Transparent" AllowsTransparency="True" ShowInTaskbar="False"
     WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
 	<Window.Resources>
 		<Style TargetType="{x:Type TextBlock}">
@@ -37,7 +37,6 @@
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="250" />
-				<RowDefinition Height="25" />
 			</Grid.RowDefinitions>
 
 			<TabControl x:Name="SettingsTab" Grid.Row="0" Height="330" Width="500" Background="Transparent" BorderThickness="0">
@@ -109,10 +108,6 @@
 					</StackPanel>
 				</TabItem>
 			</TabControl>
-
-			<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-				<Button Style="{StaticResource SimpleButton}" Content="Close" Padding="20,0,20,0" ToolTip="Click or press escape to save and close" Click="CloseDialog" />
-			</StackPanel>
 		</Grid>
 	</Border>
 	

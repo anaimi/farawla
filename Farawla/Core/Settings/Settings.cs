@@ -71,7 +71,7 @@ namespace Farawla.Core
 					// create sidebar button
 					_instance.SidebarButton = new BarButton(_instance, "Settings");
 					_instance.SidebarButton.IsExpandable = false;
-					_instance.SidebarButton.OnClick += () => SettingsWindow.Instance.ShowDialog();
+					_instance.SidebarButton.OnClick += () => SettingsWindow.Instance.Show();
 					
 					if (_instance.OpenTabs == null)
 					{

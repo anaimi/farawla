@@ -1,4 +1,4 @@
-﻿<Window x:Class="Farawla.Features.Stats.StatsWindow"
+﻿<Window x:Class="Farawla.Features.Stats.Widget"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Core="clr-namespace:Farawla.Core"

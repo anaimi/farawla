@@ -62,7 +62,7 @@ namespace Farawla.Core
 			// close on escape
 			KeyDown += (s, e) => {
 				if (e.Key == Key.Escape)
-					CloseDialog(null, null);
+					Close();
 			};
 
 			// populate themes
@@ -81,11 +81,6 @@ namespace Farawla.Core
 			
 			// version
 			NameAndVersion.Text = Core.Settings.NameAndVersion;
-		}
-		
-		public new void ShowDialog()
-		{
-			base.ShowDialog();
 		}
 		
 		#region File Association tab
@@ -200,8 +195,10 @@ namespace Farawla.Core
 			manager.RefreshProject();
 		}
 
-		private void CloseDialog(object sender, RoutedEventArgs e)
+		protected override void OnDeactivated(EventArgs e)
 		{
+			base.OnDeactivated(e);
+			
 			Close();
 		}
 	}

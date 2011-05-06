@@ -19,7 +19,7 @@ namespace Farawla.Core
 			Controller.Current.Widgets.Add(new Features.Snippets.Widget());
 			Controller.Current.Widgets.Add(new Features.Completion.Widget());
 			Controller.Current.Widgets.Add(new Features.ColorPicker.Widget());
-			Controller.Current.Widgets.Add(new Features.Stats.StatsWindow());
+			Controller.Current.Widgets.Add(new Features.Stats.Widget());
 			//Controller.Current.Widgets.Add(new Features.Terminal.Widget());
 			Controller.Current.Widgets.Add(Settings.Instance);
 		}
