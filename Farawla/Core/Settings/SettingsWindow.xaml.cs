@@ -17,6 +17,7 @@ using Orientation=System.Windows.Controls.Orientation;
 using Path=System.IO.Path;
 using Farawla.Utilities;
 using MouseEventArgs=System.Windows.Input.MouseEventArgs;
+using System.Diagnostics;
 
 namespace Farawla.Core
 {
@@ -26,6 +27,7 @@ namespace Farawla.Core
 	public partial class SettingsWindow : Window
 	{
 		private const string PROG_ID = "Farawla";
+		private List<Image> logos = new List<Image>();
 		
 		public Theme Theme { get; private set; }
 		public Settings Settings { get; private set; }
@@ -80,7 +82,7 @@ namespace Farawla.Core
 			FileAssociationList.SelectionChanged += (s, e) => { FileAssociationList.SelectedIndex = -1; };
 			
 			// version
-			NameAndVersion.Text = Core.Settings.NameAndVersion;
+			NameAndVersion.Text = Settings.NameAndVersion;
 		}
 		
 		#region File Association tab
@@ -200,6 +202,18 @@ namespace Farawla.Core
 			base.OnDeactivated(e);
 			
 			Close();
+		}
+
+		private void LinkClicked(object sender, MouseButtonEventArgs e)
+		{
+			Process.Start("http://www.anaimi.com/");
+		}
+
+		private void OpenReadme(object sender, RoutedEventArgs e)
+		{
+			Controller.Current.CreateNewTab(Settings.ExecDir + "\\README");
+			
+			Hide();
 		}
 	}
 }

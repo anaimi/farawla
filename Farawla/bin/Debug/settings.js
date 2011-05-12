@@ -13,6 +13,10 @@
   ],
   "ClosedTabs": [
     {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\\\README",
+      "Index": 2
+    },
+    {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\layout.erb",
       "Index": 2
     },
@@ -47,10 +51,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\Rakefile.rb",
       "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\app.rb",
-      "Index": 1
     }
   ],
   "Widgets": [
