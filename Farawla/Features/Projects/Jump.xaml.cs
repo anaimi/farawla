@@ -51,7 +51,7 @@ namespace Farawla.Features.Projects
 			
 			RefreshFileList();
 
-			ShowDialog();
+			Show();
 		}
 
 		private void OnKeyUp(object sender, KeyEventArgs e)
@@ -191,6 +191,13 @@ namespace Farawla.Features.Projects
 				
 				IndexDirectory(directory);
 			}
+		}
+
+		protected override void OnDeactivated(EventArgs e)
+		{
+			base.OnDeactivated(e);
+
+			Hide();
 		}
 	}
 	

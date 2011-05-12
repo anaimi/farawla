@@ -13,6 +13,10 @@
   ],
   "ClosedTabs": [
     {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\layout.erb",
+      "Index": 2
+    },
+    {
       "Path": "C:\\Users\\Ahmad\\Desktop\\te.js",
       "Index": 2
     },
