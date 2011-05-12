@@ -150,7 +150,7 @@ namespace Farawla.Core
 		}
 		
 		public void Start()
-		{
+		{	
 			#region Bind keyboard shortcuts
 			
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.O, BrowseFile);

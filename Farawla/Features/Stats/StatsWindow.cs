@@ -61,10 +61,10 @@ namespace Farawla.Features.Stats
 		
 		public void ShowStats()
 		{
-			var rect = Controller.Current.MainWindow.Sidebar.TransformToVisual(Controller.Current.MainWindow).TransformBounds(LayoutInformation.GetLayoutSlot(Controller.Current.MainWindow.Sidebar.Sidebar));
+			var point = Controller.Current.MainWindow.Sidebar.GetElementLocationOnLeft(Width);
 
-			Top = rect.Top + Controller.Current.MainWindow.Sidebar.Margin.Top + Controller.Current.MainWindow.Top;
-			Left = rect.Left - Width - 20 + Controller.Current.MainWindow.Left;
+			Top = point.Y;
+			Left = point.X;
 
 			// get and set sidebar opacity
 			Controller.Current.MainWindow.Sidebar.DontHideSidebar = true;

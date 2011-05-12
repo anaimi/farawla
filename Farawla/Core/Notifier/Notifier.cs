@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using Farawla.Core;
 
-namespace Farawla.Features
+namespace Farawla.Core
 {
 	public class Notifier
 	{
@@ -14,6 +14,13 @@ namespace Farawla.Features
 		public static void Show(string message)
 		{
 			MessageBox.Show(message);
+		}
+		
+		public static void Growl(string title, string message, string footer)
+		{
+			var box = new NotifyBox(title, message, footer);
+			
+			NotifyContainer.Instance.AddBox(box);
 		}
 
 		public static void Prompt(string description, string detail, string input, OnPromptEvent action)

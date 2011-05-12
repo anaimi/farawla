@@ -193,7 +193,7 @@ namespace Farawla.Features.Projects
 					}
 					else
 					{
-						Notifier.Show("File not found - consider refreshing the project");
+						Notifier.Growl("File not found ", "Consider refreshing the project", path);
 					}
 				};
 			}
@@ -290,13 +290,13 @@ namespace Farawla.Features.Projects
 		private void OpenProjectsClicked(object sender, RoutedEventArgs e)
 		{
 			var button = sender as Button;
-			var menu = button.ContextMenu as ContextMenu;
+			var menu = button.ContextMenu;
 			
 			var projects = PreviouslyOpenedProjects.Where(p => Directory.Exists(p)).ToList();
 
 			if (projects.Count() == 0)
 			{
-				Notifier.Show("Nothing found in your projects history");
+				Notifier.Growl("Projects", "Nothing found in your projects history", "drag and drop some folders");
 				return;
 			}
 
@@ -426,7 +426,7 @@ namespace Farawla.Features.Projects
 				}
 				catch (IOException ex)
 				{
-					Notifier.Show(ex.Message);
+					Notifier.Growl("Error renaming file", ex.Message, newName);
 				}
 			}
 

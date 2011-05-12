@@ -13,7 +13,7 @@
   ],
   "ClosedTabs": [
     {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\test.js",
+      "Path": "C:\\Users\\Ahmad\\Desktop\\te.js",
       "Index": 2
     },
     {

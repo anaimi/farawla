@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace Farawla.Core.Sidebar
 {
@@ -97,6 +98,17 @@ namespace Farawla.Core.Sidebar
 				if (button.IsExpanded)
 					button.Control.Height = workspace;
 			}
+		}
+		
+		public Point GetElementLocationOnLeft(double width)
+		{
+			var result = new Point();
+			var rect = Controller.Current.MainWindow.Sidebar.TransformToVisual(Controller.Current.MainWindow).TransformBounds(LayoutInformation.GetLayoutSlot(Controller.Current.MainWindow.Sidebar.Sidebar));
+
+			result.Y = rect.Top + Controller.Current.MainWindow.Sidebar.Margin.Top + Controller.Current.MainWindow.Top;
+			result.X = rect.Left - width - 20 + Controller.Current.MainWindow.Left;
+
+			return result;
 		}
 	}
 }

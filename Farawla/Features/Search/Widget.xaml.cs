@@ -232,18 +232,18 @@ namespace Farawla.Features.Search
 			if (SearchAreaCurrentDocument.IsSelected)
 			{
 				if (lastReachedOffset == 0)
-					Notifier.Show("Zero matches");
+					Notifier.Growl("Search", "Zero matches", Query.Text);
 				else
 				{
 					lastReachedOffset = 0;
-					Notifier.Show("End of document reached...");
+					Notifier.Growl("Search", "Reached end of document", Query.Text);
 				}
 			}
 			else if (SearchAreaOpenDocuments.IsSelected)
 			{
 				if (tab == Controller.Current.CurrentTabs.Last())
 				{
-					Notifier.Show("End of documents reached...");
+					Notifier.Growl("Search", "Reached end of document", Query.Text);
 
 					lastReachedOffset = 0;
 					lastReachedTab = null;

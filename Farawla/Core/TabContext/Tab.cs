@@ -206,7 +206,8 @@ namespace Farawla.Core.TabContext
 			}
 			catch(Exception e)
 			{
-				Notifier.Show("Error saving '" + DocumentPath + "':\n" + e.Message);
+				Notifier.Growl("Error saving document", e.Message, DocumentPath);
+				return false;
 			}
 
 			IsSaved = true;
