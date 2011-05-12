@@ -26,7 +26,9 @@
 				<VisualBrush.Visual>
 					<Border Background="{Binding Converter={Core:ThemeColorConverter}, ConverterParameter='PrimaryWidgetColor'}">
 						<Border Background="{Binding Converter={Core:ThemeColorConverter}, ConverterParameter='PrimaryWidgetColor'}">
-							<Image Source="{Binding ElementName=CurrentSettingsWindow, Path=Theme.BackgroundImage}" />
+							<Border Background="{Binding Converter={Core:ThemeColorConverter}, ConverterParameter='PrimaryWidgetColor'}">
+								<Image Source="{Binding ElementName=CurrentSettingsWindow, Path=Theme.BackgroundImage}" />
+							</Border>
 						</Border>
 					</Border>
 				</VisualBrush.Visual>

@@ -8,7 +8,8 @@
   "ShowFilesStartingWithDot": false,
   "OpenTabs": [
     "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\app.rb",
-    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\Rakefile.rb"
+    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\Rakefile.rb",
+    "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\README"
   ],
   "ClosedTabs": [
     {

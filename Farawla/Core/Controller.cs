@@ -180,6 +180,8 @@ namespace Farawla.Core
 			MainWindow.ContextMenu.Items.Add(new Separator());
 			MainWindow.ContextMenu.Items.Add(CreateContextManuItem("Quick Jump", "CTRL+,", projects.Jump.ShowBox));
 			MainWindow.ContextMenu.Items.Add(CreateContextManuItem("Stats & Encoding", "CTRL+ALT (hold)", stats.ShowStats));
+			MainWindow.ContextMenu.Items.Add(new Separator());
+			MainWindow.ContextMenu.Items.Add(CreateContextManuItem("Close Tab", "CTRL+F4", CloseActiveTab));
 			
 			#endregion
 			

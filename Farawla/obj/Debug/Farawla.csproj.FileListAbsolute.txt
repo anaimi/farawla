@@ -101,4 +101,3 @@ C:\Users\Ahmad\Desktop\Projects\Farawla\Release\Farawla.exe
 C:\Users\Ahmad\Desktop\Projects\Farawla\Release\Farawla.pdb
 C:\Users\Ahmad\Desktop\My Dropbox\Farawla\app\Farawla.exe
 C:\Users\Ahmad\Desktop\My Dropbox\Farawla\app\Farawla.exe.config
-C:\Users\Ahmad\Desktop\Projects\Farawla\Farawla\bin\Debug\Farawla.exe.config

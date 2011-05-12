@@ -6,10 +6,10 @@ for other platforms and aesthetics.
 
 To take full advantage of what Farawla has to offer, keep reading.
 
-== Sidebar
+== Sidebar & Context Menu
 Just in case you didn't notice, there's a sidebar on your right. Move your mouse to the right
 and it will slowly appear. Hopefully you won't have to use it much (you'll use the keyboard
-shortcuts instead.)
+shortcuts instead.) Also, right click anywhere for the context menu.
 
 == Projects & Quick Jump
 To open a project, drag any folder and drop it here. The sidebar will show 
@@ -21,8 +21,8 @@ and hit enter.
 	- CTRL+T				New tab
 	- CTRL+N				New tab
 	- CTRL+F4				Close tab
-	- CTRL+SHIFT+T			Open last closed tab
-	- CTRL+O				Open individual file
+	- CTRL+SHIFT+T		Open last closed tab
+	- CTRL+O				Browse file
 	- CTRL+<1..9>			Navigate to already opened tab
 	- CTRL+,				Quick Jump dialog
 	- CTRL+ALT (hold)	Show statistics & encoding dialog
@@ -34,7 +34,7 @@ and hit enter.
 	- CTRL+C				Copy  (if no text is selected, it will copy the whole line)
 	- CTRL+X				Cut (if no text is selected, it will cut the whole line)
 	- CTRL+S				Save
-	- CTRL+SHIFT+S			Save as
+	- CTRL+SHIFT+S		Save as
 	- CTRL+F				Search
 	- CTRL+F3				Search again
 
