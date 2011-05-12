@@ -47,10 +47,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\public\\js\\jquery.js",
       "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\Rakefile.rb",
-      "Index": 0
     }
   ],
   "Widgets": [

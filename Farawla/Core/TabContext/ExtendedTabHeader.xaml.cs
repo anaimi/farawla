@@ -64,12 +64,16 @@ namespace Farawla.Core.TabContext
 		{
 			if (Controller.Current.ActiveTab == Tab)
 			{
+				TabCaption.Foreground = ThemeColorConverter.GetColor("WindowTabSelectedCaptionColor");
+				
 				Left.Fill = ThemeColorConverter.GetColor("WindowTabSelectedColor");
 				Middle.Fill = ThemeColorConverter.GetColor("WindowTabSelectedColor");
 				Right.Fill = ThemeColorConverter.GetColor("WindowTabSelectedColor");
 			}
 			else
 			{
+				TabCaption.Foreground = ThemeColorConverter.GetColor("WindowTabInactiveCaptionColor");				
+				
 				Left.Fill = ThemeColorConverter.GetColor("WindowTabInactiveColor");
 				Middle.Fill = ThemeColorConverter.GetColor("WindowTabInactiveColor");
 				Right.Fill = ThemeColorConverter.GetColor("WindowTabInactiveColor");
@@ -97,6 +101,8 @@ namespace Farawla.Core.TabContext
 
 			if (!IsSelected)
 			{
+				TabCaption.Foreground = ThemeColorConverter.GetColor("WindowTabInactiveCaptionColor");				
+			
 				Left.Fill = ThemeColorConverter.GetColor("WindowTabInactiveColor");
 				Middle.Fill = ThemeColorConverter.GetColor("WindowTabInactiveColor");
 				Right.Fill = ThemeColorConverter.GetColor("WindowTabInactiveColor");
