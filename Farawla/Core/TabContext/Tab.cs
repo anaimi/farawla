@@ -31,7 +31,8 @@ namespace Farawla.Core.TabContext
 		public bool IsShowingCompletionWindow { get; set; }
 
 		public LanguageMeta Language { get; set; }
-		public TabItem TabItem { get; private set; }
+		public ExtendedTabItem TabItem { get; private set; }
+		public ExtendedTabHeader TabHeader { get; private set; }
 		public TextEditor Editor { get; private set; }
 		public BlockHighlighter BlockHighlighter { get; private set; }
 		public DocumentHighlighter DocumentHighlighter { get; private set; }
@@ -103,33 +104,9 @@ namespace Farawla.Core.TabContext
 				Editor.Load(path);		
 			}
 
-			// tab header
-			var header = new TextBlock();
-			header.Text = Name;
-						
-			// tab header tooltip
-			if (!path.IsBlank())
-			{
-				header.ToolTip = path;
-			}
-
-			// tab
-			TabItem = new TabItem();
-			TabItem.Tag = this;
-			TabItem.Header = header;
-			TabItem.Content = Editor;
-
-			// tab header double click
-			TabItem.MouseDoubleClick += (s, e) =>
-			{
-				if (!(e.OriginalSource is TextView))
-					Close();
-			};
-			
-			TabItem.MouseLeftButtonDown += (s, e) =>
-			{
-				e.Handled = true;
-			};
+			// tab item
+			TabHeader = new ExtendedTabHeader(this); // always before TabItem
+			TabItem = new ExtendedTabItem(this);
 			
 			// syntax highlighter
 			if (Language.HasSyntax)
@@ -194,7 +171,8 @@ namespace Farawla.Core.TabContext
 			}
 
 			IsSaved = true;
-			MarkWindowAsSaved();
+			TabHeader.MarkAsSaved();
+			
 			return true;
 		}
 
@@ -226,18 +204,8 @@ namespace Farawla.Core.TabContext
 			if (IsSaved || IsNewDocument)
 			{
 				IsSaved = false;
-				MarkWindowAsUnsaved();
+				TabHeader.MarkAsUnSaved();
 			}
-		}
-
-		public void MarkWindowAsUnsaved()
-		{
-			TabItem.Header = Name + "*";
-		}
-
-		public void MarkWindowAsSaved()
-		{
-			TabItem.Header = Name;
 		}
 		
 		public void Rename(string newPath)

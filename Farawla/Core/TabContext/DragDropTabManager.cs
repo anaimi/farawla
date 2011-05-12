@@ -74,7 +74,7 @@ namespace Farawla.Core.TabContext
 		{
 			var fe = parent.InputHitTest(pt) as FrameworkElement;
 
-			while (fe != null && fe.GetType() != typeof(TabItem))
+			while (fe != null && fe.GetType() != typeof(ExtendedTabItem))
 				fe = VisualTreeHelper.GetParent(fe) as FrameworkElement;
 
 			return fe as TabItem;
@@ -84,10 +84,8 @@ namespace Farawla.Core.TabContext
 		{
 			TabItem ti;
 			
-			if (e.Source is TabItem)
-				ti = e.Source as TabItem;
-			else if (e.Source is TextBlock)
-				ti = (e.Source as TextBlock).Parent as TabItem;
+			if (e.Source is ExtendedTabHeader)
+				ti = (e.Source as ExtendedTabHeader).Tab.TabItem;
 			else
 				return;
 			

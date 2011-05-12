@@ -6,12 +6,16 @@
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": true,
   "ShowFilesStartingWithDot": false,
+  "ShowCloseButtonInTabHeader": true,
   "OpenTabs": [
     "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\app.rb",
-    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\Rakefile.rb",
-    "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\README"
+    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\Rakefile.rb"
   ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\README",
+      "Index": 2
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\download-count.txt",
       "Index": 0
@@ -39,10 +43,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\app.rb",
       "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\test.rb",
-      "Index": 0
     }
   ],
   "Widgets": [
@@ -56,7 +56,7 @@
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#9B3769A0"
+        "Color": "#FF970B0A"
       }
     },
     {

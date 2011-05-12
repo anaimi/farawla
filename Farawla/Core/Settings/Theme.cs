@@ -181,57 +181,16 @@ namespace Farawla.Core
 
 	public class ThemeColorConverter : MarkupExtension, IValueConverter
 	{
-		public SolidColorBrush DefaultColor;
-		
-		public ThemeColorConverter()
-		{
-			DefaultColor = new SolidColorBrush(Colors.Orange); // TODO:: either change to white of get from Theme or both
-			
-			//Debug.WriteLine("Created instance of ThemeColorConverter");
-		}
-		
+		public static SolidColorBrush DefaultColor = new SolidColorBrush(Colors.Orange);
+
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			var opacity = 1.0;
 			var colorName = parameter as string;
-			Brush color;
-			
+
 			if (colorName == null)
 				return DefaultColor;
-			
-			// get opacity if specified
-			if (colorName.Contains(','))
-			{
-				opacity = colorName.Extract(",", "").ToDouble();
-				colorName = colorName.Extract("", ",");
-			}
-			
-			// get color by name from instance
-			var colorInfo = Theme.Instance.GetType().GetProperty(colorName);
-			var colorStr = colorInfo.GetValue(Theme.Instance, new object[0]) as string;
-			
-			if (colorStr == null)
-				return DefaultColor;
-			
-			// gradient?
-			if (colorStr.Contains(","))
-			{
-				var parts = colorStr.Split(',');
-				color = new LinearGradientBrush(parts[0].ToColor(), parts[1].ToColor(), 90);
-			}
-			else
-			{
-				color = new SolidColorBrush(colorStr.ToColor());
-			}
-			
-			
-			// apply opacity
-			if (opacity < 1)
-			{
-				color.Opacity = opacity;
-			}
 
-			return color;
+			return GetColor(colorName);
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -242,6 +201,46 @@ namespace Farawla.Core
 		public override object ProvideValue(IServiceProvider serviceProvider)
 		{
 			return this;
+		}
+		
+		public static Brush GetColor(string colorNameAndOpacity)
+		{
+			double opacity = 1.0;
+			Brush color;
+			
+			// get opacity if specified
+			if (colorNameAndOpacity.Contains(','))
+			{
+				opacity = colorNameAndOpacity.Extract(",", "").ToDouble();
+				colorNameAndOpacity = colorNameAndOpacity.Extract("", ",");
+			}
+
+			// get color by name from instance
+			var colorInfo = Theme.Instance.GetType().GetProperty(colorNameAndOpacity);
+			var colorStr = colorInfo.GetValue(Theme.Instance, new object[0]) as string;
+
+			if (colorStr == null)
+				return DefaultColor;
+
+			// gradient?
+			if (colorStr.Contains(","))
+			{
+				var parts = colorStr.Split(',');
+				color = new LinearGradientBrush(parts[0].ToColor(), parts[1].ToColor(), 90);
+			}
+			else
+			{
+				color = new SolidColorBrush(colorStr.ToColor());
+			}
+
+
+			// apply opacity
+			if (opacity < 1)
+			{
+				color.Opacity = opacity;
+			}
+
+			return color;
 		}
 	}
 	

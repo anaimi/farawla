@@ -97,6 +97,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Core\TabContext\ExtendedTabHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Core\TabContext\ExtendedTabItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Features\Stats\StatsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -212,6 +220,12 @@
     <Compile Include="Core\KeyboardObserver.cs" />
     <Compile Include="Core\TabContext\DragDropTabManager.cs" />
     <Compile Include="Core\TabContext\EditorSegment.cs" />
+    <Compile Include="Core\TabContext\ExtendedTabHeader.xaml.cs">
+      <DependentUpon>ExtendedTabHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\TabContext\ExtendedTabItem.xaml.cs">
+      <DependentUpon>ExtendedTabItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Features\Stats\StatsWindow.cs">
       <DependentUpon>StatsWindow.xaml</DependentUpon>
     </Compile>
