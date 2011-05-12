@@ -22,14 +22,21 @@ namespace Farawla.Core
 	{
 		private DispatcherTimer timer;
 		
-		public NotifyBox(string title, string desc, string footer)
+		public NotifyBox(string title, string desc, string footer, bool stick)
 		{
 			InitializeComponent();
 			
-			timer = new DispatcherTimer();
-			timer.Interval = TimeSpan.FromSeconds(3);
-			timer.Tick += TimerTick;
-			timer.Start();
+			if (stick)
+			{
+				MouseDown += (s, e) => Hide();
+			}
+			else
+			{
+				timer = new DispatcherTimer();
+				timer.Interval = TimeSpan.FromSeconds(3);
+				timer.Tick += TimerTick;
+				timer.Start();
+			}
 
 			Title.Text = title.IsBlank() ? "" : title;
 			Description.Text = desc;
@@ -38,10 +45,16 @@ namespace Farawla.Core
 
 		private void TimerTick(object sender, EventArgs e)
 		{
-			this.VerticalSlide(0, 10, () => NotifyContainer.Instance.RemoveBox(this));
+			Hide();
 			
 			timer.Tick -= TimerTick;
 			timer.Stop();
+		}
+		
+		public void Hide()
+		{
+			this.VerticalSlide(0, 10, () => NotifyContainer.Instance.RemoveBox(this));
+			
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Runtime.InteropServices;
+using System.Windows;
 using Farawla.Core;
 using System.Windows.Input;
 using System.Windows.Controls.Primitives;
@@ -7,14 +8,31 @@ namespace Farawla
 {
 	public partial class MainWindow
 	{
+		[DllImport("dwmapi.dll", PreserveSig = false)]
+		public static extern bool DwmIsCompositionEnabled();
+		
+		public bool IsGlassEnabled
+		{
+			get { return DwmIsCompositionEnabled(); }
+		}
+		
 		public MainWindow()
 		{
 			InitializeComponent();
 
-			Style = (Style)Resources["GlassStyle"];
+			if (IsGlassEnabled)
+			{
+				Style = (Style)Resources["GlassStyle"];
+				RootGrid.Margin = new Thickness(0, -20, 0, 0);
+			}
+			else
+			{
+				RootGrid.Background = ThemeColorConverter.GetColor("PrimaryWidgetColor");
+			}
 			
 			Bootstrapper.Initialize(this);
-
+			
+			// listen to events
 			Loaded += (s, e) => Controller.Current.Start();
 			Closing += (s, e) => Controller.Current.Closing(e);
 			Closed += (s, e) => Controller.Current.Exit();
@@ -77,6 +95,11 @@ namespace Farawla
 			base.OnSourceInitialized(e);
 			
 			Sidebar.UpdateWidgetSize();
+
+			if (!IsGlassEnabled) // after bootstrapper is initialized
+			{
+				Notifier.Growl("You're using a Classic theme", "Farawla looks weird becuase Aero Glass is disabled", "switch to Vista theme", true);
+			}
 		}
 	}
 }

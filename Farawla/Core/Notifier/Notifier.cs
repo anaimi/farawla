@@ -18,7 +18,12 @@ namespace Farawla.Core
 		
 		public static void Growl(string title, string message, string footer)
 		{
-			var box = new NotifyBox(title, message, footer);
+			Growl(title, message, footer, false);
+		}
+		
+		public static void Growl(string title, string message, string footer, bool stick)
+		{
+			var box = new NotifyBox(title, message, footer, stick);
 			
 			NotifyContainer.Instance.AddBox(box);
 		}
