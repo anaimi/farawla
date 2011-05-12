@@ -297,6 +297,7 @@
     <Compile Include="Features\Terminal\Widget.xaml.cs">
       <DependentUpon>Widget.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\ContextMenuHelper.cs" />
     <Compile Include="Utilities\DelayedAction.cs" />
     <Compile Include="Utilities\Extensions\CharacterExtension.cs" />
     <Compile Include="Utilities\Extensions\DateTimeExtension.cs" />

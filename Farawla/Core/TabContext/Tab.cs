@@ -22,7 +22,7 @@ using Farawla.Features;
 
 namespace Farawla.Core.TabContext
 {
-	public partial class Tab
+	public class Tab
 	{
 		public string Name { get; set; }
 		public string DocumentPath { get; set; }
@@ -35,7 +35,7 @@ namespace Farawla.Core.TabContext
 		public ExtendedTabHeader TabHeader { get; private set; }
 		public TextEditor Editor { get; private set; }
 		public BlockHighlighter BlockHighlighter { get; private set; }
-		public DocumentHighlighter DocumentHighlighter { get; private set; }
+		public IHighlighter DocumentHighlighter { get; private set; }
 
 		public bool IsNewDocument
 		{
@@ -52,13 +52,16 @@ namespace Farawla.Core.TabContext
 
 		public Tab(string path)
 		{
-			// set name and path
+			// arrange
+			matchingTokensBackground = Theme.Instance.MatchingTokensBackground.ToColor();
+			
+			#region Set Name and DocumentPath
+			
 			if (path.IsBlank())
 			{
 				IsSaved = false;
 				Name = "new";
 				DocumentPath = string.Empty;
-				Language = Controller.Current.Languages.GetDefaultLanguage();
 			}
 			else
 			{
@@ -71,13 +74,12 @@ namespace Farawla.Core.TabContext
 				IsSaved = true;
 				Name = Path.GetFileName(path);
 				DocumentPath = path;
-				Language = Controller.Current.Languages.GetLanguageByExtension(path.Substring(path.LastIndexOf('.') + 1));
 			}
-
-			// arrange
-			matchingTokensBackground = Theme.Instance.MatchingTokensBackground.ToColor();
 			
-			// editor
+			#endregion
+			
+			#region Create editor
+			
 			Editor = new TextEditor();
 			Editor.FontSize = 13;
 			Editor.ShowLineNumbers = true;
@@ -85,8 +87,8 @@ namespace Farawla.Core.TabContext
 			Editor.Options.EnableHyperlinks = false;
 			Editor.Options.ShowBoxForControlCharacters = true;
 			//Editor.Options.ConvertTabsToSpaces = true;
-			Editor.Background = new SolidColorBrush(Theme.Instance.Background.ToColor());
-			Editor.Foreground = new SolidColorBrush(Theme.Instance.Foreground.ToColor());
+			Editor.Background = ThemeColorConverter.GetColor("Background");
+			Editor.Foreground = ThemeColorConverter.GetColor("Foreground");
 			Editor.FontFamily = new FontFamily(Theme.Instance.FontFamily);
 			Editor.TextChanged += TextChanged;
 			Editor.TextArea.SelectionChanged += SelectionChanged;
@@ -94,32 +96,69 @@ namespace Farawla.Core.TabContext
 			Editor.TextArea.GotFocus += EditorGotFocus;
 			Editor.Encoding = System.Text.Encoding.GetEncoding("ASCII");
 			
+			#endregion
+			
+			#region Create context menu for editor
+
+			var menu = new ContextMenu();
+
+			menu.Items.Add(ContextMenuHelper.CreateManuItem("New Tab", "CTRL+T", () => Controller.Current.CreateNewTab("")));
+			menu.Items.Add(ContextMenuHelper.CreateManuItem("Open Previous Tab", "CTRL+SHIFT+T", Controller.Current.OpenLastClosedTab));
+			menu.Items.Add(ContextMenuHelper.CreateManuItem("Browse File", "CTRL+O", Controller.Current.BrowseFile));
+			menu.Items.Add(new Separator());
+			menu.Items.Add(ContextMenuHelper.CreateManuItem("Quick Jump", "CTRL+,", () => Controller.Current.GetWidget<Features.Projects.Widget>().Jump.ShowBox()));
+			menu.Items.Add(ContextMenuHelper.CreateManuItem("Stats & Encoding", "CTRL+ALT (hold)", () => Controller.Current.GetWidget<Features.Stats.Widget>().ShowStats()));
+			menu.Items.Add(new Separator());
+			menu.Items.Add(ContextMenuHelper.CreateManuItem("Close Tab", "CTRL+F4", Controller.Current.CloseActiveTab));
+
+			Editor.ContextMenu = menu;
+			
+			#endregion
+			
 			// renderer
 			BlockHighlighter = new BlockHighlighter(Editor);
 			Editor.TextArea.TextView.BackgroundRenderers.Add(BlockHighlighter);
-			
-			// load?
-			if (!path.IsBlank())
-			{
-				Editor.Load(path);		
-			}
+
+			// load language
+			LoadLanguageHighlighterAndSyntax();
 
 			// tab item
 			TabHeader = new ExtendedTabHeader(this); // always before TabItem
-			TabItem = new ExtendedTabItem(this);
+			TabItem = new ExtendedTabItem(this);			
+			
+			// assign completion window
+			completionItems = new List<CompletionWindowItem>();
+
+			// load? (always last)
+			if (!path.IsBlank())
+				Editor.Load(path);
+		}
+		
+		public void LoadLanguageHighlighterAndSyntax()
+		{
+			if (DocumentPath.IsBlank())
+			{
+				Language = Controller.Current.Languages.GetDefaultLanguage();
+				return;
+			}
+
+			var language = Controller.Current.Languages.GetLanguageByExtension(DocumentPath.Substring(DocumentPath.LastIndexOf('.') + 1));
+
+			if (Language != null && Language.Name == language.Name)
+				return;
+
+			Language = language;
 			
 			// syntax highlighter
 			if (Language.HasSyntax)
 			{
-				//HighlightingManager.Instance.RegisterHighlighting(Language.Name, Language.Associations.ToArray(), Language.Syntax.GetHighlighter());
-				
 				var ruleset = Language.Syntax.GetHighlighter();
+				
 				Editor.SyntaxHighlighting = ruleset;
-				DocumentHighlighter = new DocumentHighlighter(Editor.Document, ruleset.MainRuleSet);
+				DocumentHighlighter = Editor.TextArea.GetService(typeof(IHighlighter)) as IHighlighter;
+
+				CaretOffsetChanged(null, null); // to inform language context change
 			}
-			
-			// assign completion window
-			completionItems = new List<CompletionWindowItem>();
 		}
 
 		public void MakeActive(bool giveFocus)
@@ -172,6 +211,7 @@ namespace Farawla.Core.TabContext
 
 			IsSaved = true;
 			TabHeader.MarkAsSaved();
+			LoadLanguageHighlighterAndSyntax();
 			
 			return true;
 		}
@@ -198,22 +238,13 @@ namespace Farawla.Core.TabContext
 			return true;
 		}
 		
-		public void TextChanged()
-		{
-			// mark as unsaved?
-			if (IsSaved || IsNewDocument)
-			{
-				IsSaved = false;
-				TabHeader.MarkAsUnSaved();
-			}
-		}
-		
 		public void Rename(string newPath)
 		{
 			Name = Path.GetFileName(newPath);
 			DocumentPath = newPath;
 
-			TabItem.Header = Name;
+			TabHeader.Rename(Name);
+			LoadLanguageHighlighterAndSyntax();
 		}
 		
 		public void Close()
@@ -253,7 +284,7 @@ namespace Farawla.Core.TabContext
 				return new List<EditorSegment>();
 			
 			var offset = Editor.CaretOffset;
-			var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(offset));
+			var line = DocumentHighlighter.HighlightLine(Editor.TextArea.Caret.Line);
 			
 			return line.Sections
 						.Where(s => s.Offset <= offset && s.Offset + s.Length >= offset)
@@ -269,7 +300,7 @@ namespace Farawla.Core.TabContext
 			// before
 			while(true)
 			{
-				var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(startOffset - 1));
+				var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(startOffset - 1).LineNumber);
 
 				var sections = line.Sections.Where(s => s.Color.Name.StartsWith(name) && s.Offset <= startOffset);
 
@@ -302,7 +333,7 @@ namespace Farawla.Core.TabContext
 				}
 				
 				// check for segment
-				var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(localEndOffset));
+				var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(localEndOffset).LineNumber);
 
 				var sections = line.Sections.Where(s => s.Color.Name.StartsWith(name) && s.Offset <= localEndOffset && (s.Offset + s.Length) > endOffset);
 				
@@ -316,6 +347,16 @@ namespace Farawla.Core.TabContext
 			}
 
 			return new EditorSegment(this, name, startOffset, endOffset - startOffset);
+		}
+
+		public void TextChanged()
+		{
+			// mark as unsaved?
+			if (IsSaved || IsNewDocument)
+			{
+				IsSaved = false;
+				TabHeader.MarkAsUnSaved();
+			}
 		}
 
 		private void TextChanged(object sender, EventArgs e)

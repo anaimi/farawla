@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Farawla.Utilities;
 
 namespace Farawla.Core.TabContext
 {
@@ -39,6 +40,10 @@ namespace Farawla.Core.TabContext
 			{
 				ToolTip = tab.DocumentPath;
 			}
+			
+			ContextMenu = new ContextMenu();
+			ContextMenu.Items.Add(ContextMenuHelper.CreateManuItem("Close Tab", "CTRL+F4", Tab.Close));
+			ContextMenu.Items.Add(ContextMenuHelper.CreateManuItem("Rename Tab", "", () => Controller.Current.GetWidget<Features.Projects.Widget>().RenameFile(tab.DocumentPath)));
 
 			Controller.Current.MainWindow.Tab.SelectionChanged += ActiveTabChanges; // un-listen when closed
 			CloseBtn.Click += CloseBtnClicked;
@@ -108,6 +113,11 @@ namespace Farawla.Core.TabContext
 		public void MarkAsSaved()
 		{
 			TabCaption.Text = Tab.Name;
+		}
+
+		public void Rename(string name)
+		{
+			TabCaption.Text = name;
 		}
 	}
 }

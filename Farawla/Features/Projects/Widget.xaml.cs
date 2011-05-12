@@ -236,6 +236,11 @@ namespace Farawla.Features.Projects
 			});
 		}
 		
+		public void RenameFile(string path)
+		{
+			RenameFile(new FileItem { Path = path });
+		}
+		
 		private void DeleteFile(FileItem item)
 		{
 			var result = MessageBox.Show("Move '" + Path.GetFileName(item.Path) + "' to Recycle Bin?", item.Path, MessageBoxButton.YesNo);
@@ -415,7 +420,14 @@ namespace Farawla.Features.Projects
 			}
 			else
 			{
-				File.Move(Path, newPath);
+				try
+				{
+					File.Move(Path, newPath);
+				}
+				catch (IOException ex)
+				{
+					Notifier.Show(ex.Message);
+				}
 			}
 
 			var tab = Controller.Current.CurrentTabs.Where(t => t.DocumentPath == Path).FirstOrDefault();

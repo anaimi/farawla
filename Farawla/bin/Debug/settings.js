@@ -13,6 +13,10 @@
   ],
   "ClosedTabs": [
     {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\test.js",
+      "Index": 2
+    },
+    {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\README",
       "Index": 2
     },

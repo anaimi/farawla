@@ -151,9 +151,6 @@ namespace Farawla.Core
 		
 		public void Start()
 		{
-			var projects = Widgets.First(w => w is Features.Projects.Widget) as Features.Projects.Widget;
-			var stats = Widgets.First(w => w is Features.Stats.Widget) as Features.Stats.Widget;
-			
 			#region Bind keyboard shortcuts
 			
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.O, BrowseFile);
@@ -168,20 +165,6 @@ namespace Farawla.Core
 			Keyboard.AddBinding(KeyCombination.Ctrl, KeyboardNumberNavigation, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9);
 			Keyboard.AddBinding(KeyCombination.Ctrl, KeyboardNumberNavigation, Key.NumPad1, Key.NumPad2, Key.NumPad3, Key.NumPad4, Key.NumPad5, Key.NumPad6, Key.NumPad7, Key.NumPad8, Key.NumPad9);
 			//Keyboard.AddBinding(KeyCombination.Ctrl, KeyboardArrowNavigation, Key.Left, Key.Right);			
-			
-			#endregion
-			
-			#region Bind textarea context menu
-			
-			MainWindow.ContextMenu = new ContextMenu();
-			MainWindow.ContextMenu.Items.Add(CreateContextManuItem("New Tab", "CTRL+T", () => CreateNewTab("")));
-			MainWindow.ContextMenu.Items.Add(CreateContextManuItem("Open Previous Tab", "CTRL+SHIFT+T", OpenLastClosedTab));
-			MainWindow.ContextMenu.Items.Add(CreateContextManuItem("Browse File", "CTRL+O", BrowseFile));
-			MainWindow.ContextMenu.Items.Add(new Separator());
-			MainWindow.ContextMenu.Items.Add(CreateContextManuItem("Quick Jump", "CTRL+,", projects.Jump.ShowBox));
-			MainWindow.ContextMenu.Items.Add(CreateContextManuItem("Stats & Encoding", "CTRL+ALT (hold)", stats.ShowStats));
-			MainWindow.ContextMenu.Items.Add(new Separator());
-			MainWindow.ContextMenu.Items.Add(CreateContextManuItem("Close Tab", "CTRL+F4", CloseActiveTab));
 			
 			#endregion
 			
@@ -210,17 +193,6 @@ namespace Farawla.Core
 					CreateNewTab(path);
 			}
 				
-		}
-		
-		private MenuItem CreateContextManuItem(string header, string shortcut, Action action)
-		{
-			var item = new MenuItem();
-
-			item.Header = header;
-			item.InputGestureText = shortcut;
-			item.Click += (s, e) => action();
-
-			return item;
 		}
 
 		public void Closing(CancelEventArgs args)
@@ -374,6 +346,11 @@ namespace Farawla.Core
 
 				target.MakeActive(true);
 			}
+		}
+		
+		public T GetWidget<T>()
+		{
+			return (T)Widgets.First(w => w is T);
 		}
 	}
 }
