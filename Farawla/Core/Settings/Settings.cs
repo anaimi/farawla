@@ -92,6 +92,7 @@ namespace Farawla.Core
 		public bool ShowTabsInEditor { get; set; }
 		public bool ShowFilesStartingWithDot { get; set; }
 		public bool ShowCloseButtonInTabHeader { get; set; }
+		public bool ShowColorPreviewWhenCaretIsOnColorString { get; set; }
 
 
 		public List<string> OpenTabs { get; set; }

@@ -232,6 +232,8 @@
     <Compile Include="Core\Notifier\NotifyContainer.xaml.cs">
       <DependentUpon>NotifyContainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Core\TabContext\BaseRendered.cs" />
+    <Compile Include="Core\TabContext\ColorPreviewRenderer.cs" />
     <Compile Include="Core\TabContext\DragDropTabManager.cs" />
     <Compile Include="Core\TabContext\EditorSegment.cs" />
     <Compile Include="Core\TabContext\ExtendedTabHeader.xaml.cs">

@@ -11,7 +11,7 @@ using DrawingContext = System.Windows.Media.DrawingContext;
 
 namespace Farawla.Core.TabContext
 {
-	public class BlockHighlighter : IBackgroundRenderer
+	public class BlockHighlighter : BaseRenderer, IBackgroundRenderer
 	{
 		private List<HighlightedBlocks> blocks;
 		private TextEditor editor;
@@ -23,9 +23,9 @@ namespace Farawla.Core.TabContext
 		private DocumentLine viewportFirstLine;
 		private DocumentLine viewportLastLine;
 
-		public BlockHighlighter(TextEditor editor)
+		public BlockHighlighter(Tab tab)
 		{
-			this.editor = editor;
+			editor = tab.Editor;
 
 			blocks = new List<HighlightedBlocks>();
 
@@ -119,8 +119,8 @@ namespace Farawla.Core.TabContext
 				{
 					if (!IsOffsetInsideViewport(match.Index, match.Index + 1))
 						continue;
-					
-					var point = GetPositionFromOffset(VisualYPosition.LineMiddle, match.Index);
+
+					var point = GetPositionFromOffset(editor, VisualYPosition.LineMiddle, match.Index);
 
 					var x1 = point.X - editor.TextArea.TextView.ScrollOffset.X + 2;
 					var y1 = point.Y - editor.TextArea.TextView.ScrollOffset.Y;
@@ -148,8 +148,8 @@ namespace Farawla.Core.TabContext
 			if (Theme.Instance.HighlightLineOfCaret && editor.TextArea.IsFocused)
 			{
 				var line = editor.Document.GetLineByOffset(editor.CaretOffset);
-				var start = GetPositionFromOffset(VisualYPosition.LineTop, line.Offset);
-				var end = GetPositionFromOffset(VisualYPosition.LineBottom, line.Offset);
+				var start = GetPositionFromOffset(editor, VisualYPosition.LineTop, line.Offset);
+				var end = GetPositionFromOffset(editor, VisualYPosition.LineBottom, line.Offset);
 
 				ctx.DrawRoundedRectangle(lineOfCaret, new Pen(), new Rect(start.X, start.Y - editor.TextArea.TextView.ScrollOffset.Y, textView.ActualWidth, end.Y - start.Y), 3, 3);
 			}
@@ -162,9 +162,9 @@ namespace Farawla.Core.TabContext
 			{
 				if (!IsOffsetInsideViewport(block.Offset, block.Offset + block.Length))
 					continue;
-				
-				var startPosition = GetPositionFromOffset(VisualYPosition.LineTop, block.Offset);
-				var endPosition = GetPositionFromOffset(VisualYPosition.LineBottom, block.Offset + block.Length);
+
+				var startPosition = GetPositionFromOffset(editor, VisualYPosition.LineTop, block.Offset);
+				var endPosition = GetPositionFromOffset(editor, VisualYPosition.LineBottom, block.Offset + block.Length);
 
 				var x = startPosition.X - editor.TextArea.TextView.ScrollOffset.X;
 				var y = startPosition.Y - editor.TextArea.TextView.ScrollOffset.Y;
@@ -190,14 +190,6 @@ namespace Farawla.Core.TabContext
 				return false;
 			
 			return true;
-		}
-
-		private Point GetPositionFromOffset(VisualYPosition position, int offset)
-		{
-			var startLocation = editor.TextArea.TextView.Document.GetLocation(offset);
-			var point = editor.TextArea.TextView.GetVisualPosition(new TextViewPosition(startLocation), position);
-
-			return new Point(Math.Round(point.X), Math.Round(point.Y));
 		}
 
 		public void Redraw()

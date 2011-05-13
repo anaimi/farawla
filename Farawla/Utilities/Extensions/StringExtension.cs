@@ -132,6 +132,9 @@ public static class StringExtension
 		if (!str.StartsWith("#"))
 			throw new Exception("Color string must start with a '#'");
 		
+		if (str.Length == 8)
+			str = str + "0";
+		
 		if (str.Length != 7 && str.Length != 9)
 			throw new Exception("String '" + str + "' is not a valid 6- or 8-digits hex color");
 
@@ -143,13 +146,15 @@ public static class StringExtension
 
 			return Color.FromArgb(255, (byte)r, (byte)g, (byte)b);
 		}
+		else
+		{
+			a = Convert.ToInt32(str.Substring(1, 2), 16);
+			r = Convert.ToInt32(str.Substring(3, 2), 16);
+			g = Convert.ToInt32(str.Substring(5, 2), 16);
+			b = Convert.ToInt32(str.Substring(7, 2), 16);
 
-		a = Convert.ToInt32(str.Substring(1, 2), 16);
-		r = Convert.ToInt32(str.Substring(3, 2), 16);
-		g = Convert.ToInt32(str.Substring(5, 2), 16);
-		b = Convert.ToInt32(str.Substring(7, 2), 16);
-
-		return Color.FromArgb((byte)a, (byte)r, (byte)g, (byte)b);
+			return Color.FromArgb((byte)a, (byte)r, (byte)g, (byte)b);
+		}
 	}
 	
 	public static int GetLevenshteinDistance(this string str, string other)

@@ -49,6 +49,7 @@ namespace Farawla.Core.TabContext
 		private Color matchingTokensBackground;
 		private List<CompletionWindowItem> completionItems;
 		private CompletionWindow completionWindow;
+		private ColorPreviewRenderer colorPreview;
 
 		public Tab(string path)
 		{
@@ -116,9 +117,11 @@ namespace Farawla.Core.TabContext
 			#endregion
 			
 			// renderer
-			BlockHighlighter = new BlockHighlighter(Editor);
+			BlockHighlighter = new BlockHighlighter(this);
 			Editor.TextArea.TextView.BackgroundRenderers.Add(BlockHighlighter);
-
+			colorPreview = new ColorPreviewRenderer(this);
+			Editor.TextArea.TextView.BackgroundRenderers.Add(colorPreview);
+			
 			// load language
 			LoadLanguageHighlighterAndSyntax();
 
@@ -133,7 +136,7 @@ namespace Farawla.Core.TabContext
 			if (!path.IsBlank())
 				Editor.Load(path);
 		}
-		
+
 		public void LoadLanguageHighlighterAndSyntax()
 		{
 			if (DocumentPath.IsBlank())

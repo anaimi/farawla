@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Core="clr-namespace:Farawla.Core"
     x:Name="CurrentSettingsWindow" Title="Settings"
-    Height="250" Width="500"
+    Height="270" Width="500"
     Background="Transparent" AllowsTransparency="True" ShowInTaskbar="False"
     WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
 	<Window.Resources>
@@ -73,6 +73,7 @@
 								<CheckBox Content="Show tabs" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowTabsInEditor}" Click="ShowTabsAndSpacesChanged" />
 								<CheckBox Content="Show spaces" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowSpacesInEditor}" Click="ShowTabsAndSpacesChanged" />
 								<CheckBox Content="Show close button in tab header" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowCloseButtonInTabHeader}" />
+								<CheckBox Content="Show color preview when caret is on hexdecimal string" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowColorPreviewWhenCaretIsOnColorString}" />
 							</StackPanel>
 						</GroupBox>
 
@@ -99,7 +100,7 @@
 						This operation might require elevated permissions to read/write associations settings.
 						</TextBlock>
 
-						<ListBox x:Name="FileAssociationList" Background="Transparent" BorderThickness="0" Height="170" />
+						<ListBox x:Name="FileAssociationList" Background="Transparent" BorderThickness="0" Height="190" />
 					</StackPanel>
 				</TabItem>
 

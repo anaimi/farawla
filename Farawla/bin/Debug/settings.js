@@ -7,14 +7,16 @@
   "ShowTabsInEditor": true,
   "ShowFilesStartingWithDot": false,
   "ShowCloseButtonInTabHeader": true,
+  "ShowColorPreviewWhenCaretIsOnColorString": true,
   "OpenTabs": [
     "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\app.rb",
-    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\Rakefile.rb"
+    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\Rakefile.rb",
+    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\public\\css\\main.css"
   ],
   "ClosedTabs": [
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\\\README",
-      "Index": 2
+      "Index": 3
     },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\layout.erb",
@@ -60,7 +62,7 @@
     {
       "Name": "ColorPicker",
       "Values": {
-        "Color": "#FF970B0A"
+        "Color": "#2E0929F5"
       }
     },
     {
