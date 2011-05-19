@@ -72,7 +72,6 @@
 							<StackPanel>
 								<CheckBox Content="Show tabs" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowTabsInEditor}" Click="ShowTabsAndSpacesChanged" />
 								<CheckBox Content="Show spaces" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowSpacesInEditor}" Click="ShowTabsAndSpacesChanged" />
-								<CheckBox Content="Show close button in tab header" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowCloseButtonInTabHeader}" />
 								<CheckBox Content="Show color preview when caret is on hexdecimal string" IsChecked="{Binding ElementName=CurrentSettingsWindow, Path=Settings.ShowColorPreviewWhenCaretIsOnColorString}" />
 							</StackPanel>
 						</GroupBox>

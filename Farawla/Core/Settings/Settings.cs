@@ -91,7 +91,6 @@ namespace Farawla.Core
 		public bool ShowSpacesInEditor { get; set; }
 		public bool ShowTabsInEditor { get; set; }
 		public bool ShowFilesStartingWithDot { get; set; }
-		public bool ShowCloseButtonInTabHeader { get; set; }
 		public bool ShowColorPreviewWhenCaretIsOnColorString { get; set; }
 
 
@@ -104,7 +103,6 @@ namespace Farawla.Core
 			// set default settings
 			ThemeName = DEFAULT_THEME;
 			IsWindowMaximized = true;
-			ShowCloseButtonInTabHeader = true;
 
 			OpenTabs = new List<string>();
 			ClosedTabs = new List<ClosedTabs>();

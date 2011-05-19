@@ -6,7 +6,6 @@
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": true,
   "ShowFilesStartingWithDot": false,
-  "ShowCloseButtonInTabHeader": true,
   "ShowColorPreviewWhenCaretIsOnColorString": true,
   "OpenTabs": [
     "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\app.rb",

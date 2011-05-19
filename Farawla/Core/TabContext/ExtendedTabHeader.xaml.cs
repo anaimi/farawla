@@ -43,7 +43,7 @@ namespace Farawla.Core.TabContext
 			
 			ContextMenu = new ContextMenu();
 			ContextMenu.Items.Add(ContextMenuHelper.CreateManuItem("Close Tab", "CTRL+F4", Tab.Close));
-			ContextMenu.Items.Add(ContextMenuHelper.CreateManuItem("Rename Tab", "", () => Controller.Current.GetWidget<Features.Projects.Widget>().RenameFile(tab.DocumentPath)));
+			ContextMenu.Items.Add(ContextMenuHelper.CreateManuItem("Rename File", "", () => Controller.Current.GetWidget<Features.Projects.Widget>().RenameFile(tab.DocumentPath)));
 
 			Controller.Current.MainWindow.Tab.SelectionChanged += ActiveTabChanges; // un-listen when closed
 			CloseBtn.Click += CloseBtnClicked;
@@ -51,9 +51,6 @@ namespace Farawla.Core.TabContext
 
 		private void CloseBtnClicked(object sender, RoutedEventArgs e)
 		{
-			if (!Settings.Instance.ShowCloseButtonInTabHeader)
-				return;
-			
 			// un assign
 			Controller.Current.MainWindow.Tab.SelectionChanged -= ActiveTabChanges;
 			
@@ -82,9 +79,8 @@ namespace Farawla.Core.TabContext
 
 		protected override void OnMouseEnter(MouseEventArgs e)
 		{
-			if (Settings.Instance.ShowCloseButtonInTabHeader)
-				CloseBtn.Opacity = 0.6;
-
+			CloseBtn.Opacity = 0.6;
+			
 			if (!IsSelected)
 			{
 				Left.Fill = ThemeColorConverter.GetColor("WindowTabHoverColor");
