@@ -9,7 +9,8 @@
   "ShowColorPreviewWhenCaretIsOnColorString": true,
   "OpenTabs": [
     "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\app.rb",
-    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\public\\css\\main.css"
+    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\public\\css\\main.css",
+    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\index.erb"
   ],
   "ClosedTabs": [
     {
@@ -57,8 +58,8 @@
     {
       "Name": "Projects",
       "Values": {
-        "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes",
-        "PreviouslyOpenedProjects": "C:\\Users\\Ahmad\\Desktop\\Projects\\v8,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb,C:\\Users\\Ahmad\\Desktop\\Projects\\codebox-web,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog,C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes"
+        "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web",
+        "PreviouslyOpenedProjects": "C:\\Users\\Ahmad\\Desktop\\Projects\\v8,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb,C:\\Users\\Ahmad\\Desktop\\Projects\\codebox-web,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes,C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web"
       }
     },
     {

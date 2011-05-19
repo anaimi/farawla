@@ -113,6 +113,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Features\Snippets\SnippetToolptip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Features\Stats\StatsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -241,6 +245,9 @@
     </Compile>
     <Compile Include="Core\TabContext\ExtendedTabItem.xaml.cs">
       <DependentUpon>ExtendedTabItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Snippets\SnippetToolptip.xaml.cs">
+      <DependentUpon>SnippetToolptip.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Stats\StatsWindow.cs">
       <DependentUpon>StatsWindow.xaml</DependentUpon>
