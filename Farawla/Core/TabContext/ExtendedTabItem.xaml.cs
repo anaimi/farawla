@@ -33,19 +33,19 @@ namespace Farawla.Core.TabContext
 			Content = tab.Editor;
 		}
 
-		protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
-		{
-			if (!(e.OriginalSource is TextView))
-				       tab.Close();
+		//protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
+		//{
+		//    if (!(e.OriginalSource is TextView))
+		//               tab.Close();
 			
-			base.OnMouseDoubleClick(e);
-		}
+		//    base.OnMouseDoubleClick(e);
+		//}
 
-		protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-		{
-			e.Handled = true;
+		//protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+		//{
+		//    e.Handled = true;
 			
-			base.OnMouseLeftButtonDown(e);
-		}
+		//    base.OnMouseLeftButtonDown(e);
+		//}
 	}
 }

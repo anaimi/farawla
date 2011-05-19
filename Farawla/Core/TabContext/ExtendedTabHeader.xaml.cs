@@ -47,6 +47,19 @@ namespace Farawla.Core.TabContext
 
 			Controller.Current.MainWindow.Tab.SelectionChanged += ActiveTabChanges; // un-listen when closed
 			CloseBtn.Click += CloseBtnClicked;
+			Container.MouseDown += MouseClick;
+		}
+
+		private void MouseClick(object sender, MouseButtonEventArgs e)
+		{
+			if (e.MiddleButton == MouseButtonState.Pressed)
+			{
+				Tab.Close();
+			}
+			else if (e.ClickCount == 2)
+			{
+				Tab.Close();
+			}
 		}
 
 		private void CloseBtnClicked(object sender, RoutedEventArgs e)
