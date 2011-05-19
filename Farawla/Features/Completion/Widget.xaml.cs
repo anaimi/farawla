@@ -73,11 +73,16 @@ namespace Farawla.Features.Completion
 
 			if (e.Text.Length == 1)
 			{
-				if (!Engine.IsIdentifierCharacter(e.Text[0]))
+				if (e.Text == " ")
+				{
+					ActiveTab.CompletionRequestInsertion(e);
+				}
+				else if (!Engine.IsIdentifierCharacter(e.Text[0]))
 				{
 					var isDelimiterText = ActiveCompletion.ObjectAttributeDelimiters.Any(d => d == e.Text);
-
-					ActiveTab.CompletionRequestInsertion(e, isDelimiterText);
+					
+					if (isDelimiterText)
+						ActiveTab.CompletionRequestInsertion(e);
 				}
 			}
 		}

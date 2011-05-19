@@ -481,9 +481,9 @@ namespace Farawla.Core.TabContext
 				AddCompletionItem(item);
 		}
 
-		public void CompletionRequestInsertion(TextCompositionEventArgs e, bool isDelimiterText)
+		public void CompletionRequestInsertion(TextCompositionEventArgs e)
 		{
-			if (completionWindow != null && completionWindow.IsVisible && isDelimiterText)
+			if (completionWindow != null && completionWindow.IsVisible)
 				completionWindow.CompletionList.RequestInsertion(e);
 		}
 
