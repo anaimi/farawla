@@ -19,7 +19,7 @@
 			</Path.RenderTransform>
 		</Path>
 		
-		<Button x:Name="CloseBtn" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Opacity="0" Margin="0,0,-8,0" ToolTip="Tip: double click on tab header to close">
+		<Button x:Name="CloseBtn" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Opacity="0" Margin="0,0,-8,0" ToolTip="Tip: middle button or double click on tab header to close">
 			<Button.Template>
 				<ControlTemplate>
 					<Grid>

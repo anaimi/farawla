@@ -38,7 +38,7 @@
 		It's better to keep these semi-transparent as there's a lot of layering
 		Usually 'Primary' would be used for the background and 'Secondary' for the borders - this rule is not always followed
 	*/
-	PrimaryWidgetColor: "#553769A0",
+	PrimaryWidgetColor: "#883769A0",
 	SecondaryWidgetColor: "#11000000",
 	
 	/* Color Text in the widgets */
