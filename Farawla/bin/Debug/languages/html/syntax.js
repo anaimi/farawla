@@ -13,6 +13,16 @@
 			Reference: "JavaScript"
 		},
 		{
+			Start: "<\\?php",
+			End: "\\?>",
+			Reference: "PHP"
+		},
+		{
+			Start: "<\\%",
+			End: "\\%>",
+			Reference: "Ruby"
+		},
+		{
 			Start: "<script\\ type=\"application/processing\">",
 			End: "</script>",
 			Reference: "Processing"

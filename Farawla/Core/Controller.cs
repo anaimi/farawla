@@ -187,7 +187,7 @@ namespace Farawla.Core
 			// open readme if first time
 			if (Settings.Instance.IsFirstTime)
 			{
-				var path = Settings.ExecDir + "README";
+				var path = Settings.ExecDir + "readme.txt";
 				
 				if (File.Exists(path))
 					CreateNewTab(path);

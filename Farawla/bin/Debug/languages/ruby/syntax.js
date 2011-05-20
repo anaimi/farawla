@@ -62,11 +62,15 @@
 	Rules: [
 		{
 			Name: "keyword",
-			Regex: "\\b(alias|begin|BEGIN|break|case|defined|do|else|elsif|end|END|ensure|for|if|in|include|loop|next|raise|redo|rescue|retry|return|super|then|undef|unless|until|when|while|yield|false|nil|self|true|__FILE__|__LINE__|and|not|or|def|class|module|catch|fail|load|throw)\\b"
+			Regex: "\\b(alias|begin|BEGIN|break|case|defined|do|else|elsif|end|END|ensure|for|if|in|include|loop|next|raise|redo|rescue|retry|return|super|then|undef|unless|until|when|while|yield|false|nil|self|true|__FILE__|__LINE__|and|not|or|def|class|module|catch|fail|load|throw|require)\\b"
+		},
+		{
+			Name: "type",
+			Regex: "([A-Z])(\\w|-)+"
 		},
 		{
 			Name: "object",
-			Regex: "\\b(Array|Bignum|Binding|Class|Continuation|Dir|Exception|FalseClass|File::Stat|File|Fixnum|Float|Hash|Integer|IO|MatchData|Method|Module|NilClass|Numeric|Object|Proc|Range|Regexp|String|Struct|Symbol|ThreadGroup|Thread|Time|TrueClass)\\b"
+			Regex: "\\@(\\w|-)+"
 		},
 		{
 			Name: "symbol",

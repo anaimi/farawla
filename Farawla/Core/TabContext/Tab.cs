@@ -304,7 +304,7 @@ namespace Farawla.Core.TabContext
 			// before
 			while(true)
 			{
-				var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(startOffset - 1).LineNumber);
+				var line = DocumentHighlighter.HighlightLine(Editor.Document.GetLineByOffset(startOffset).LineNumber);
 
 				var sections = line.Sections.Where(s => s.Color.Name.StartsWith(name) && s.Offset <= startOffset);
 

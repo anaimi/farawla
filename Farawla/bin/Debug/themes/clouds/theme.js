@@ -3,7 +3,6 @@
 	By Ahmad Al-Naimi
 	Heavily inspired from http://fredhq.com/projects/clouds
 */
-
 {
 	/* Background colors for document tab headers */
 	WindowTabSelectedColor: "#FFFFFFFF,#FFF4F8FE",
@@ -64,8 +63,9 @@
 			So as a theme designer, it's better to be as general as possible.
 	*/
 	SyntaxColors: {
-		"comment": "#BCC8BA",
+		"comment": "#BFBFBF",
 		"string": "#5D90CD",
+		"type": "#C2515A",
 		"keyword": "#AF956F",
 		"object": "#39946A",
 		"terminal": "#39946A",
@@ -73,6 +73,7 @@
 		"number": "#46A609",
 		"operator": "#CCCCCC",
 		"regex": "#C2515A",
+		"constant": "#FFDEAF22",
 		"xml-tag": "#AF956F",
 		"xml-attribute": "#39946A",
 		"css-block": "#39946A",

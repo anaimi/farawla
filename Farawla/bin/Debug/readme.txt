@@ -6,6 +6,12 @@ for other platforms and aesthetics.
 
 To take full advantage of what Farawla has to offer, keep reading.
 
+== Installation
+There is no installation. Just place the folder containing Farawla anywhere in your file system,
+and drag then drop Farawla.exe to your quick launch bar or startup menu to create a shortcut.
+Also make sure to check out the Settings dialog (hover mouse to the right) and to specify 
+File Associations.
+
 == Sidebar & Context Menu
 Just in case you didn't notice, there's a sidebar on your right. Move your mouse to the right
 and it will slowly appear. Hopefully you won't have to use it much (you'll use the keyboard
@@ -31,7 +37,7 @@ and hit enter.
 	- Home					Beginning of line
 	- CTRL+Home			Beginning of document
 	- CTRL+V				Paste
-	- CTRL+C				Copy  (if no text is selected, it will copy the whole line)
+	- CTRL+C				Copy (if no text is selected, it will copy the whole line)
 	- CTRL+X				Cut (if no text is selected, it will cut the whole line)
 	- CTRL+S				Save
 	- CTRL+SHIFT+S		Save as
