@@ -159,7 +159,7 @@ namespace Farawla.Core
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.F4, CloseActiveTab);
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.N, () => CreateNewTab(""));
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.T, () => CreateNewTab(""));
-			Keyboard.AddBinding(KeyCombination.Ctrl | KeyCombination.Shift, Key.T, OpenLastClosedTab);		
+			Keyboard.AddBinding(KeyCombination.Ctrl | KeyCombination.Shift, Key.T, OpenLastClosedTab);
 			
 			// keybindings for ctrl+#
 			Keyboard.AddBinding(KeyCombination.Ctrl, KeyboardNumberNavigation, Key.D1, Key.D2, Key.D3, Key.D4, Key.D5, Key.D6, Key.D7, Key.D8, Key.D9);
@@ -274,7 +274,7 @@ namespace Farawla.Core
 
 			if (dialog.ShowDialog().Value)
 			{
-				Controller.Current.CreateNewTab(dialog.FileName);
+				CreateNewTab(dialog.FileName);
 			}
 		}
 

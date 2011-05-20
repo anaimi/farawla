@@ -91,6 +91,7 @@ namespace Farawla.Core.TabContext
 			Editor.Background = ThemeColorConverter.GetColor("Background");
 			Editor.Foreground = ThemeColorConverter.GetColor("Foreground");
 			Editor.FontFamily = new FontFamily(Theme.Instance.FontFamily);
+			Editor.TextArea.PreviewKeyDown += EditorKeyDown;
 			Editor.TextChanged += TextChanged;
 			Editor.TextArea.SelectionChanged += SelectionChanged;
 			Editor.TextArea.Caret.PositionChanged += CaretOffsetChanged;
@@ -136,6 +137,22 @@ namespace Farawla.Core.TabContext
 			// load? (always last)
 			if (!path.IsBlank())
 				Editor.Load(path);
+		}
+
+		private void EditorKeyDown(object sender, KeyEventArgs e)
+		{
+			var ctrl = Keyboard.IsKeyDown(Key.RightCtrl) || Keyboard.IsKeyDown(Key.LeftCtrl);
+			var keyD = Keyboard.IsKeyDown(Key.D);
+			
+			if (ctrl && keyD)
+			{
+				var line = Editor.Document.GetLineByOffset(Editor.CaretOffset);
+				var text = Editor.Document.GetText(line.Offset, line.Length);
+				
+				Editor.Document.Insert(line.EndOffset, "\n" + text);
+				
+				e.Handled = true;
+			}
 		}
 
 		public void LoadLanguageHighlighterAndSyntax(LanguageMeta lang)
