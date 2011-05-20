@@ -351,6 +351,8 @@ namespace Farawla.Core.TabContext
 				}
 				
 				Editor.TextArea.Caret.Line = dest;
+				Editor.ScrollToLine(dest);
+				Editor.Focus();
 				
 			});
 		}

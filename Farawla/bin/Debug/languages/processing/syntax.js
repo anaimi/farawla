@@ -2,6 +2,8 @@
 	Language: JavaScript
 */
 {
+	IncludeLanguageSyntax: ["JavaScript"],
+	
 	Spans: [
 		{
 			Name: "comment multi-line",
@@ -39,14 +41,6 @@
 		{
 			Name: "terminal",
 			Regex: "\\b(true|false|null|PI|HALF_PI|QUARTER_PI|TWO_PI)\\b"
-		},
-		{
-			Name: "number",
-			Regex: "((0x)?(\\d+)(\\.\\d+)?(f)?)"
-		},
-		{
-			Name: "regex",
-			Regex: "\\/(.)+\\/"
 		}
 		
 	]

@@ -7,7 +7,7 @@
 	{
 		Name: "Link",
 		Trigger: "links",
-		Body: '<link rel="stylesheet" type="text/css" href="example.css" media="all" />'
+		Body: '<link rel="stylesheet" type="text/css" href="$0.css" media="all" />'
 	},
 	{
 		Name: "Style",

@@ -8,9 +8,22 @@
   "ShowFilesStartingWithDot": false,
   "ShowColorPreviewWhenCaretIsOnColorString": true,
   "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\examples\\socket.rb"
+    "C:\\Users\\Ahmad\\Desktop\\examples\\socket.rb",
+    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles\\index.html"
   ],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles\\index.html",
+      "Index": 1
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles\\js\\slider.js",
+      "Index": 2
+    },
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles\\js\\jquery.js",
+      "Index": 2
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\ألسلام عليكم.rb",
       "Index": 1
@@ -38,26 +51,14 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
       "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes\\clouds\\theme.js",
-      "Index": 0
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages\\php\\syntax.js",
-      "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\layout.erb",
-      "Index": 2
     }
   ],
   "Widgets": [
     {
       "Name": "Projects",
       "Values": {
-        "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBlog",
-        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\My Dropbox\\farawla\\farawla-web,C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBlog"
+        "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles",
+        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\My Dropbox\\farawla\\farawla-web,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBlog,C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles"
       }
     },
     {
