@@ -46,6 +46,12 @@ namespace Farawla.Features.Projects
 		
 		public void ShowBox()
 		{
+			if (projectManager.CurrentProjectPath.IsBlank())
+			{
+				Notifier.Growl("Quick Jump", "No project loaded", "Drag and drop a folder to open a project");
+				return;
+			}
+			
 			FileName.Focus();
 			FileName.SelectAll();
 			

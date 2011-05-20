@@ -12,6 +12,10 @@
   ],
   "ClosedTabs": [
     {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\ألسلام عليكم.rb",
+      "Index": 1
+    },
+    {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles\\index.html",
       "Index": 0
     },
@@ -52,8 +56,8 @@
     {
       "Name": "Projects",
       "Values": {
-        "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog",
-        "PreviouslyOpenedProjects": "C:\\Users\\Ahmad\\Desktop\\Projects\\v8,C:\\Users\\Ahmad\\Desktop\\Projects\\Algorithmatic,C:\\Users\\Ahmad\\Desktop\\Projects\\FarawlaWeb,C:\\Users\\Ahmad\\Desktop\\Projects\\codebox-web,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\themes,C:\\Users\\Ahmad\\Desktop\\Projects\\Farawla\\Farawla\\bin\\Debug\\languages\\php,C:\\Users\\Ahmad\\Desktop\\wordpress-3.1.2\\wordpress,C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles,C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog"
+        "LastOpenProject": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBlog",
+        "PreviouslyOpenedProjects": ",C:\\Users\\Ahmad\\Desktop\\My Dropbox\\farawla\\farawla-web,C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles,C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBlog"
       }
     },
     {

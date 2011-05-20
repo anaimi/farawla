@@ -85,8 +85,11 @@ namespace Farawla.Features.Projects
 					else
 					{
 						OpenProject(path);
+
+						//Notifier.Growl("Project loaded", Path.GetFileName(path), path.Chop(60));
 					}
 				}
+				
 			};
 
 			Controller.Current.Keyboard.AddBinding(KeyCombination.None, Key.F2, () =>
