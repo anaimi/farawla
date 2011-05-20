@@ -159,6 +159,7 @@ namespace Farawla.Core
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.F4, CloseActiveTab);
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.N, () => CreateNewTab(""));
 			Keyboard.AddBinding(KeyCombination.Ctrl, Key.T, () => CreateNewTab(""));
+			Keyboard.AddBinding(KeyCombination.Ctrl, Key.G, ActiveTab.GoToLine);
 			Keyboard.AddBinding(KeyCombination.Ctrl | KeyCombination.Shift, Key.T, OpenLastClosedTab);
 			
 			// keybindings for ctrl+#

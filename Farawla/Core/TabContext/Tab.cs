@@ -325,6 +325,35 @@ namespace Farawla.Core.TabContext
 			// update count (also open a new tab if tab count is zero)
 			Controller.Current.TabCountUpdated();
 		}
+
+		public void GoToLine()
+		{
+			var line = Editor.Document.GetLineByOffset(Editor.CaretOffset);
+
+			Notifier.Prompt("Go to", "You are at line " + line.LineNumber, "", (canceled, message) =>
+			{
+				if (canceled)
+					return;
+				
+				if (!message.IsInteger())
+				{
+					Notifier.Growl("Can't go to line", "Expected a number, got " + message, "try again");
+					return;
+				}
+				
+				var dest = message.ToInteger();
+				var maxLine = Editor.Document.LineCount;
+				
+				if (dest <= 0 || dest > maxLine)
+				{
+					Notifier.Growl("Can't go to line", "Requested line number is out of range", "try again");
+					return;
+				}
+				
+				Editor.TextArea.Caret.Line = dest;
+				
+			});
+		}
 		
 		public List<EditorSegment> GetCurrentSegments()
 		{
