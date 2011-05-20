@@ -44,7 +44,8 @@ namespace Farawla.Core.TabContext
 			ContextMenu = new ContextMenu();
 			ContextMenu.Items.Add(ContextMenuHelper.CreateManuItem("Close Tab", "CTRL+F4", Tab.Close));
 			ContextMenu.Items.Add(ContextMenuHelper.CreateManuItem("Rename File", "", () => Controller.Current.GetWidget<Features.Projects.Widget>().RenameFile(tab.DocumentPath)));
-
+			ContextMenu.Items.Add(Tab.GetChangleLanguageContextMenuItem());
+			
 			Controller.Current.MainWindow.Tab.SelectionChanged += ActiveTabChanges; // un-listen when closed
 			CloseBtn.Click += CloseBtnClicked;
 			Container.MouseDown += MouseClick;

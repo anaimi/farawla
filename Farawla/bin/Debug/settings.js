@@ -2,7 +2,7 @@
   "SidebarButton": null,
   "ThemeName": "clouds",
   "IsFirstTime": false,
-  "IsWindowMaximized": false,
+  "IsWindowMaximized": true,
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
@@ -45,10 +45,6 @@
     },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\views\\layout.erb",
-      "Index": 2
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\Farawla\\farawla-web\\app.rb",
       "Index": 2
     }
   ],

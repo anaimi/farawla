@@ -33,6 +33,7 @@ namespace Farawla.Core.Language
 		{
 			Name = DEFAULT_NAME;
 			Associations = new List<string>();
+			Syntax = new Syntax();
 		}
 		
 		public void LoadChildren()

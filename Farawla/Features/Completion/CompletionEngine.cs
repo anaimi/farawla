@@ -178,7 +178,7 @@ namespace Farawla.Features.Completion
 				while (match.Success)
 				{
 					var offset = match.Index;
-					var scope = scopes.Where(s => s.From < offset && s.To >= offset).OrderBy(s => s.Size).First();
+					var scope = scopes.Where(s => s.From <= offset && s.To >= offset).OrderBy(s => s.Size).FirstOrDefault();
 
 					if (identifier.OptionType == "Object")
 					{

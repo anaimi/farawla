@@ -11,7 +11,9 @@ namespace Farawla.Utilities
 
 			item.Header = header;
 			item.InputGestureText = shortcut;
-			item.Click += (s, e) => action();
+			
+			if (action != null)
+				item.Click += (s, e) => action();
 
 			return item;
 		}

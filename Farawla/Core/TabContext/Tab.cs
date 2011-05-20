@@ -110,6 +110,7 @@ namespace Farawla.Core.TabContext
 			menu.Items.Add(ContextMenuHelper.CreateManuItem("Quick Jump", "CTRL+,", () => Controller.Current.GetWidget<Features.Projects.Widget>().Jump.ShowBox()));
 			menu.Items.Add(ContextMenuHelper.CreateManuItem("Stats & Encoding", "CTRL+ALT (hold)", () => Controller.Current.GetWidget<Features.Stats.Widget>().ShowStats()));
 			menu.Items.Add(new Separator());
+			menu.Items.Add(GetChangleLanguageContextMenuItem());
 			menu.Items.Add(ContextMenuHelper.CreateManuItem("Close Tab", "CTRL+F4", Controller.Current.CloseActiveTab));
 
 			Editor.ContextMenu = menu;
@@ -123,7 +124,7 @@ namespace Farawla.Core.TabContext
 			Editor.TextArea.TextView.BackgroundRenderers.Add(colorPreview);
 			
 			// load language
-			LoadLanguageHighlighterAndSyntax();
+			LoadLanguageHighlighterAndSyntax(null);
 
 			// tab item
 			TabHeader = new ExtendedTabHeader(this); // always before TabItem
@@ -137,23 +138,32 @@ namespace Farawla.Core.TabContext
 				Editor.Load(path);
 		}
 
-		public void LoadLanguageHighlighterAndSyntax()
+		public void LoadLanguageHighlighterAndSyntax(LanguageMeta lang)
 		{
-			if (DocumentPath.IsBlank())
+			// forced language, via context menu
+			if (lang != null)
+			{
+				Language = lang;
+			}
+			// new tab
+			else if (DocumentPath.IsBlank())
 			{
 				Language = Controller.Current.Languages.GetDefaultLanguage();
 				return;
 			}
+			// language via rename or save
+			else
+			{
+				var language = Controller.Current.Languages.GetLanguageByExtension(DocumentPath.Substring(DocumentPath.LastIndexOf('.') + 1));
 
-			var language = Controller.Current.Languages.GetLanguageByExtension(DocumentPath.Substring(DocumentPath.LastIndexOf('.') + 1));
+				if (Language != null && Language.Name == language.Name)
+					return;
 
-			if (Language != null && Language.Name == language.Name)
-				return;
-
-			Language = language;
+				Language = language;
+			}
 			
 			// syntax highlighter
-			if (Language.HasSyntax)
+			if (Language.HasSyntax || Language.IsDefault)
 			{
 				var ruleset = Language.Syntax.GetHighlighter();
 				
@@ -162,6 +172,23 @@ namespace Farawla.Core.TabContext
 
 				CaretOffsetChanged(null, null); // to inform language context change
 			}
+		}
+		
+		public MenuItem GetChangleLanguageContextMenuItem()
+		{
+			var languages = ContextMenuHelper.CreateManuItem("Change Language", "", null);
+
+			languages.Items.Add(ContextMenuHelper.CreateManuItem("Default", "", () => LoadLanguageHighlighterAndSyntax(Controller.Current.Languages.GetDefaultLanguage())));
+
+			languages.Items.Add(new Separator());
+			
+			foreach (var lang in Controller.Current.Languages.Items)
+			{
+				var language = lang;
+				languages.Items.Add(ContextMenuHelper.CreateManuItem(lang.Name, "", () => LoadLanguageHighlighterAndSyntax(language)));
+			}
+
+			return languages;
 		}
 
 		public void MakeActive(bool giveFocus)
@@ -215,7 +242,7 @@ namespace Farawla.Core.TabContext
 
 			IsSaved = true;
 			TabHeader.MarkAsSaved();
-			LoadLanguageHighlighterAndSyntax();
+			LoadLanguageHighlighterAndSyntax(null);
 			
 			return true;
 		}
@@ -248,7 +275,7 @@ namespace Farawla.Core.TabContext
 			DocumentPath = newPath;
 
 			TabHeader.Rename(Name);
-			LoadLanguageHighlighterAndSyntax();
+			LoadLanguageHighlighterAndSyntax(null);
 		}
 		
 		public void Close()
