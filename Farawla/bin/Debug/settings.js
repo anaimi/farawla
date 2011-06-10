@@ -2,16 +2,17 @@
   "SidebarButton": null,
   "ThemeName": "clouds",
   "IsFirstTime": false,
-  "IsWindowMaximized": true,
+  "IsWindowMaximized": false,
   "ShowSpacesInEditor": false,
   "ShowTabsInEditor": false,
   "ShowFilesStartingWithDot": false,
   "ShowColorPreviewWhenCaretIsOnColorString": true,
-  "OpenTabs": [
-    "C:\\Users\\Ahmad\\Desktop\\examples\\socket.rb",
-    "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles\\index.html"
-  ],
+  "OpenTabs": [],
   "ClosedTabs": [
+    {
+      "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles\\particles.pjs",
+      "Index": 0
+    },
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\My Dropbox\\particles\\index.html",
       "Index": 1
@@ -47,10 +48,6 @@
     {
       "Path": "C:\\Users\\Ahmad\\Desktop\\ActionScript.tmbundle\\ActionScript.tmbundle\\Syntaxes\\ActionScript.plist",
       "Index": 1
-    },
-    {
-      "Path": "C:\\Users\\Ahmad\\Desktop\\Projects\\ORLYBLog\\public\\javascripts\\main.js",
-      "Index": 0
     }
   ],
   "Widgets": [

@@ -76,18 +76,12 @@ namespace Farawla.Core.TabContext
 			if (Controller.Current.ActiveTab == Tab)
 			{
 				TabCaption.Foreground = ThemeColorConverter.GetColor("WindowTabSelectedCaptionColor");
-				
-				Left.Fill = ThemeColorConverter.GetColor("WindowTabSelectedColor");
-				Middle.Fill = ThemeColorConverter.GetColor("WindowTabSelectedColor");
-				Right.Fill = ThemeColorConverter.GetColor("WindowTabSelectedColor");
+				ChangeBackgroundToColor("WindowTabSelectedColor");
 			}
 			else
 			{
 				TabCaption.Foreground = ThemeColorConverter.GetColor("WindowTabInactiveCaptionColor");				
-				
-				Left.Fill = ThemeColorConverter.GetColor("WindowTabInactiveColor");
-				Middle.Fill = ThemeColorConverter.GetColor("WindowTabInactiveColor");
-				Right.Fill = ThemeColorConverter.GetColor("WindowTabInactiveColor");
+				ChangeBackgroundToColor("WindowTabInactiveColor");
 			}
 		}
 
@@ -97,9 +91,7 @@ namespace Farawla.Core.TabContext
 			
 			if (!IsSelected)
 			{
-				Left.Fill = ThemeColorConverter.GetColor("WindowTabHoverColor");
-				Middle.Fill = ThemeColorConverter.GetColor("WindowTabHoverColor");
-				Right.Fill = ThemeColorConverter.GetColor("WindowTabHoverColor");
+				ChangeBackgroundToColor("WindowTabHoverColor");
 			}
 			
 			base.OnMouseEnter(e);
@@ -111,11 +103,8 @@ namespace Farawla.Core.TabContext
 
 			if (!IsSelected)
 			{
-				TabCaption.Foreground = ThemeColorConverter.GetColor("WindowTabInactiveCaptionColor");				
-			
-				Left.Fill = ThemeColorConverter.GetColor("WindowTabInactiveColor");
-				Middle.Fill = ThemeColorConverter.GetColor("WindowTabInactiveColor");
-				Right.Fill = ThemeColorConverter.GetColor("WindowTabInactiveColor");
+				TabCaption.Foreground = ThemeColorConverter.GetColor("WindowTabInactiveCaptionColor");
+				ChangeBackgroundToColor("WindowTabInactiveColor");
 			}
 			
 			base.OnMouseLeave(e);
@@ -134,6 +123,13 @@ namespace Farawla.Core.TabContext
 		public void Rename(string name)
 		{
 			TabCaption.Text = name;
+		}
+		
+		private void ChangeBackgroundToColor(string name)
+		{
+			//Left.Fill = ThemeColorConverter.GetColor(name);
+			Container.Background = ThemeColorConverter.GetColor(name);
+			//Right.Fill = ThemeColorConverter.GetColor(name);
 		}
 	}
 }

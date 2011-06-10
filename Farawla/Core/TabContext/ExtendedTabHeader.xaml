@@ -3,51 +3,55 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Core="clr-namespace:Farawla.Core"
     x:Name="CurrentTabHeader">
-	<Grid x:Name="Container" Margin="0,0,-15,0">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition />
-			<ColumnDefinition />
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
-
-		<Path x:Name="Left" Grid.Column="0" Fill="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveColor'}" Data="M1,21 C15,0 5,0 21,0 L21,21" Width="21" Height="21" />
+	<Grid Margin="1,0,3,1">
+		<!--<Path x:Name="Left" Grid.Column="0" Fill="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveColor'}" Data="M1,21 C15,0 5,0 21,0 L21,21" Width="21" Height="21" />
 		<Rectangle x:Name="Middle" Grid.Column="1" Fill="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveColor'}" Height="21" />
-
 		<Path x:Name="Right" Grid.Column="2" Fill="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveColor'}" Data="M1,21 C15,0 5,0 21,0 L21,21" Width="21" Height="21" RenderTransformOrigin="0.5,0.5">
 			<Path.RenderTransform>
 				<ScaleTransform ScaleX="-1"  />
 			</Path.RenderTransform>
-		</Path>
+		</Path>-->
 		
-		<Button x:Name="CloseBtn" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Opacity="0" Margin="0,0,-8,0" ToolTip="Tip: middle button or double click on tab header to close">
-			<Button.Template>
-				<ControlTemplate>
-					<Grid>
-						<Path x:Name="background" StrokeThickness="0" Fill="Transparent" Width="10" Height="10" Stretch="Fill">
-							<Path.Data>
-								<EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
-							</Path.Data>
-						</Path>
-						<Path x:Name="cross" Stroke="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveCaptionColor'}" StrokeThickness="1" Width="6" Height="6" Stretch="Fill" >
-							<Path.Data>
-								<GeometryGroup >
-									<LineGeometry StartPoint="20,20" EndPoint="80,80" />
-									<LineGeometry StartPoint="20,80" EndPoint="80,20" />
-								</GeometryGroup>
-							</Path.Data>
-						</Path>
-					</Grid>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter TargetName="background" Property="Fill" Value="#970D0C" />
-							<Setter TargetName="cross" Property="Stroke" Value="White" />
-						</Trigger>
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
+		<Border x:Name="Container" Background="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveColor'}" Height="19" CornerRadius="3,3,0,0" Width="100" Padding="5,2,5,0" >
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition Width="10" />
+				</Grid.ColumnDefinitions>
+
+				<TextBlock x:Name="TabCaption" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,2,0,2" Foreground="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveCaptionColor'}" />
 				
-			</Button.Template>
-		</Button>
+				<Button x:Name="CloseBtn" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Opacity="0" ToolTip="Tip: middle button or double click on tab header to close">
+					<Button.Template>
+						<ControlTemplate>
+							<Grid>
+								<Path x:Name="background" StrokeThickness="0" Fill="Transparent" Width="10" Height="10" Stretch="Fill">
+									<Path.Data>
+										<EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
+									</Path.Data>
+								</Path>
+								<Path x:Name="cross" Stroke="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveCaptionColor'}" StrokeThickness="1" Width="6" Height="6" Stretch="Fill" >
+									<Path.Data>
+										<GeometryGroup >
+											<LineGeometry StartPoint="20,20" EndPoint="80,80" />
+											<LineGeometry StartPoint="20,80" EndPoint="80,20" />
+										</GeometryGroup>
+									</Path.Data>
+								</Path>
+							</Grid>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsMouseOver" Value="True">
+									<Setter TargetName="background" Property="Fill" Value="#970D0C" />
+									<Setter TargetName="cross" Property="Stroke" Value="White" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Button.Template>
+				</Button>
+			</Grid>
+			
+		</Border>
+
 		
-		<TextBlock x:Name="TabCaption" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,2,5,2" Foreground="{Binding Converter={Core:ThemeColorConverter},ConverterParameter='WindowTabInactiveCaptionColor'}" />
 	</Grid>
 </UserControl>
