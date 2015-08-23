@@ -1,11 +1,11 @@
 <p align="center">
   <img src="https://raw.github.com/anaimi/farawla/master/Screenshots/header.png" alt="Farawla"/>
 </p>
-Farawla ([link + binary](http://getfarawla.com)) is a code editor for Windows. The goal of this project (which started around 2010) was to create a less boring code editor for dynamic languages, with small experiments in design and productivity. 
+This project was last updated in 2010 and is no longer maintained. Feel free to fork.
 
-The codebase follows a [Feature-Centric Design Pattern](http://anaimi.com/16). Farawla is the original inspiration for this design pattern.
+Farawla ([link + binary](http://getfarawla.com)) is a code editor for Windows, with the objective of creating a less boring code editor for dynamic programming languages, with small experiments in design and productivity. It is easily extensible and customizable to support new languages.
 
-This project is no longer maintained.
+The codebase follows a [Feature-Centric Design Pattern](http://anaimi.com/16). Farawla is the original inspiration for this design pattern. 
 
 ## Zero clutter
 By default, all what you see is your code. Move your mouse to the right and a sidebar will slowly appear -- you will rarely use the sidebar.
