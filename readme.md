@@ -1,6 +1,6 @@
-![Header](https://raw.github.com/anaimi/farawla/master/Screenshots/header.png)
-
-# Farawla
+<p align="center">
+  <img src="https://raw.github.com/anaimi/farawla/master/Screenshots/header.png" alt="Farawla"/>
+</p>
 Farawla ([link](http://getfarawla.com)) is a code editor for Windows. The goal of this project (which started around 2010) was to create a less boring code editor for dynamic languages, with small experiments in design and productivity. 
 
 Farawla follows a [Feature-Centric Design Pattern](http://anaimi.com/16). It is the original project that inspired this design pattern.
